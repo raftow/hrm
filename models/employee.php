@@ -1314,6 +1314,12 @@ class Employee extends AFWObject{
             return $company->beLongsTo($orgunit_id, true);
         }
 
+        public function shouldBeCalculatedField($attribute){
+            if($attribute=="id_domain") return true;
+            if($attribute=="id_domain1") return true;
+            return false;
+        }
+
         /*
         public function calcAll_tasks_nb()
         {
