@@ -22,9 +22,9 @@ class EmployeeCandidate extends AfwObject{
         
         public static function loadByMainIndex($orgunit_id, $campaign_id, $customer_id, $jobrole_mfk, $create_update=false)
         {
-           if(!$campaign_id) throw new RuntimeException("loadByMainIndex : campaign_id is mandatory field");
-           if(!$orgunit_id) throw new RuntimeException("loadByMainIndex : orgunit_id is mandatory field");
-           if(!$customer_id) throw new RuntimeException("loadByMainIndex : customer_id is mandatory field");
+           if(!$campaign_id) throw new AfwRuntimeException("loadByMainIndex : campaign_id is mandatory field");
+           if(!$orgunit_id) throw new AfwRuntimeException("loadByMainIndex : orgunit_id is mandatory field");
+           if(!$customer_id) throw new AfwRuntimeException("loadByMainIndex : customer_id is mandatory field");
 
 
            $obj = new EmployeeCandidate();

@@ -81,8 +81,8 @@ class Employee extends AFWObject{
             $obj = new Employee();
             
 
-            if(!$id_sh_org) throw new RuntimeException("loadByOrgunitAndUsername : to create employee id_sh_org is mandatory field");
-            if(!$user_name) throw new RuntimeException("loadByOrgunitAndUsername : user_name is mandatory field");
+            if(!$id_sh_org) throw new AfwRuntimeException("loadByOrgunitAndUsername : to create employee id_sh_org is mandatory field");
+            if(!$user_name) throw new AfwRuntimeException("loadByOrgunitAndUsername : user_name is mandatory field");
             
             $obj->select("id_sh_org",$id_sh_org);
             $obj->select("username",$user_name);
@@ -199,7 +199,7 @@ class Employee extends AFWObject{
                 if($country_external_code>0)
                 {
                       $countryObj = Country::loadByMainIndex($country_external_code);
-                      // $this->throwError("countryObj = ".$countryObj);
+                      // throw new AfwRuntimeException("countryObj = ".$countryObj);
                       if($countryObj) 
                       {
                           $this->set("country_id",$countryObj->getId());
@@ -258,8 +258,8 @@ class Employee extends AFWObject{
         public static function loadByEmail($id_sh_org, $email, $create_obj_if_not_found=false)
         {
              $obj = new Employee();
-             if($create_obj_if_not_found and (!$id_sh_org)) throw new RuntimeException("loadByEmail : to create employee id_sh_org is mandatory field");
-             if(!$email) throw new RuntimeException("loadByEmail : email is mandatory field");
+             if($create_obj_if_not_found and (!$id_sh_org)) throw new AfwRuntimeException("loadByEmail : to create employee id_sh_org is mandatory field");
+             if(!$email) throw new AfwRuntimeException("loadByEmail : email is mandatory field");
              //$obj->select("id_sh_org",$id_sh_org);
              $obj->select("email",$email);
              if($obj->load())
@@ -282,8 +282,8 @@ class Employee extends AFWObject{
         public static function loadByEmployeeNumber($id_sh_org, $emp_num,$create_obj_if_not_found=false)
         {
            $obj = new Employee();
-           if(!$id_sh_org) throw new RuntimeException("loadByEmployeeNumber : id_sh_org is mandatory field");
-           if(!$emp_num) throw new RuntimeException("loadByEmployeeNumber : emp_num is mandatory field");
+           if(!$id_sh_org) throw new AfwRuntimeException("loadByEmployeeNumber : id_sh_org is mandatory field");
+           if(!$emp_num) throw new AfwRuntimeException("loadByEmployeeNumber : emp_num is mandatory field");
            
  
            $obj->select("id_sh_org",$id_sh_org);
@@ -714,7 +714,7 @@ class Employee extends AFWObject{
                                         if($jobAroleObj and (!$jobAroleObj->isEmpty()))
                                         {
                                              $mod_id = $jobAroleObj->getVal("module_id");
-                                             if(!$mod_id) $this->throwError("job arole $jobAroleObj has no module defined");
+                                             if(!$mod_id) throw new AfwRuntimeException("job arole $jobAroleObj has no module defined");
                                              $arole_arr[$jobAroleObj->getVal("module_id")][] = $jobAroleObj->getVal("arole_id");
                                         }     
                                     }
@@ -839,7 +839,7 @@ class Employee extends AFWObject{
                  if(count($errors)==0)
                  {
                      $errors = $employee->getDataErrors($lang);
-                     //$this->throwError("student->getDataErrors = ".var_export($errors,true));
+                     //throw new AfwRuntimeException("student->getDataErrors = ".var_export($errors,true));
                  }                             
                  if(count($errors)==0)
                  {
@@ -899,7 +899,7 @@ class Employee extends AFWObject{
       
       protected function beforeSetAttribute($attribute, $newvalue)
       {
-              // if($attribute=="country_id") $this->throwError("country_id updated");
+              // if($attribute=="country_id") throw new AfwRuntimeException("country_id updated");
               return true;
       }
       
@@ -1089,7 +1089,7 @@ class Employee extends AFWObject{
                                 if($jobAroleObj and (!$jobAroleObj->isEmpty()))
                                 {
                                         $mod_id = $jobAroleObj->getVal("module_id");
-                                        if(!$mod_id) $this->throwError("job arole $jobAroleObj has no module defined");
+                                        if(!$mod_id) throw new AfwRuntimeException("job arole $jobAroleObj has no module defined");
                                         $moduleToGiveArr[$jobAroleObj->getVal("module_id")][] = $jobAroleObj->getVal("arole_id");
                                 }     
                             }
@@ -1145,7 +1145,7 @@ class Employee extends AFWObject{
                
                if((!$usr) or (!is_object($usr)) or ($usr->isEmpty()))
                {
-                     $this->throwError("updateMyUserInformation need user object : ".var_export($usr,true));
+                     throw new AfwRuntimeException("updateMyUserInformation need user object : ".var_export($usr,true));
                }
                if($this->getVal("firstname") and $this->getVal("lastname"))
                {

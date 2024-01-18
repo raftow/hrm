@@ -129,7 +129,7 @@ class Orgunit extends AFWObject{
         public static function loadByTitleIndex($id_sh_org, $titre_short, $create_obj_if_not_found=false, $id_domain=0, $from_attr=null)
         {
            $obj = new Orgunit();
-           if(!$titre_short) $obj->throwError("loadByTitleIndex : titre_short is mandatory field");
+           if(!$titre_short) throw new AfwRuntimeException("loadByTitleIndex : titre_short is mandatory field");
  
            $obj->select("id_sh_org",$id_sh_org);
            $obj->select("titre_short",$titre_short);
@@ -162,7 +162,7 @@ class Orgunit extends AFWObject{
         public static function loadByHRMCode($hrm_code,$create_obj_if_not_found=false)
         {
            $obj = new Orgunit();
-           if(!$hrm_code) $obj->throwError("loadByHRMCode : hrm_code is mandatory field");
+           if(!$hrm_code) throw new AfwRuntimeException("loadByHRMCode : hrm_code is mandatory field");
  
  
            $obj->select("hrm_code",$hrm_code);
@@ -188,7 +188,7 @@ class Orgunit extends AFWObject{
         public static function loadByCRMCode($crm_code,$create_obj_if_not_found=false)
         {
            $obj = new Orgunit();
-           if(!$crm_code) $obj->throwError("loadByCRMCode : crm_code is mandatory field");
+           if(!$crm_code) throw new AfwRuntimeException("loadByCRMCode : crm_code is mandatory field");
  
  
            $obj->select("crm_code",$crm_code);
@@ -1012,7 +1012,7 @@ class Orgunit extends AFWObject{
                       /*
                       if($this->getId()==80)
                       {
-                          $this->throwError("bf_item = ".var_export($bf_item,true));
+                          throw new AfwRuntimeException("bf_item = ".var_export($bf_item,true));
                       }*/
                  }
                      

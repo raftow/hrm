@@ -125,7 +125,7 @@ class OrgunitType extends AFWObject{
         public static function loadByMainIndex($lookup_code,$create_obj_if_not_found=false)
         {
            $obj = new OrgunitType();
-           if(!$lookup_code) $obj->throwError("loadByMainIndex : lookup_code is mandatory field");
+           if(!$lookup_code) throw new AfwRuntimeException("loadByMainIndex : lookup_code is mandatory field");
  
  
            $obj->select("lookup_code",$lookup_code);
@@ -150,7 +150,7 @@ class OrgunitType extends AFWObject{
         public static function loadByCode($external_code, $title, $create_obj_if_not_found=false)
         {
            $obj = new OrgunitType();
-           if(!$external_code) $obj->throwError("loadByCode : external_code is mandatory field");
+           if(!$external_code) throw new AfwRuntimeException("loadByCode : external_code is mandatory field");
  
            $obj->select("external_code",$external_code);
  
