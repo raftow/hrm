@@ -159,7 +159,7 @@ class EmployeeCandidate extends AfwObject{
                 if($commit) $this->commit();
         }
         
-        protected function beforeMaj($id, $fields_updated) 
+        public function beforeMaj($id, $fields_updated) 
         {
                 
                 $this->repareMe("ar", $fields_updated, false);
@@ -279,7 +279,7 @@ class EmployeeCandidate extends AfwObject{
                 
                 $this->commit();
 
-                return self::pbm_result($err_arr,$inf_arr);
+                return AfwFormatHelper::pbm_result($err_arr,$inf_arr);
         }
 
 

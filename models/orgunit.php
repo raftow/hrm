@@ -677,7 +677,7 @@ class Orgunit extends AFWObject{
         }
         
         // edited manually
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             
             
@@ -1041,11 +1041,11 @@ class Orgunit extends AFWObject{
               return $menu_folder;
         }
         
-        protected function beforeMAJ($id, $fields_updated)    // 
+        public function beforeMaj($id, $fields_updated)    // 
         {
               if(!$this->hrm_code)
               {
-                   $this->hrm_code = substr(self::hzmArabicToLatinRepresentation($this->title),0,5)."-".round(rand(10001,99999));
+                   $this->hrm_code = substr(AfwStringHelper::hzmArabicToLatinRepresentation($this->title),0,5)."-".round(rand(10001,99999));
               }
               
               $parent = $this->hetParent();
@@ -1060,7 +1060,7 @@ class Orgunit extends AFWObject{
         
         }
         
-        protected function afterInsert($id, $fields_updated)    // 
+        public function afterInsert($id, $fields_updated)    // 
         {
               $file_dir_name = dirname(__FILE__); 
               if(file_exists("$file_dir_name/../external/organization_business.php") and $this->getVal("titre_short"))
@@ -1092,7 +1092,7 @@ class Orgunit extends AFWObject{
             global $MODE_BATCH_LOURD;            
             if(($numInstance>400) and (!$MODE_BATCH_LOURD))
             {
-              self::lightSafeDie("orgunit trop dinstances $numInstance", AfwCacheSystem::getSingleton());
+              AfwRunHelper::lightSafeDie("orgunit trop dinstances $numInstance", AfwCacheSystem::getSingleton());
             }
             return true;
         }

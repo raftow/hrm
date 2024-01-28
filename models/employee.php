@@ -403,7 +403,7 @@ class Employee extends AFWObject{
                return (!$errs);
         }
 
-        protected function afterUpdate($id, $fields_updated)    // afterInsert
+        public function afterUpdate($id, $fields_updated)    // afterInsert
         {
             self::lookIfInfiniteLoop(1000,"EmployeeAfterUpdate");      
             global $auto_generate_employeenum;
@@ -903,7 +903,7 @@ class Employee extends AFWObject{
               return true;
       }
       
-        protected function beforeDelete($id,$id_replace) 
+        public function beforeDelete($id,$id_replace) 
         {
             
  
@@ -1031,7 +1031,7 @@ class Employee extends AFWObject{
             $color = "green";
             $title_ar = "تحديث بيانات المستخدم";
             $methodName = "updateMyUserInformation"; 
-            $pbms[self::hzmEncode($methodName)] = array("METHOD"=>$methodName,
+            $pbms[AfwStringHelper::hzmEncode($methodName)] = array("METHOD"=>$methodName,
                                     "COLOR"=>$color, 
                                     "LABEL_AR"=>$title_ar, 
                                     "PUBLIC"=>true, "BF-ID"=>"", "HZM-SIZE" =>12,  
@@ -1181,7 +1181,7 @@ class Employee extends AFWObject{
                $moduleToGiveArr = $this->myModulesAnRoles();
                
                $infos_arr[] = $usr->giveMeTheseModulesAnRoles($moduleToGiveArr,$this->id_sh_org);
-               return self::pbm_result($errors_arr,$infos_arr);
+               return AfwFormatHelper::pbm_result($errors_arr,$infos_arr);
         }
         
         
