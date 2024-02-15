@@ -1108,6 +1108,15 @@ class Orgunit extends AFWObject{
             if($obj->id) return $obj;
             else return null;
         }
+
+        public function myShortNameToAttributeName($attribute){
+            if($attribute=="orgtype") return "id_sh_type";
+            if($attribute=="title") return "titre_short";
+            if($attribute=="domain") return "id_domain";
+            if($attribute=="parent") return "id_sh_parent";
+            if($attribute=="resp") return "id_responsible";
+            return $attribute;
+        }
         
 }
 ?>

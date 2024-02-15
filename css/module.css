@@ -582,9 +582,6 @@ other style
             font-size: 24px;
     }
     
-    .hzm-icon-fm:before {
-            font-size: 72px !important;
-    }
     
     .hzm-icon-credit-card:before {
         content: "\f09d";
