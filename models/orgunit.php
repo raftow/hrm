@@ -1090,9 +1090,9 @@ class Orgunit extends AFWObject{
         public function instanciated($numInstance)
         {
             global $MODE_BATCH_LOURD;            
-            if(($numInstance>400) and (!$MODE_BATCH_LOURD))
+            if(($numInstance>1400) and (!$MODE_BATCH_LOURD))
             {
-              AfwRunHelper::lightSafeDie("orgunit trop dinstances $numInstance", AfwCacheSystem::getSingleton());
+               AfwRunHelper::lightSafeDie("orgunit trop dinstances $numInstance", AfwCacheSystem::getSingleton());
             }
             return true;
         }
