@@ -30,7 +30,7 @@
 				),
 
 			'creation_date' => array('SHOW-ADMIN' => true,  'RETRIEVE' => false,  'EDIT' => false,  
-				'TYPE' => 'DATETIME',  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
+				'TYPE' => 'GDAT',  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				),
 
@@ -40,7 +40,7 @@
 				),
 
 			'update_date' => array('SHOW-ADMIN' => true,  'RETRIEVE' => false,  'EDIT' => false,  
-				'TYPE' => 'DATETIME',  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
+				'TYPE' => 'GDAT',  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				),
 
@@ -50,7 +50,7 @@
 				),
 
 			'validation_date' => array('SHOW-ADMIN' => true,  'RETRIEVE' => false,  'EDIT' => false,  
-				'TYPE' => 'DATETIME',  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
+				'TYPE' => 'GDAT',  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				),
 

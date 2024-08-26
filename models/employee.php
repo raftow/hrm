@@ -922,13 +922,16 @@ class Employee extends AFWObject{
                $file_dir_name = dirname(__FILE__); 
                if(file_exists("$file_dir_name/../../external/organization_business.php"))
                {
-                      require_once("$file_dir_name/../../external/organization_business.php");
-                      list($return, $reason) = HrmOrgunitBusiness::trigger_before_delete_employee($id, $id_replace, $simul);
-                      if(!$return)
-                      {
-                           $this->deleteNotAllowedReason = $reason;
-                           return false;
-                      } 
+                        require_once("$file_dir_name/../../external/organization_business.php");
+                        if(class_exists("HrmOrgunitBusiness"))
+                        {
+                            list($return, $reason) = HrmOrgunitBusiness::trigger_before_delete_employee($id, $id_replace, $simul);
+                            if(!$return)
+                            {
+                                $this->deleteNotAllowedReason = $reason;
+                                return false;
+                            } 
+                        }
                       
                }
                
