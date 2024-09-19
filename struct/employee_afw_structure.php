@@ -133,7 +133,7 @@
 
 			'country_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 16,  'UTF8' => false,  'RETRIEVE' => false,  'MINIBOX' => true,  
 				'CSS' => 'width_pct_25',  
-				'TYPE' => 'FK',  'ANSWER' => 'country',  'ANSMODULE' => 'pag',  'DEFAUT' => 183,  'STEP' => 3,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
+				'TYPE' => 'FK',  'ANSWER' => 'country',  'ANSMODULE' => 'ums',  'DEFAUT' => 183,  'STEP' => 3,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', ),
 
 			'idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 16,  
@@ -229,7 +229,7 @@
 				),
 
 			'city_id' => array('IMPORTANT' => 'IN',  'SEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 40,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'city',  'ANSMODULE' => 'pag',  
+				'TYPE' => 'FK',  'ANSWER' => 'city',  'ANSMODULE' => 'ums',  
 				'CSS' => 'width_pct_50',  'DEFAUT' => 1,  'STEP' => 4,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', ),
 
@@ -290,7 +290,7 @@
                                                                 'QEDIT' => false, 'ANSWER' => 'ugroup', 'ANSMODULE' => 'ums', 'TYPE' => 'MFK', 'FGROUP' => 'tech_fields'),
 
                         'sci_id'                        => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'QEDIT' => false, 
-                                                                'TYPE' => 'FK', 'ANSWER' => 'scenario_item', 'ANSMODULE' => 'pag', 'FGROUP' => 'tech_fields'),
+                                                                'TYPE' => 'FK', 'ANSWER' => 'scenario_item', 'ANSMODULE' => 'ums', 'FGROUP' => 'tech_fields'),
 
                         'tech_notes' 	                => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'TYPE' => 'TEXT', 'CATEGORY' => 'FORMULA', "SHOW-ADMIN" => true, 
                                                                 'TOKEN_SEP'=>"§", 'READONLY'=>true, "NO-ERROR-CHECK"=>true, 'FGROUP' => 'tech_fields'),
