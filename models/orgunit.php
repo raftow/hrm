@@ -208,9 +208,6 @@ class Orgunit extends AFWObject{
         
         public function getRAMObjectData()
         {
-                  $file_dir_name = dirname(__FILE__); 
-                  require_once("$file_dir_name/../bau/r_a_m_object_type.php");
-                  
                   $orgTypeObj = $this->getOrgType();
                   $lookup_code = $orgTypeObj->getVal("lookup_code");
                   
@@ -604,7 +601,7 @@ class Orgunit extends AFWObject{
             $my_id = $this->getId();
             $id_sh_org = $this->getVal("id_sh_org");
             $displ = $this->getDisplay($lang);
-
+            /*
             if($mode=="mode_goalConcernList")
             {
                 unset($link);
@@ -612,11 +609,11 @@ class Orgunit extends AFWObject{
                 $link = array();
                 $title = "إدارة اأهداف";
                 $title_detailed = $title ."لـ : ". $displ;
-                $link["URL"] = "main.php?Main_Page=afw_mode_qedit.php&cl=GoalConcern&currmod=bau&id_origin=$my_id&class_origin=Orgunit&module_origin=hrm&newo=10&limit=30&ids=all&fixmtit=$title_detailed&fixmdisable=1&fixm=orgunit_id=$my_id&sel_orgunit_id=$my_id";
+                $link["URL"] = "main.php?Main_Page=afw_mode_qedit.php&cl=GoalConcern&currmod=b au&id_origin=$my_id&class_origin=Orgunit&module_origin=hrm&newo=10&limit=30&ids=all&fixmtit=$title_detailed&fixmdisable=1&fixm=orgunit_id=$my_id&sel_orgunit_id=$my_id";
                 $link["TITLE"] = $title;
                 $link["UGROUPS"] = array();
                 $otherLinksArray[] = $link;
-            }
+            }*/
             
             if($mode=="mode_moduleOrgunitList")
             {

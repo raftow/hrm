@@ -184,9 +184,10 @@
 				'TYPE' => 'TEXT',  'QSEARCH' => true,  'UTF8' => true,  'STEP' => 4,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				),
+				/*
 
 		'goalConcernList' => array(
-				'TYPE' => 'FK',  'ANSWER' => 'goal_concern',  'ANSMODULE' => 'bau',  
+				'TYPE' => 'FK',  'ANSWER' => 'goal_concern',  'ANSMODULE' => 'b au',  
 				'CATEGORY' => 'ITEMS',  'ITEM' => 'orgunit_id',  
 				'WHERE' => "", 
 				 'SHOW' => false,  'FORMAT' => 'retrieve',  'EDIT' => false,  'ICONS' => true,  'DELETE-ICON' => false,  'BUTTONS' => true,  'NO-LABEL' => false,  'STEP' => 5,  'SEARCH-BY-ONE' => '',  'DISPLAY' => false,  
@@ -194,10 +195,10 @@
 				),
 
 		'goalList' => array(
-				'TYPE' => 'MFK',  'ANSWER' => 'goal',  'ANSMODULE' => 'bau',  
+				'TYPE' => 'MFK',  'ANSWER' => 'goal',  'ANSMODULE' => 'b au',  
 				'CATEGORY' => 'FORMULA',  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'READONLY' => true,  'PHP_FORMULA' => 'list_extract.goalConcernList.goal_id.',  'STEP' => 5,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-				),
+				),*/
 
 		'allEmployeeList' => array(
 				'TYPE' => 'FK',  'ANSWER' => 'employee',  'ANSMODULE' => 'hrm',  
