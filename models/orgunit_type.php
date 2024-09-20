@@ -49,44 +49,10 @@ class OrgunitType extends AFWObject{
  
 	public static $DATABASE		= ""; 
         public static $MODULE		    = "hrm"; 
-        public static $TABLE			= ""; 
-        public static $DB_STRUCTURE = null; /* = array(
-                id => array(SHOW => true, RETRIEVE => true, EDIT => true, TYPE => PK),
- 
- 
-                lookup_code => array("TYPE" => "TEXT", "SHOW" => true, "RETRIEVE"=>true, "EDIT" => true, "SIZE" => 64, "QEDIT" => true, SHORTNAME=>code,  MANDATORY => true),
- 
-		titre_short => array(SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => true,  MANDATORY => true,  
-				SIZE => 40,  MAXLENGTH => 48,  "MIN-SIZE" => 3,  CHAR_TEMPLATE => ",ARABIC-CHARS,SPACE",  MANDATORY => true,  UTF8 => true,  SHORTNAME => "title",  
-				TYPE => "TEXT",  READONLY => false, ),
- 
-		titre_short_en => array(SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => true,  MANDATORY => true,  
-				SIZE => 46,  MAXLENGTH => 46,  "MIN-SIZE" => 3,  CHAR_TEMPLATE => "ARABIC-CHARS,SPACE",  MANDATORY => true,  UTF8 => false,  
-				TYPE => "TEXT",  READONLY => false, ),
- 
-		external_code => array(SEARCH => true,  QSEARCH => true,  SHOW => true,  RETRIEVE => true,  
-				EDIT => true,  QEDIT => true,  MANDATORY => true,  
-				SIZE => 16,  MAXLENGTH => 16,  "MIN-SIZE" => 1,  CHAR_TEMPLATE => "ALPHABETIC,NUMERIC,UNDERSCORE",  MANDATORY => true,  UTF8 => true,  
-				TYPE => "TEXT",  READONLY => false, ),
-                                 
-                created_by => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                created_at => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                updated_by => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                updated_at => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                validated_by => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => auser, ANSMODULE => ums),
-                validated_at => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => DATETIME),
-                active => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, "DEFAULT" => 'Y', TYPE => YN),
-                version => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => INT),
-                update_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                delete_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                display_groups_mfk => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, ANSWER => ugroup, ANSMODULE => ums, TYPE => MFK),
-                sci_id => array("SHOW-ADMIN" => true, RETRIEVE => false, EDIT => false, TYPE => FK, ANSWER => scenario_item, ANSMODULE => pag),
-                tech_notes 	    => array(TYPE => TEXT, CATEGORY => FORMULA, "SHOW-ADMIN" => true, 'STEP' =>"all", TOKEN_SEP=>"§", READONLY=>true, "NO-ERROR-CHECK"=>true),
-	);
- 
-	*/ public function __construct(){
+        public static $TABLE			= "orgunit_type"; 
+        public static $DB_STRUCTURE = null; 
+        
+        public function __construct(){
 		parent::__construct("orgunit_type","id","hrm");
                 $this->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
                 $this->DISPLAY_FIELD = "titre_short";

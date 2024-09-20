@@ -244,7 +244,7 @@ class SisEmployeeCandidateAfwStructure
                         'EDIT' => true,
                         'TYPE' => 'MFK',
                         'ANSWER' => 'jobrole',
-                        'ANSMODULE' => 'pag',
+                        'ANSMODULE' => 'ums',
                         'SIZE' => 32,
                         'QSEARCH' => true,
                         'RETRIEVE' => true,

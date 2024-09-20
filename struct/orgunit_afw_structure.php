@@ -29,7 +29,7 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', ),
 
 			'gender_id' => array('IMPORTANT' => 'IN',  'SEARCH' => false,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 40,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'genre',  'ANSMODULE' => 'pag',  'DEFAUT' => 1,  
+				'TYPE' => 'enum',  'ANSWER' => 'FUNCTION',  'DEFAUT' => 1,  
 				'CSS' => 'width_pct_25',  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', ),
 
@@ -68,7 +68,7 @@
 				),
 
 			'id_domain' => array(
-				'TYPE' => 'FK',  'ANSWER' => 'domain',  'ANSMODULE' => 'pag',  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  
+				'TYPE' => 'INT', 'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  
 				'WHERE' => "", 
 				 'SHORTNAME' => 'domain',  'SEARCH-BY-ONE' => true,  'SEARCH' => true,  'QSEARCH' => true,  'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 

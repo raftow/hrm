@@ -4,10 +4,6 @@
 // alter table orgunit change home_latitude home_latitude double null;
 // alter table orgunit change home_longitude home_longitude double null;
 
-
-
-// http://localhost/pag/main.php?Main_Page=toggle_option.php&option=SQL_LOG
-// http://localhost/btb/main.php?Main_Page=toggle_option.php&My_Module=pag&option=SQL_LOG
 $file_dir_name = dirname(__FILE__); 
 
                 
@@ -858,22 +854,13 @@ class Orgunit extends AFWObject{
                    $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - deletable 
                        // ums.module_orgunit-الجهة المعنية بالنظام/ التطبيق	id_orgunit  أنا تفاصيل لها-OneToMany
                         if(!$simul) $this->execQuery("delete from ${server_db_prefix}ums.module_orgunit where id_orgunit = '$id' ");
-                       // pag.module_sh-الجهة المعنية بالنظام/ التطبيق	id_sh  أنا تفاصيل لها-OneToMany
-                       // if(!$simul) $this->execQuery("delete from ${server_db_prefix}pag.module_sh where id_sh = '$id' ");
 
-                   
-                   // FK not part of me - replaceable 
-                       // pag.jobrole-المؤسسة/الشركة	id_sh_org  حقل يفلتر به-ManyToOne
-                        if(!$simul) $this->execQuery("update ${server_db_prefix}pag.jobrole set id_sh_org='$id_replace' where id_sh_org='$id' ");
-                       // pag.jobrole-الإدارة/القسم	id_sh_div  حقل يفلتر به-ManyToOne
-                        if(!$simul) $this->execQuery("update ${server_db_prefix}pag.jobrole set id_sh_div='$id_replace' where id_sh_div='$id' ");
-                       // pag.pmessage-الجهة المعنية	stakeholder_id  حقل يفلتر به-ManyToOne
-                        if(!$simul) $this->execQuery("update ${server_db_prefix}pag.pmessage set stakeholder_id='$id_replace' where stakeholder_id='$id' ");
-
-                       // pag.eimport-الجهة المعنية	orgunit_id  حقل يفلتر به-ManyToOne
-                        if(!$simul) $this->execQuery("update ${server_db_prefix}pag.eimport set orgunit_id='$id_replace' where orgunit_id='$id' ");
-                       // crm.crm_customer-جهة العميل	customer_orgunit_id  حقل يفلتر به-ManyToOne
+                    if(class_exists('CrmCustomer'))    
+                    {
+                        // crm.crm_customer-جهة العميل	customer_orgunit_id  حقل يفلتر به-ManyToOne
                         if(!$simul) $this->execQuery("update ${server_db_prefix}crm.crm_customer set customer_orgunit_id='$id_replace' where customer_orgunit_id='$id' ");
+                    }
+                       
 
                }
                else
@@ -900,19 +887,8 @@ class Orgunit extends AFWObject{
                        
                        // ums.module_orgunit-الجهة المعنية بالنظام/ التطبيق	id_orgunit  أنا تفاصيل لها-OneToMany
                         if(!$simul) $this->execQuery("update ${server_db_prefix}ums.module_orgunit set id_orgunit='$id_replace' where id_orgunit='$id' ");
-                       // pag.module_sh-الجهة المعنية بالنظام/ التطبيق	id_sh  أنا تفاصيل لها-OneToMany
-                       // if(!$simul) $this->execQuery("update ${server_db_prefix}pag.module_sh set id_sh='$id_replace' where id_sh='$id' ");
-
-                       // pag.jobrole-المؤسسة/الشركة	id_sh_org  حقل يفلتر به-ManyToOne
-                        if(!$simul) $this->execQuery("update ${server_db_prefix}pag.jobrole set id_sh_org='$id_replace' where id_sh_org='$id' ");
-                       // pag.jobrole-الإدارة/القسم	id_sh_div  حقل يفلتر به-ManyToOne
-                        if(!$simul) $this->execQuery("update ${server_db_prefix}pag.jobrole set id_sh_div='$id_replace' where id_sh_div='$id' ");
-                       // pag.pmessage-الجهة المعنية	stakeholder_id  حقل يفلتر به-ManyToOne
-                        if(!$simul) $this->execQuery("update ${server_db_prefix}pag.pmessage set stakeholder_id='$id_replace' where stakeholder_id='$id' ");
-
-                       // pag.eimport-الجهة المعنية	orgunit_id  حقل يفلتر به-ManyToOne
-                        if(!$simul) $this->execQuery("update ${server_db_prefix}pag.eimport set orgunit_id='$id_replace' where orgunit_id='$id' ");
-                       // crm.crm_customer-جهة العميل	customer_orgunit_id  حقل يفلتر به-ManyToOne
+                       
+                        // crm.crm_customer-جهة العميل	customer_orgunit_id  حقل يفلتر به-ManyToOne
                         if(!$simul) $this->execQuery("update ${server_db_prefix}crm.crm_customer set customer_orgunit_id='$id_replace' where customer_orgunit_id='$id' ");
                         
                         

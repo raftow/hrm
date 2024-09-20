@@ -60,7 +60,7 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', ),
 
 			'domain_id' => array('FGROUP' => 'employment',  
-				'TYPE' => 'FK',  'ANSWER' => 'domain',  'ANSMODULE' => 'pag',  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  
+				'TYPE' => 'INT',  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  
 				'WHERE' => "", 
 				 'SHORTNAME' => 'domain',  'SEARCH-BY-ONE' => true,  'SEARCH' => true,  'QSEARCH' => true,  
 				'CSS' => 'width_pct_50',  'STEP' => 1,  'DISPLAY' => true,  
@@ -115,20 +115,20 @@
 				),
 
 			'jobrole_mfk' => array('IMPORTANT' => 'IN',  'SEARCH' => false,  'SHOW' => true,  'MINIBOX' => true,  'MB_CSS' => 'width_pct_100',  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32,  'LIST_SEPARATOR' => '، ',  
-				'TYPE' => 'MFK',  'ANSWER' => 'jobrole',  'ANSMODULE' => 'pag',  
+				'TYPE' => 'MFK',  'ANSWER' => 'jobrole',  'ANSMODULE' => 'ums',  
 				'WHERE' => "id_domain in (§domain_id§,§id_domain§,§id_domain1§,1) or id_domain in (select id from c0pag.domain where domain_code like '%_common')", 
 				 
 				'SEL_OPTIONS' => array (
-  'enableFiltering' => true,
-  'numberDisplayed' => 3,
-  'filterPlaceholder' => 'اكتب كلمة للبحث',
-),  'STEP' => 2,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
+					'enableFiltering' => true,
+					'numberDisplayed' => 3,
+					'filterPlaceholder' => 'اكتب كلمة للبحث',
+					),  'STEP' => 2,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				),
 
 			'gender_id' => array('IMPORTANT' => 'IN',  'SEARCH' => false,  'SHOW' => true,  'MANDATORY' => true,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 16,  'UTF8' => false,  
 				'CSS' => 'width_pct_25',  
-				'TYPE' => 'FK',  'ANSWER' => 'genre',  'ANSMODULE' => 'pag',  'DEFAUT' => 1,  'STEP' => 3,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
+				'TYPE' => 'enum',  'ANSWER' => 'FUNCTION',   'DEFAUT' => 1,  'STEP' => 3,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '',  'ERROR-CHECK' => true, ),
 
 			'country_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 16,  'UTF8' => false,  'RETRIEVE' => false,  'MINIBOX' => true,  
@@ -138,7 +138,7 @@
 
 			'idn_type_id' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 16,  
 				'CSS' => 'width_pct_25',  'SEARCH-ADMIN' => true,  'SHOW-ADMIN' => true,  'EDIT-ADMIN' => true,  'UTF8' => false,  
-				'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'pag',  'DEFAUT' => 0,  'STEP' => 3,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
+				'TYPE' => 'FK',  'ANSWER' => 'idn_type',  'ANSMODULE' => 'ums',  'DEFAUT' => 0,  'STEP' => 3,  'SEARCH-BY-ONE' => '',  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', ),
 
 			'idn' => array('IMPORTANT' => 'IN',  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 16,  
@@ -173,18 +173,18 @@
 				'STEP' => 3,  'SEARCH-BY-ONE' => '',  'DISPLAY' => false,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				),
-
+		/*
 		'id_domain' => array(
-				'TYPE' => 'FK',  'ANSWER' => 'domain',  'ANSMODULE' => 'pag',  
+				'TYPE' => 'INT', 
 				'CATEGORY' => 'SHORTCUT',  'SHORTCUT' => 'id_sh_org.id_domain',  'CAN-BE-SETTED' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				),
 
 		'id_domain1' => array(
-				'TYPE' => 'FK',  'ANSWER' => 'domain',  'ANSMODULE' => 'pag',  
+				'TYPE' => 'INT',  
 				'CATEGORY' => 'SHORTCUT',  'SHORTCUT' => 'id_sh_div.id_domain',  'CAN-BE-SETTED' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-				),
+				),*/
 
 			'lastname_en' => array(
 				'TYPE' => 'TEXT',  'EDIT' => true,  'QEDIT' => true,  
