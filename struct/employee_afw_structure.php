@@ -116,7 +116,7 @@
 
 			'jobrole_mfk' => array('IMPORTANT' => 'IN',  'SEARCH' => false,  'SHOW' => true,  'MINIBOX' => true,  'MB_CSS' => 'width_pct_100',  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => false,  'SIZE' => 32,  'LIST_SEPARATOR' => '، ',  
 				'TYPE' => 'MFK',  'ANSWER' => 'jobrole',  'ANSMODULE' => 'ums',  
-				'WHERE' => "id_domain in (§domain_id§,§id_domain§,§id_domain1§,1) or id_domain in (select id from c0pag.domain where domain_code like '%_common')", 
+				'WHERE' => "id_domain in (§domain_id§,§id_domain§,§id_domain1§,1) or id_domain in (select id from §DBPREFIX§pag.domain where domain_code like '%_common')", 
 				 
 				'SEL_OPTIONS' => array (
 					'enableFiltering' => true,

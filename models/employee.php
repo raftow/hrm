@@ -1,10 +1,10 @@
 <?php
 // ------------------------------------------------------------------------------------
-// alter table c0hrm.employee add   domain_id int(11) DEFAULT NULL  after id_sh_div; 
+// alter table ".$server_db_prefix."hrm.employee add   domain_id int(11) DEFAULT NULL  after id_sh_div; 
 
 // 16/3/2022, rafik does this data fix :
 // delete from employee where auser_id is null;
-// update employee set username = (select username from c0ums.auser where id = auser_id) where username is null or username = '';
+// update employee set username = (select username from ".$server_db_prefix."ums.auser where id = auser_id) where username is null or username = '';
 // delete from employee where username is null; -- means that the employee.auser_id is not in auser table otherwise previous would have updated it.
 // so that this query :
 // mysql> select id_sh_org, username, count(*), max(created_at) from employee where 1 group by id_sh_org, username having  count(*)> 1;
@@ -985,7 +985,7 @@ class Employee extends AFWObject{
  
  
  
-                        $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - deletable 
+                        $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - deletable 
  
  
                         // FK not part of me - replaceable 
@@ -997,7 +997,7 @@ class Employee extends AFWObject{
                }
                else
                {
-                        $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK on me 
+                        $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK on me 
                         // crm.request-المشرف المكلف	supervisor_id  أنا تفاصيل لها-OneToMany
                         if(!$simul) $this->execQuery("update ${server_db_prefix}crm.request set supervisor_id='$id_replace' where supervisor_id='$id' ");
                         

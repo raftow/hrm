@@ -59,7 +59,7 @@ class Orgunit extends AFWObject{
         public static $ID_DEFAULT_EXTERNAL_ORG = 4;
  
                 
-        public static $DATABASE		= "c0hrm"; 
+        public static $DATABASE		= "".$server_db_prefix."hrm"; 
         public static $MODULE		    = "hrm"; 
         public static $TABLE			= "orgunit"; 
         public static $DB_STRUCTURE = null;   
@@ -848,7 +848,7 @@ class Orgunit extends AFWObject{
 
 
                         
-                   $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK part of me - deletable 
+                   $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK part of me - deletable 
                        // ums.module_orgunit-الجهة المعنية بالنظام/ التطبيق	id_orgunit  أنا تفاصيل لها-OneToMany
                         if(!$simul) $this->execQuery("delete from ${server_db_prefix}ums.module_orgunit where id_orgunit = '$id' ");
 
@@ -862,7 +862,7 @@ class Orgunit extends AFWObject{
                }
                else
                {
-                        $server_db_prefix = AfwSession::config("db_prefix","c0"); // FK on me 
+                        $server_db_prefix = AfwSession::config("db_prefix","default_db_"); // FK on me 
                        // ums.module-الجهة المستفيدة	id_main_sh  أنا تفاصيل لها-OneToMany
                         if(!$simul) $this->execQuery("update ${server_db_prefix}ums.module set id_main_sh='$id_replace' where id_main_sh='$id' ");
                        // crm.request-الجهة المعنية بالطلب	concerned_orgunit_id  أنا تفاصيل لها-OneToMany
