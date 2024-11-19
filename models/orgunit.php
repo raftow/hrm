@@ -59,7 +59,6 @@ class Orgunit extends AFWObject{
         public static $ID_DEFAULT_EXTERNAL_ORG = 4;
  
                 
-        public static $DATABASE		= ""; 
         public static $MODULE		    = "hrm"; 
         public static $TABLE			= "orgunit"; 
         public static $DB_STRUCTURE = null;   
