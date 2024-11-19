@@ -35,7 +35,7 @@
 				'CSS' => 'width_pct_100',  'UTF8' => false,  'READONLY' => true,  
 				'DISABLE-READONLY-ADMIN' => true,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', ),
-
+				
 
 			'id_sh_dep' => array('FGROUP' => 'employment',  'QSEARCH' => true,  'SEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 24,  
 				'CSS' => 'width_pct_100',  'UTF8' => false,  'AUTOCOMPLETE' => false, 'SHORTNAME' => 'department', 
