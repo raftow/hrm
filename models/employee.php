@@ -1193,7 +1193,7 @@ class Employee extends AFWObject{
               global $LANGS_MODULE;
               
               
-              if(se_termine_par($attribute,"_en")) return $LANGS_MODULE["en"];
+              if(AfwStringHelper::stringEndsWith($attribute,"_en")) return $LANGS_MODULE["en"];
               
               
               
