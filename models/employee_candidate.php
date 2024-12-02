@@ -84,7 +84,7 @@ class EmployeeCandidate extends AfwObject{
 	{
 		$file_dir_name = dirname(__FILE__);
                 
-                include_once("$file_dir_name/../afw/common_date.php");
+                // include_once("$file_dir_name/../afw/com mon_date.php");
                 list($hijri_campaign_id,$mm,$dd) = AfwDateHelper::currentHijriDate("hlist");
                 $hijri_campaign_id = intval($hijri_campaign_id);
                 
