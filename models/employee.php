@@ -19,7 +19,7 @@
 // update employee set id_sh_dep = id_sh_div;
 // update employee set id_sh_dep = id_sh_org where id_sh_dep is null;
 
-
+// INSERT INTO `employee` (`id`, `created_by`, `created_at`, `updated_by`, `updated_at`, `validated_by`, `validated_at`, `active`, `version`, `update_groups_mfk`, `delete_groups_mfk`, `display_groups_mfk`, `sci_id`, `auser_id`, `gender_id`, `firstname`, `f_firstname`, `g_f_firstname`, `lastname`, `firstname_en`, `f_firstname_en`, `g_f_firstname_en`, `lastname_en`, `birth_date`, `country_id`, `address`, `city_id`, `id_sh_org`, `id_sh_dep`, `id_sh_div`, `domain_id`, `username`, `emp_num`, `mobile`, `phone`, `email`, `desk`, `job`, `jobrole_mfk`, `last_empl_date`, `em_name`, `em_relship_id`, `em_mobile`, `id_sh_div2`, `id_sh_div3`, `jobrole_id`, `idn_type_id`, `idn`) VALUES ('2', '1', '2024-12-26 07:54:05.000000', '1', '2024-12-26 07:54:05.000000', NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, '2', '1', 'المهمة', NULL, NULL, 'الآلية', 'Scheduled', NULL, NULL, 'Task', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 
 
@@ -1322,6 +1322,23 @@ class Employee extends AFWObject{
             if($attribute=="id_domain1") return true;
             return false;
         }
+
+        public function myShortNameToAttributeName($attribute)
+        {
+                if ($attribute == "orgunit") return "id_sh_org";
+                if ($attribute == "department") return "id_sh_dep";
+                if ($attribute == "division") return "id_sh_div";
+                if ($attribute == "domain") return "domain_id";
+                if ($attribute == "user") return "auser_id";
+                
+                return $attribute;
+        }
+
+          
+		 
+		 
+		 
+		 
 
         /*
         public function calcAll_tasks_nb()

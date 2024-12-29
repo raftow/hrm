@@ -31,7 +31,7 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
+		
 		'id_sh_org' => array(
 			'FGROUP' => 'employment',
 			'QSEARCH' => true,
@@ -61,7 +61,7 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
+		
 
 		'id_sh_dep' => array(
 			'FGROUP' => 'employment',
@@ -95,8 +95,7 @@ class HrmEmployeeAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
-
-
+		
 		'id_sh_div' => array(
 			'FGROUP' => 'employment',
 			'QSEARCH' => true,
@@ -129,6 +128,7 @@ class HrmEmployeeAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
+		
 		'domain_id' => array(
 			'FGROUP' => 'employment',
 			'TYPE' => 'INT',
@@ -167,7 +167,7 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
+		
 		'auser_id' => array(
 			'FGROUP' => 'employment',
 			'SEARCH' => false,
