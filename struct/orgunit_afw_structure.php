@@ -67,6 +67,16 @@
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
 				),
 
+			'titre_short_en' => array('SHOW' => true,  'QSEARCH' => true,  'SEARCH' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  
+				'TYPE' => 'TEXT',  'UTF8' => false,  'SHORTNAME' => 'title',  'SIZE' => 32,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  'STEP' => 1,  
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+				),
+
+			'titre_en' => array('SHOW' => true,  'QSEARCH' => true,  'SEARCH' => true,  'RETRIEVE' => false,  'EDIT' => true,  
+				'TYPE' => 'TEXT',  'UTF8' => false,  'SIZE' => 64,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  'STEP' => 1,  
+				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
+				),	
+
 			'id_domain' => array(
 				'TYPE' => 'INT', 'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  
 				'WHERE' => "", 

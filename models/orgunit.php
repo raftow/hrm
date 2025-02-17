@@ -235,7 +235,9 @@ class Orgunit extends AFWObject{
         }
         
         
-        public static function findOrgunit($id_sh_type, $id_sh_org, $hrm_crm_code, $titre_short, $titre, $id_domain, $create_obj_if_not_found=false, $update_obj_if_found = true, $hrm_crm="hrm")
+        public static function findOrgunit($id_sh_type, $id_sh_org, $hrm_crm_code, 
+                                           $titre_short, $titre, $titre_short_en, $titre_en, $id_domain, 
+                                           $create_obj_if_not_found=false, $update_obj_if_found = true, $hrm_crm="hrm")
         {
            $obj = new Orgunit();
            $obj->select("${hrm_crm}_code",$hrm_crm_code);
@@ -248,6 +250,8 @@ class Orgunit extends AFWObject{
                         if($id_sh_type) $obj->set("id_sh_type",$id_sh_type);
                         $obj->set("titre_short",$titre_short);
                         $obj->set("titre",$titre);
+                        $obj->set("titre_short_en",$titre_short_en);
+                        $obj->set("titre_en",$titre_en);
                         if($id_domain) $obj->set("id_domain",$id_domain);
                         $obj->activate();
                 }
@@ -257,9 +261,14 @@ class Orgunit extends AFWObject{
            unset($obj);
            $obj = new Orgunit();
            
-           $obj->select("titre_short",$titre_short);
-           
-           
+           $arrSelects = [
+                "titre_short" => $titre_short, 
+                "titre" => $titre,
+                "titre_short_en" => $titre_short_en, 
+                "titre_en" => $titre_en,
+           ]; 
+
+           $obj->selectOneOfListOfCritirea($arrSelects);
            
            if($obj->load())
            {
@@ -278,9 +287,11 @@ class Orgunit extends AFWObject{
            elseif($create_obj_if_not_found)
            {
                 $obj->set("id_sh_org",$id_sh_org);
-                $obj->set("titre_short",$titre_short);
                 $obj->set("id_sh_type",$id_sh_type);
+                $obj->set("titre_short",$titre_short);
                 $obj->set("titre",$titre);
+                $obj->set("titre_short_en",$titre_short_en);
+                $obj->set("titre_en",$titre_en);
                 $obj->set("id_domain",$id_domain);
                 $obj->set("${hrm_crm}_code",$hrm_crm_code);
                 
