@@ -363,6 +363,7 @@ class HrmEmployeeAfwStructure
 			'EDIT-UGROUPS' => '',
 		),
 
+		
 		'gender_id' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => false,
