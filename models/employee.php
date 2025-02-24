@@ -254,6 +254,9 @@ class Employee extends AFWObject{
                 return $nbFields;
         }
  
+        /**
+         * @return Employee
+         */
  
         public static function loadByEmail($id_sh_org, $email, $create_obj_if_not_found=false)
         {

@@ -334,7 +334,7 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
+		
 		'jobrole_mfk' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => false,
@@ -451,7 +451,7 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
+		
 		'firstname' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => true,
@@ -546,7 +546,7 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-		/*
+		
 		'id_domain' => array(
 				'TYPE' => 'INT', 
 				'CATEGORY' => 'SHORTCUT',  'SHORTCUT' => 'id_sh_org.id_domain',  'CAN-BE-SETTED' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
@@ -557,7 +557,7 @@ class HrmEmployeeAfwStructure
 				'TYPE' => 'INT',  
 				'CATEGORY' => 'SHORTCUT',  'SHORTCUT' => 'id_sh_div.id_domain',  'CAN-BE-SETTED' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-				),*/
+				),
 
 		'lastname_en' => array(
 			'TYPE' => 'TEXT',

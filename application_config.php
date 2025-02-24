@@ -1,7 +1,7 @@
 <?php
 $config_arr = [
         'application_id' => 1072,
-
+        'hrm_application_id' => 1072,
         'application_code' => 'hrm',
 
         
