@@ -97,7 +97,8 @@ class Employee extends AFWObject{
         public static function loadAndUpdateFromExternalHRSystem($username, $employee_num)
         {
                 $file_dir_name = dirname(__FILE__);
-                require_once("$file_dir_name/../../external/external_hrm_employee.php");
+                $company = AfwSession::currentCompany();
+                require_once("$file_dir_name/../../client-$company/external_hrm_employee.php");
                 if(AfwStringHelper::stringContain($username, "@"))
                 {
                        // it means it is not employee of global company or its branchs 
@@ -450,8 +451,9 @@ class Employee extends AFWObject{
 
                 if(($this->getId()) and $this->getVal("username") or $this->getVal("emp_num"))
                 {  
+                    $company = AfwSession::currentCompany();
                     $file_dir_name = dirname(__FILE__);
-                    require_once("$file_dir_name/../../external/external_hrm_employee.php");
+                    require_once("$file_dir_name/../../client-$company/external_hrm_employee.php");
                     
                     list($ok, $error, $resEmployee) = ExternalHrmEmployee::loadJsonFromExternalHRSystem($user_name, $this->getVal("emp_num"));
                     
@@ -921,11 +923,12 @@ class Employee extends AFWObject{
             }
  
             if($id)
-            {   
-               $file_dir_name = dirname(__FILE__); 
-               if(file_exists("$file_dir_name/../../external/organization_business.php"))
-               {
-                        require_once("$file_dir_name/../../external/organization_business.php");
+            {  
+                $company = AfwSession::currentCompany();  
+                $file_dir_name = dirname(__FILE__); 
+                if(file_exists("$file_dir_name/../../client-$company/organization_business.php"))
+                {
+                        require_once("$file_dir_name/../../client-$company/organization_business.php");
                         if(class_exists("HrmOrgunitBusiness"))
                         {
                             list($return, $reason) = HrmOrgunitBusiness::trigger_before_delete_employee($id, $id_replace, $simul);

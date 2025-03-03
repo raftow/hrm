@@ -55,7 +55,7 @@ class Orgunit extends AFWObject{
         // unknown - غير معروف  
         public static $orgunit_type_unknown = 12;         
 
-        // ضيوف المؤسسة virtual company to allow register of external employees
+        // ضيوف المؤسسة virtual company to allow register of outside employees
         public static $ID_DEFAULT_EXTERNAL_ORG = 4;
  
                 
@@ -697,9 +697,10 @@ class Orgunit extends AFWObject{
             if($id)
             {   
                $file_dir_name = dirname(__FILE__); 
-               if(file_exists("$file_dir_name/../external/organization_business.php"))
+               $company = AfwSession::currentCompany();
+               if(file_exists("$file_dir_name/../client-$company/organization_business.php"))
                {
-                      require_once("$file_dir_name/../external/organization_business.php");
+                      require_once("$file_dir_name/../client-$company/organization_business.php");
                       list($return, $reason) = HrmOrgunitBusiness::trigger_before_delete_organization($id, $id_replace, $simul);
                       if(!$return)
                       {
@@ -900,9 +901,9 @@ class Orgunit extends AFWObject{
                         
                         
                         $file_dir_name = dirname(__FILE__); 
-                        if(file_exists("$file_dir_name/../external/organization_business.php"))
+                        if(file_exists("$file_dir_name/../client-$company/organization_business.php"))
                         {
-                              require_once("$file_dir_name/../external/organization_business.php");
+                              require_once("$file_dir_name/../client-$company/organization_business.php");
                               $return = HrmOrgunitBusiness::trigger_before_delete_organization($id, $id_replace, $simul);
                               if(!$return) return false;
                         }
@@ -1045,10 +1046,11 @@ class Orgunit extends AFWObject{
         
         public function afterInsert($id, $fields_updated)    // 
         {
-              $file_dir_name = dirname(__FILE__); 
-              if(file_exists("$file_dir_name/../external/organization_business.php") and $this->getVal("titre_short"))
+              $file_dir_name = dirname(__FILE__);
+              $company = AfwSession::currentCompany(); 
+              if(file_exists("$file_dir_name/../client-$company/organization_business.php") and $this->getVal("titre_short"))
               {
-                      require_once("$file_dir_name/../external/organization_business.php");
+                      require_once("$file_dir_name/../client-$company/organization_business.php");
                       HrmOrgunitBusiness::trigger_new_organization($this);
               }
 	    }

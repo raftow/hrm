@@ -41,7 +41,7 @@
     
     .calendar_bloc_g {
             height: 96px;
-            background-image: url(../../external/pic/calendar_bus_zz.png);
+            background-image: url(../../lib/images/calendar_bus_zz.png);
             background-repeat: no-repeat;
             background-size: 60%;
             background-position: 10px 10px;
@@ -415,7 +415,7 @@ ul.footerlinks li {
 }
 
 .footer_bg {
-    background-image: url(../../external/pic/bg-footer.jpg);
+    background-image: url(../../lib/images/bg-footer.jpg);
     background-color: #e27505;
     background-size: contain;
 }
