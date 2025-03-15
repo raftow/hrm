@@ -843,7 +843,7 @@ class Employee extends AFWObject{
                  
                  if(count($errors)==0)
                  {
-                     $errors = $employee->getDataErrors($lang);
+                     $errors = AfwDataQualityHelper::getDataErrors($employee, $lang);
                      //throw new AfwRuntimeException("student->getDataErrors = ".var_export($errors,true));
                  }                             
                  if(count($errors)==0)
