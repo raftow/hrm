@@ -17,6 +17,6 @@ AfwAutoLoader::addMainModule("hrm");
 include_once ("$file_dir_name/../hrm/ini.php");
 include_once ("$file_dir_name/../hrm/module_config.php");
 include_once ("$file_dir_name/../hrm/application_config.php");
-AfwSession::initConfig($config_arr);
+AfwSession::initConfig($config_arr, "system", "$file_dir_name/../hrm/application_config.php");
 
 AfwSession::startSession();

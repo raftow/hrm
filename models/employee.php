@@ -1340,7 +1340,12 @@ class Employee extends AFWObject{
                 return $attribute;
         }
 
-          
+        public function loadablePropsBy($user)
+        {
+            // if($user->id > 0) 
+            return ['firstname','lastname','firstname_en','lastname_en','email'];
+            return [];
+        }  
 		 
 		 
 		 
