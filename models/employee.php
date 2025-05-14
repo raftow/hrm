@@ -149,7 +149,7 @@ class Employee extends AFWObject{
         
         private function updateMeFromJson($resEmployee)
         {
-            global $lang;
+            $lang = AfwLanguageHelper::getGlobalLanguage();
             if(!$lang) $lang = AfwGlobalVar::variable_get('lang','ar');
                 $file_dir_name = dirname(__FILE__);
                 $nbFields = 0;
@@ -382,7 +382,7 @@ class Employee extends AFWObject{
         public function beforeMaj($id, $fields_updated) 
         {
             self::lookIfInfiniteLoop(1000,"EmployeeBeforeMaj");   
-            global $lang;
+            $lang = AfwLanguageHelper::getGlobalLanguage();
                
                 if(!$this->getVal("username")) 
                 {

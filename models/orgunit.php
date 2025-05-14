@@ -604,7 +604,7 @@ class Orgunit extends AFWObject{
          
         protected function getOtherLinksArray($mode, $genereLog = false, $step="all")      
         {
-            global $lang;
+            $lang = AfwLanguageHelper::getGlobalLanguage();
 
             //$objme = AfwSession::getUserConnected();
             $otherLinksArray = $this->getOtherLinksArrayStandard($mode, false, $step);
