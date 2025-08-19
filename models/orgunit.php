@@ -714,7 +714,7 @@ class Orgunit extends AFWObject{
                        // ums.module-الجهة المستفيدة	id_main_sh  أنا تفاصيل لها-OneToMany
                         
                         $obj = new Module();
-                        $obj->where("id_main_sh = '$id' and active='Y' ");
+                        $obj->where("id_main_sh = '$id' and avail='Y' ");
                         $nbRecords = $obj->count();
                         // check if there's no record that block the delete operation
                         if($nbRecords>0)
@@ -723,7 +723,7 @@ class Orgunit extends AFWObject{
                             return false;
                         }
                         // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
-                        if(!$simul) $this->execQuery("delete from ${server_db_prefix}ums.module where id_main_sh = '$id' and active='N'");
+                        if(!$simul) $this->execQuery("delete from ${server_db_prefix}ums.module where id_main_sh = '$id' and avail='N'");
 
                        // crm.request-الجهة المعنية بالطلب	concerned_orgunit_id  أنا تفاصيل لها-OneToMany
                         
