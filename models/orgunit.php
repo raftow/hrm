@@ -682,7 +682,7 @@ class Orgunit extends AFWObject{
         // edited manually
         public function beforeDelete($id,$id_replace) 
         {
-            
+            $server_db_prefix = AfwSession::config("db_prefix","default_db_");
             
             if(!$id)
             {
