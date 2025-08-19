@@ -706,8 +706,8 @@ class Orgunit extends AFWObject
                 }
                 // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
                 if (!$simul) $this->execQuery("delete from ${server_db_prefix}ums.module where id_main_sh = '$id' and avail='N'");
-
-                if (class_exists('CrmCustomer')) {
+                
+                if (class_exists('CrmCustomer', false)) {
                     // crm.request-الجهة المعنية بالطلب	concerned_orgunit_id  أنا تفاصيل لها-OneToMany
                     $obj = new Request();
                     $obj->where("concerned_orgunit_id = '$id' and active='Y' ");
@@ -836,7 +836,7 @@ class Orgunit extends AFWObject
                 // ums.module_orgunit-الجهة المعنية بالنظام/ التطبيق	id_orgunit  أنا تفاصيل لها-OneToMany
                 if (!$simul) $this->execQuery("delete from ${server_db_prefix}ums.module_orgunit where id_orgunit = '$id' ");
 
-                if (class_exists('CrmCustomer')) {
+                if (class_exists('CrmCustomer', false)) {
                     // crm.crm_customer-جهة العميل	customer_orgunit_id  حقل يفلتر به-ManyToOne
                     if (!$simul) $this->execQuery("update ${server_db_prefix}crm.crm_customer set customer_orgunit_id='$id_replace' where customer_orgunit_id='$id' ");
                 }
@@ -844,7 +844,7 @@ class Orgunit extends AFWObject
                 $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK on me 
                 // ums.module-الجهة المستفيدة	id_main_sh  أنا تفاصيل لها-OneToMany
                 if (!$simul) $this->execQuery("update ${server_db_prefix}ums.module set id_main_sh='$id_replace' where id_main_sh='$id' ");
-                if (class_exists('CrmCustomer')) {
+                if (class_exists('CrmCustomer', false)) {
                     // crm.request-الجهة المعنية بالطلب	concerned_orgunit_id  أنا تفاصيل لها-OneToMany
                     if (!$simul) $this->execQuery("update ${server_db_prefix}crm.request set concerned_orgunit_id='$id_replace' where concerned_orgunit_id='$id' ");
                     // crm.request-الإدارة المكلفة بالإجابة	orgunit_id  أنا تفاصيل لها-OneToMany
