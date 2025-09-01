@@ -10,7 +10,7 @@
 					$obj->DISPLAY_FIELD = "titre_short";
 					$obj->ORDER_BY_FIELDS = "titre_short, titre, id_sh_type, id_sh_org, id_domain";
 					//$obj->UNIQUE_KEY = array('id_sh_type','id_sh_org','titre_short','titre','id_domain');
-					
+					$obj->IS_LOOKUP = true;
 					$obj->UNIQUE_KEY = array('hrm_code');
 					$obj->editByStep = true;
 					$obj->editNbSteps = 7;
