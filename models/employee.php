@@ -1340,6 +1340,17 @@ class Employee extends AFWObject{
                 return $attribute;
         }
 
+          
+        public static function getCustomerEmployee()
+        {
+                return self::loadById(3);
+        }
+
+        public static function getStandardJobEmployee()
+        {
+                return self::loadById(2);
+        }
+    
         public function loadablePropsBy($user)
         {
             // if($user->id > 0) 
