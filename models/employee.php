@@ -407,7 +407,7 @@ class Employee extends AFWObject{
                return (!$errs);
         }
 
-        public function afterUpdate($id, $fields_updated)    // afterInsert
+        public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent=false)    // afterInsert
         {
             self::lookIfInfiniteLoop(1000,"EmployeeAfterUpdate");      
             global $auto_generate_employeenum;

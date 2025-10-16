@@ -1001,7 +1001,7 @@ class Orgunit extends AFWObject
         return true;
     }
 
-    public function afterInsert($id, $fields_updated)    // 
+    public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent=false)    // 
     {
         $file_dir_name = dirname(__FILE__);
         $company = AfwSession::currentCompany();
