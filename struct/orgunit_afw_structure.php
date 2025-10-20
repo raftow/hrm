@@ -87,7 +87,7 @@
 			'sh_code' => array('SHOW' => true,  'RETRIEVE' => false,  'EDIT' => true,  'QEDIT' => true,  
 				'TYPE' => 'TEXT',  'SIZE' => 16,  'QSEARCH' => true,  'UTF8' => true,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  'STEP' => 1,  
 				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-				),
+				), 
 
 			'hrm_code' => array('SEARCH' => false,  'QSEARCH' => true,  'SHOW' => true,  'RETRIEVE' => true,  'EDIT' => true,  'QEDIT' => true,  'SIZE' => 16,  'MIN-SIZE' => 3,  'CHAR_TEMPLATE' => 'ALPHABETIC,NUMERIC,UNDERSCORE',  'UTF8' => true,  
 				'TYPE' => 'TEXT',  'READONLY' => false,  'SEARCH-BY-ONE' => true,  'DISPLAY' => true,  'STEP' => 1,  

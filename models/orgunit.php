@@ -11,6 +11,11 @@ $file_dir_name = dirname(__FILE__);
 
 class Orgunit extends AFWObject
 {
+    public function __construct()
+    {
+        parent::__construct("orgunit", "id", "hrm");
+        HrmOrgunitAfwStructure::initInstance($this);
+    }
 
     public static $HEAD_COMPANY = 3;
 
@@ -104,12 +109,7 @@ class Orgunit extends AFWObject
         return  "active";
     }
 
-    public function __construct()
-    {
-        parent::__construct("orgunit", "id", "hrm");
-
-        HrmOrgunitAfwStructure::initInstance($this);
-    }
+    
 
     public static function loadById($id)
     {
