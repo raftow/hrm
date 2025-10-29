@@ -929,9 +929,9 @@ class Employee extends AFWObject{
                 if(file_exists("$file_dir_name/../../client-$company/organization_business.php"))
                 {
                         require_once("$file_dir_name/../../client-$company/organization_business.php");
-                        if(class_exists("HrmOrgunitBusiness"))
+                        if(class_exists("OrganizationBusiness"))
                         {
-                            list($return, $reason) = HrmOrgunitBusiness::trigger_before_delete_employee($id, $id_replace, $simul);
+                            list($return, $reason) = OrganizationBusiness::trigger_before_delete_employee($id, $id_replace, $simul);
                             if(!$return)
                             {
                                 $this->deleteNotAllowedReason = $reason;

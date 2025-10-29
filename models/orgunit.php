@@ -252,8 +252,8 @@ class Orgunit extends AFWObject
         $arrSelects = [
             "titre_short" => $titre_short,
             "titre" => $titre,
-            "titre_short_en" => $titre_short_en,
-            "titre_en" => $titre_en,
+            // "titre_short_en" => $titre_short_en,
+            // "titre_en" => $titre_en,
         ];
 
         $obj->selectOneOfListOfCritirea($arrSelects);
@@ -686,7 +686,7 @@ class Orgunit extends AFWObject
             $company = AfwSession::currentCompany();
             if (file_exists("$file_dir_name/../client-$company/organization_business.php")) {
                 require_once("$file_dir_name/../client-$company/organization_business.php");
-                list($return, $reason) = HrmOrgunitBusiness::trigger_before_delete_organization($id, $id_replace, $simul);
+                list($return, $reason) = OrganizationBusiness::trigger_before_delete_organization($id, $id_replace, $simul);
                 if (!$return) {
                     $this->deleteNotAllowedReason = $reason;
                     return false;
@@ -707,71 +707,7 @@ class Orgunit extends AFWObject
                 // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
                 if (!$simul) $this->execQuery("delete from ${server_db_prefix}ums.module where id_main_sh = '$id' and avail='N'");
                 
-                if (class_exists('CrmCustomer', false)) {
-                    // crm.request-الجهة المعنية بالطلب	concerned_orgunit_id  أنا تفاصيل لها-OneToMany
-                    $obj = new Request();
-                    $obj->where("concerned_orgunit_id = '$id' and active='Y' ");
-                    $nbRecords = $obj->count();
-                    // check if there's no record that block the delete operation
-                    if ($nbRecords > 0) {
-                        $this->deleteNotAllowedReason = "Used in some Media requests(s) as Customer orgunit";
-                        return false;
-                    }
-                    // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
-                    if (!$simul) $this->execQuery("delete from ${server_db_prefix}crm.request where concerned_orgunit_id = '$id' and active='N'");
-
-                    // crm.request-الإدارة المكلفة بالإجابة	orgunit_id  أنا تفاصيل لها-OneToMany
-
-                    $obj = new Request();
-                    $obj->where("orgunit_id = '$id' and active='Y' ");
-                    $nbRecords = $obj->count();
-                    // check if there's no record that block the delete operation
-                    if ($nbRecords > 0) {
-                        $this->deleteNotAllowedReason = "Used in some Media requests(s) as B m orgunit";
-                        return false;
-                    }
-                    // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
-                    if (!$simul) $this->execQuery("delete from ${server_db_prefix}crm.request where orgunit_id = '$id' and active='N'");
-
-                    // crm.response-الجهة المكلفة بالرد	orgunit_id  أنا تفاصيل لها-OneToMany
-
-                    $obj = new Response();
-                    $obj->where("orgunit_id = '$id' and active='Y' ");
-                    $nbRecords = $obj->count();
-                    // check if there's no record that block the delete operation
-                    if ($nbRecords > 0) {
-                        $this->deleteNotAllowedReason = "Used in some Media responses(s) as Orgunit";
-                        return false;
-                    }
-                    // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
-                    if (!$simul) $this->execQuery("delete from ${server_db_prefix}crm.response where orgunit_id = '$id' and active='N'");
-
-                    // crm.crm_orgunit-الجهة المكلفة بالرد	orgunit_id  جزء مني ولا يعمل إلا بي-OneToOneBidirectional
-
-                    $obj = new CrmOrgunit();
-                    $obj->where("orgunit_id = '$id' and active='Y' ");
-                    $nbRecords = $obj->count();
-                    // check if there's no record that block the delete operation
-                    if ($nbRecords > 0) {
-                        $this->deleteNotAllowedReason = "Used in some Crm orgunits(s) as Orgunit";
-                        return false;
-                    }
-                    // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
-                    if (!$simul) $this->execQuery("delete from ${server_db_prefix}crm.crm_orgunit where orgunit_id = '$id' and active='N'");
-
-
-
-                    $obj = new CrmOrgunit();
-                    $obj->where("orgunit_id = '$id' and active='Y' ");
-                    $nbRecords = $obj->count();
-                    // check if there's no record that block the delete operation
-                    if ($nbRecords > 0) {
-                        $this->deleteNotAllowedReason = "Used in some Crm investigators as the organization unit";
-                        return false;
-                    }
-                    // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
-                    if (!$simul) $this->execQuery("delete from ${server_db_prefix}crm.crm_orgunit where orgunit_id = '$id' and active='N'");
-                }
+                
 
                 // hrm.employee-المؤسسة/الشركة	id_sh_org  أنا تفاصيل لها-OneToMany
 
@@ -844,18 +780,7 @@ class Orgunit extends AFWObject
                 $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK on me 
                 // ums.module-الجهة المستفيدة	id_main_sh  أنا تفاصيل لها-OneToMany
                 if (!$simul) $this->execQuery("update ${server_db_prefix}ums.module set id_main_sh='$id_replace' where id_main_sh='$id' ");
-                if (class_exists('CrmCustomer', false)) {
-                    // crm.request-الجهة المعنية بالطلب	concerned_orgunit_id  أنا تفاصيل لها-OneToMany
-                    if (!$simul) $this->execQuery("update ${server_db_prefix}crm.request set concerned_orgunit_id='$id_replace' where concerned_orgunit_id='$id' ");
-                    // crm.request-الإدارة المكلفة بالإجابة	orgunit_id  أنا تفاصيل لها-OneToMany
-                    if (!$simul) $this->execQuery("update ${server_db_prefix}crm.request set orgunit_id='$id_replace' where orgunit_id='$id' ");
-                    // crm.response-الجهة المكلفة بالرد	orgunit_id  أنا تفاصيل لها-OneToMany
-                    if (!$simul) $this->execQuery("update ${server_db_prefix}crm.response set orgunit_id='$id_replace' where orgunit_id='$id' ");
-                    // crm.crm_orgunit-الجهة المكلفة بالرد	orgunit_id  جزء مني ولا يعمل إلا بي-OneToOneBidirectional
-                    if (!$simul) $this->execQuery("update ${server_db_prefix}crm.crm_orgunit set orgunit_id='$id_replace' where orgunit_id='$id' ");
-                    // crm.crm_customer-جهة العميل	customer_orgunit_id  حقل يفلتر به-ManyToOne
-                    if (!$simul) $this->execQuery("update ${server_db_prefix}crm.crm_customer set customer_orgunit_id='$id_replace' where customer_orgunit_id='$id' ");
-                }
+                
                 // hrm.employee-المؤسسة/الشركة	id_sh_org  أنا تفاصيل لها-OneToMany
                 if (!$simul) $this->execQuery("update ${server_db_prefix}hrm.employee set id_sh_org='$id_replace' where id_sh_org='$id' ");
                 // hrm.employee-الإدارة/القسم/الفرع	id_sh_div  أنا تفاصيل لها-OneToMany
@@ -869,13 +794,13 @@ class Orgunit extends AFWObject
                 if (!$simul) $this->execQuery("update ${server_db_prefix}ums.module_orgunit set id_orgunit='$id_replace' where id_orgunit='$id' ");
 
 
-
+                /*    
                 $file_dir_name = dirname(__FILE__);
                 if (file_exists("$file_dir_name/../client-$company/organization_business.php")) {
                     require_once("$file_dir_name/../client-$company/organization_business.php");
                     $return = HrmOrgunitBusiness::trigger_before_delete_organization($id, $id_replace, $simul);
                     if (!$return) return false;
-                }
+                }*/
             }
             return true;
         }
@@ -1007,7 +932,7 @@ class Orgunit extends AFWObject
         $company = AfwSession::currentCompany();
         if (file_exists("$file_dir_name/../client-$company/organization_business.php") and $this->getVal("titre_short")) {
             require_once("$file_dir_name/../client-$company/organization_business.php");
-            HrmOrgunitBusiness::trigger_new_organization($this);
+            OrganizationBusiness::trigger_new_organization($this);
         }
     }
 
