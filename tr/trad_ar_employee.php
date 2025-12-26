@@ -10,6 +10,7 @@
 		$trad["employee"]["employee.new"] = "جديد";
 		$trad["employee"]["employee"] = "الموظفين";
 		$trad["employee"]["gender_id"] = "الجنس";
+		
 		$trad["employee"]["domain_id"] = "المجال الوظيفي";
 
 		$trad["employee"]["firstname"] = "الاسم الأول";
@@ -38,6 +39,7 @@
 		$trad["employee"]["id_sh_div"] = "الإدارة/القسم";  
 		$trad["employee"]["emp_num"] = "رقم الموظف";
 		$trad["employee"]["mobile"] = "الجوال";
+		
 		$trad["employee"]["phone"] = "الهاتف/التحويلة";
 		$trad["employee"]["email"] = "البريد الالكتروني";
 		$trad["employee"]["desk"] = "رمز المكتب";
