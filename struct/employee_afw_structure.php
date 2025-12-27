@@ -383,7 +383,7 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
-		),
+		), 
 
 		'country_id' => array(
 			'IMPORTANT' => 'IN',
