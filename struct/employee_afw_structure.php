@@ -5,8 +5,8 @@ class HrmEmployeeAfwStructure
 	{
 		if ($obj instanceof Employee) {
 			$obj->QEDIT_MODE_NEW_OBJECTS_DEFAULT_NUMBER = 15;
-			$obj->DISPLAY_FIELD = "";
-			$obj->ORDER_BY_FIELDS = "firstname, f_firstname, lastname";
+			$obj->DISPLAY_FIELD = '';
+			$obj->ORDER_BY_FIELDS = 'firstname, f_firstname, lastname';
 			$obj->FORMULA_DISPLAY_FIELD = "concat(IF(ISNULL(firstname), '', firstname) , ' ' , IF(ISNULL(f_firstname), '', f_firstname) , ' ' , IF(ISNULL(lastname), '', lastname))";
 
 			$obj->UNIQUE_KEY = array('id_sh_org', 'idn_type_id', 'idn');
@@ -14,12 +14,12 @@ class HrmEmployeeAfwStructure
 			$obj->editNbSteps = 4;
 			$obj->showQeditErrors = true;
 			$obj->showRetrieveErrors = true;
-			$obj->public_display = true;
+
+			// $obj->public_display = true; then any one can afw edit
 		}
 	}
+
 	public static $DB_STRUCTURE = array(
-
-
 		'id' => array(
 			'SHOW' => true,
 			'RETRIEVE' => false,
@@ -31,7 +31,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-		
 		'id_sh_org' => array(
 			'FGROUP' => 'employment',
 			'QSEARCH' => true,
@@ -45,9 +44,10 @@ class HrmEmployeeAfwStructure
 			'ANSMODULE' => 'hrm',
 			'SHORTNAME' => 'orgunit',
 			'NO_DDB' => true,
-			'DEPENDENT_OFME' => array(0 => 'id_sh_div',),
-			'WHERE' => "id_sh_type in (5,6,7,8)",
-
+			'DEPENDENT_OFME' => array(
+				0 => 'id_sh_div',
+			),
+			'WHERE' => 'id_sh_type in (5,6,7,8)',
 			'RELATION' => 'OneToMany',
 			'DEFAUT' => 1,
 			'STEP' => 1,
@@ -61,8 +61,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-		
-
 		'id_sh_dep' => array(
 			'FGROUP' => 'employment',
 			'QSEARCH' => true,
@@ -80,9 +78,8 @@ class HrmEmployeeAfwStructure
 			'TYPE' => 'FK',
 			'ANSWER' => 'orgunit',
 			'ANSMODULE' => 'hrm',
-			'WHERE' => "id_sh_type in (9,11,13,14,16) and (id_sh_org=§id_sh_org§ or id = §id_sh_org§ or 1 = §id_sh_org§)",
-
-			'WHERE-SEARCH' => "id_sh_type in (11,13,14,16)",
+			'WHERE' => 'id_sh_type in (9,11,13,14,16) and (id_sh_org=§id_sh_org§ or id = §id_sh_org§ or 1 = §id_sh_org§)',
+			'WHERE-SEARCH' => 'id_sh_type in (11,13,14,16)',
 			'DEPENDENCY' => 'id_sh_org',
 			'READONLY' => true,
 			'DISABLE-READONLY-ADMIN' => true,
@@ -95,8 +92,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
-		
 		'id_sh_div' => array(
 			'FGROUP' => 'employment',
 			'QSEARCH' => true,
@@ -114,9 +109,8 @@ class HrmEmployeeAfwStructure
 			'ANSWER' => 'orgunit',
 			'ANSMODULE' => 'hrm',
 			'SHORTNAME' => 'division',
-			'WHERE' => "id_sh_type in (3,4,9,10,15) and (id_sh_org=§id_sh_dep§ or id_sh_parent=§id_sh_dep§ or id = §id_sh_dep§)",
-
-			'WHERE-SEARCH' => "id_sh_type in (3,4,9,10,15)",
+			'WHERE' => 'id_sh_type in (3,4,9,10,15) and (id_sh_org=§id_sh_dep§ or id_sh_parent=§id_sh_dep§ or id = §id_sh_dep§)',
+			'WHERE-SEARCH' => 'id_sh_type in (3,4,9,10,15)',
 			'DEPENDENCY' => 'id_sh_org',
 			'READONLY' => true,
 			'DISABLE-READONLY-ADMIN' => true,
@@ -129,8 +123,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
-		
 		'domain_id' => array(
 			'FGROUP' => 'employment',
 			'TYPE' => 'INT',
@@ -138,7 +130,7 @@ class HrmEmployeeAfwStructure
 			'RETRIEVE' => false,
 			'EDIT' => true,
 			'QEDIT' => true,
-			'WHERE' => "",
+			'WHERE' => '',
 			'SHORTNAME' => 'domain',
 			'SEARCH-BY-ONE' => true,
 			'SEARCH' => true,
@@ -149,7 +141,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'username' => array(
 			'FGROUP' => 'employment',
 			'TYPE' => 'TEXT',
@@ -169,7 +160,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-		
 		'auser_id' => array(
 			'FGROUP' => 'employment',
 			'SEARCH' => false,
@@ -190,7 +180,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'emp_num' => array(
 			'FGROUP' => 'employment',
 			'IMPORTANT' => 'IN',
@@ -213,7 +202,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'last_empl_date' => array(
 			'FGROUP' => 'employment',
 			'IMPORTANT' => 'IN',
@@ -234,7 +222,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'email' => array(
 			'FGROUP' => 'communication',
 			'IMPORTANT' => 'IN',
@@ -259,7 +246,6 @@ class HrmEmployeeAfwStructure
 			'MANDATORY' => true,
 			'ERROR-CHECK' => true,
 		),
-
 		'phone' => array(
 			'FGROUP' => 'communication',
 			'IMPORTANT' => 'IN',
@@ -279,7 +265,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'desk' => array(
 			'FGROUP' => 'communication',
 			'IMPORTANT' => 'IN',
@@ -298,7 +283,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'active' => array(
 			'FGROUP' => 'communication',
 			'SHOW-ADMIN' => true,
@@ -315,7 +299,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'job' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => true,
@@ -334,7 +317,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-		
 		'jobrole_mfk' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => false,
@@ -350,7 +332,6 @@ class HrmEmployeeAfwStructure
 			'ANSWER' => 'jobrole',
 			'ANSMODULE' => 'ums',
 			'WHERE' => "id_domain in (§domain_id§,§id_domain§,§id_domain1§,1) or id_domain in (select id from §DBPREFIX§pag.domain where domain_code like '%_common')",
-
 			'SEL_OPTIONS' => array(
 				'enableFiltering' => true,
 				'numberDisplayed' => 3,
@@ -362,8 +343,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
-		
 		'gender_id' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => false,
@@ -383,8 +362,7 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
-		), 
-
+		),
 		'country_id' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => true,
@@ -406,7 +384,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'idn_type_id' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => true,
@@ -430,7 +407,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'idn' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => true,
@@ -451,7 +427,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-		
 		'firstname' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => true,
@@ -472,7 +447,6 @@ class HrmEmployeeAfwStructure
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
 		),
-
 		'f_firstname' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => true,
@@ -491,7 +465,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'g_f_firstname' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => true,
@@ -509,7 +482,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'lastname' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => true,
@@ -530,7 +502,6 @@ class HrmEmployeeAfwStructure
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
 		),
-
 		'full_name' => array(
 			'TYPE' => 'TEXT',
 			'CATEGORY' => 'FORMULA',
@@ -546,19 +517,28 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-		
 		'id_domain' => array(
-				'TYPE' => 'INT', 
-				'CATEGORY' => 'SHORTCUT',  'SHORTCUT' => 'id_sh_org.id_domain',  'CAN-BE-SETTED' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-				),
-
+			'TYPE' => 'INT',
+			'CATEGORY' => 'SHORTCUT',
+			'SHORTCUT' => 'id_sh_org.id_domain',
+			'CAN-BE-SETTED' => false,
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',
+			'STEP' => 1,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
 		'id_domain1' => array(
-				'TYPE' => 'INT',  
-				'CATEGORY' => 'SHORTCUT',  'SHORTCUT' => 'id_sh_div.id_domain',  'CAN-BE-SETTED' => false,  'SEARCH-BY-ONE' => '',  'DISPLAY' => '',  'STEP' => 1,  
-				'DISPLAY-UGROUPS' => '',  'EDIT-UGROUPS' => '', 
-				),
-
+			'TYPE' => 'INT',
+			'CATEGORY' => 'SHORTCUT',
+			'SHORTCUT' => 'id_sh_div.id_domain',
+			'CAN-BE-SETTED' => false,
+			'SEARCH-BY-ONE' => '',
+			'DISPLAY' => '',
+			'STEP' => 1,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+		),
 		'lastname_en' => array(
 			'TYPE' => 'TEXT',
 			'EDIT' => true,
@@ -576,7 +556,6 @@ class HrmEmployeeAfwStructure
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
 		),
-
 		'g_f_firstname_en' => array(
 			'TYPE' => 'TEXT',
 			'EDIT' => true,
@@ -592,7 +571,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'f_firstname_en' => array(
 			'TYPE' => 'TEXT',
 			'EDIT' => true,
@@ -608,7 +586,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'firstname_en' => array(
 			'TYPE' => 'TEXT',
 			'EDIT' => true,
@@ -625,7 +602,6 @@ class HrmEmployeeAfwStructure
 			'EDIT-UGROUPS' => '',
 			'ERROR-CHECK' => true,
 		),
-
 		'full_name_en' => array(
 			'TYPE' => 'TEXT',
 			'CATEGORY' => 'FORMULA',
@@ -642,7 +618,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'birth_date' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => true,
@@ -661,7 +636,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'address' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => false,
@@ -679,7 +653,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'city_id' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => false,
@@ -700,7 +673,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'mobile' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => true,
@@ -721,7 +693,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'em_name' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => false,
@@ -738,7 +709,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'em_relship_id' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => false,
@@ -758,7 +728,6 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
 		'em_mobile' => array(
 			'IMPORTANT' => 'IN',
 			'SEARCH' => false,
@@ -775,8 +744,7 @@ class HrmEmployeeAfwStructure
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
 		),
-
-		'created_by'         => array(
+		'created_by' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
@@ -788,8 +756,7 @@ class HrmEmployeeAfwStructure
 			'ANSMODULE' => 'ums',
 			'FGROUP' => 'tech_fields'
 		),
-
-		'created_at'            => array(
+		'created_at' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
@@ -799,8 +766,7 @@ class HrmEmployeeAfwStructure
 			'TYPE' => 'GDAT',
 			'FGROUP' => 'tech_fields'
 		),
-
-		'updated_by'           => array(
+		'updated_by' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
@@ -812,8 +778,7 @@ class HrmEmployeeAfwStructure
 			'ANSMODULE' => 'ums',
 			'FGROUP' => 'tech_fields'
 		),
-
-		'updated_at'              => array(
+		'updated_at' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
@@ -823,8 +788,7 @@ class HrmEmployeeAfwStructure
 			'TYPE' => 'GDAT',
 			'FGROUP' => 'tech_fields'
 		),
-
-		'validated_by'       => array(
+		'validated_by' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
@@ -835,8 +799,7 @@ class HrmEmployeeAfwStructure
 			'ANSMODULE' => 'ums',
 			'FGROUP' => 'tech_fields'
 		),
-
-		'validated_at'          => array(
+		'validated_at' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
@@ -845,11 +808,9 @@ class HrmEmployeeAfwStructure
 			'TYPE' => 'GDAT',
 			'FGROUP' => 'tech_fields'
 		),
-
-		/* 'active'                   => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'EDIT' => false, 
-                                                                'QEDIT' => false, "DEFAULT" => 'Y', 'TYPE' => 'YN', 'FGROUP' => 'tech_fields'),*/
-
-		'version'                  => array(
+		/* 'active'                   => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'EDIT' => false,
+																'QEDIT' => false, "DEFAULT" => 'Y', 'TYPE' => 'YN', 'FGROUP' => 'tech_fields'),*/
+		'version' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
@@ -858,11 +819,9 @@ class HrmEmployeeAfwStructure
 			'TYPE' => 'INT',
 			'FGROUP' => 'tech_fields'
 		),
-
-		// 'draft'                         => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'EDIT' => false, 
+		// 'draft'                         => array('STEP' => 99, 'HIDE_IF_NEW' => true, 'SHOW' => true, 'RETRIEVE' => false, 'EDIT' => false,
 		//                                        'QEDIT' => false, "DEFAULT" => 'Y', 'TYPE' => 'YN', 'FGROUP' => 'tech_fields'),
-
-		'update_groups_mfk'             => array(
+		'update_groups_mfk' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
@@ -873,8 +832,7 @@ class HrmEmployeeAfwStructure
 			'TYPE' => 'MFK',
 			'FGROUP' => 'tech_fields'
 		),
-
-		'delete_groups_mfk'             => array(
+		'delete_groups_mfk' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
@@ -885,8 +843,7 @@ class HrmEmployeeAfwStructure
 			'TYPE' => 'MFK',
 			'FGROUP' => 'tech_fields'
 		),
-
-		'display_groups_mfk'            => array(
+		'display_groups_mfk' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
@@ -897,27 +854,25 @@ class HrmEmployeeAfwStructure
 			'TYPE' => 'MFK',
 			'FGROUP' => 'tech_fields'
 		),
-
-		'sci_id'                        => array(
+		'sci_id' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
 			'RETRIEVE' => false,
 			'QEDIT' => false,
-			'TYPE' => 'INT', /*stepnum-not-the-object*/
+			'TYPE' => 'INT',  /* stepnum-not-the-object */
 			'ANSMODULE' => 'ums',
 			'FGROUP' => 'tech_fields'
 		),
-
-		'tech_notes' 	                => array(
+		'tech_notes' => array(
 			'STEP' => 99,
 			'HIDE_IF_NEW' => true,
 			'TYPE' => 'TEXT',
 			'CATEGORY' => 'FORMULA',
-			"SHOW-ADMIN" => true,
-			'TOKEN_SEP' => "§",
+			'SHOW-ADMIN' => true,
+			'TOKEN_SEP' => '§',
 			'READONLY' => true,
-			"NO-ERROR-CHECK" => true,
+			'NO-ERROR-CHECK' => true,
 			'FGROUP' => 'tech_fields'
 		),
 	);
