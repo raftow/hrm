@@ -1039,6 +1039,7 @@ class Employee extends AFWObject
 
     public function myModulesAnRoles()
     {
+        $freinds = AfwSession::config('freinds', []);
         $moduleToGiveArr = array();
         $jobroleList = $this->get('jobrole_mfk');
 
@@ -1047,10 +1048,20 @@ class Employee extends AFWObject
                 $jobAroleList = $jobroleObj->get('jobAroleList');
                 foreach ($jobAroleList as $jobAroleObj) {
                     if ($jobAroleObj and (!$jobAroleObj->isEmpty())) {
-                        $mod_id = $jobAroleObj->getVal('module_id');
-                        if (!$mod_id)
-                            throw new AfwRuntimeException("job arole $jobAroleObj has no module defined");
-                        $moduleToGiveArr[$jobAroleObj->getVal('module_id')][] = $jobAroleObj->getVal('arole_id');
+                        $module_id = $jobAroleObj->getVal('module_id');
+                        $role_id = $jobAroleObj->getVal('arole_id');
+                        if ($module_id and $role_id) {
+                            $moduleToGiveArr[$module_id][] = $role_id;
+                        }
+
+                        foreach ($freinds["m$module_id"] as $freind_module => $freindRoleArr) {
+                            $freindModuleId = substr($freind_module, 1);
+                            foreach ($freindRoleArr as $freindRole) {
+                                if ($freindRole == "r$role_id") {
+                                    $moduleToGiveArr[$freindModuleId][] = $role_id;
+                                }
+                            }
+                        }
                     }
                 }
             }
