@@ -98,7 +98,7 @@ class Employee extends AFWObject
     {
         $file_dir_name = dirname(__FILE__);
         $company = AfwSession::currentCompany();
-        require_once ("$file_dir_name/../../client-$company/external_hrm_employee.php");
+        require_once("$file_dir_name/../../client-$company/external_hrm_employee.php");
         if (AfwStringHelper::stringContain($username, '@')) {
             // it means it is not employee of global company or its branchs
             // it is a guest employee
@@ -412,7 +412,7 @@ class Employee extends AFWObject
             if (($this->getId()) and $this->getVal('username') or $this->getVal('emp_num')) {
                 $company = AfwSession::currentCompany();
                 $file_dir_name = dirname(__FILE__);
-                require_once ("$file_dir_name/../../client-$company/external_hrm_employee.php");
+                require_once("$file_dir_name/../../client-$company/external_hrm_employee.php");
 
                 list($ok, $error, $resEmployee) = ExternalHrmEmployee::loadJsonFromExternalHRSystem($user_name, $this->getVal('emp_num'));
 
@@ -851,8 +851,8 @@ class Employee extends AFWObject
     {
         $file_dir_name = dirname(__FILE__);
 
-        include ("$file_dir_name/module_tables_info.php");
-        include ("$file_dir_name/../ums/module_tables_info.php");
+        include("$file_dir_name/module_tables_info.php");
+        include("$file_dir_name/../ums/module_tables_info.php");
 
         $importClassesList = [];
 
@@ -896,7 +896,7 @@ class Employee extends AFWObject
             $company = AfwSession::currentCompany();
             $file_dir_name = dirname(__FILE__);
             if (file_exists("$file_dir_name/../../client-$company/organization_business.php")) {
-                require_once ("$file_dir_name/../../client-$company/organization_business.php");
+                require_once("$file_dir_name/../../client-$company/organization_business.php");
                 if (class_exists('OrganizationBusiness')) {
                     list($return, $reason) = OrganizationBusiness::trigger_before_delete_employee($id, $id_replace, $simul);
                     if (!$return) {
@@ -1054,11 +1054,13 @@ class Employee extends AFWObject
                             $moduleToGiveArr[$module_id][] = $role_id;
                         }
 
-                        foreach ($freinds["m$module_id"] as $freind_module => $freindRoleArr) {
-                            $freindModuleId = substr($freind_module, 1);
-                            foreach ($freindRoleArr as $freindRole) {
-                                if ($freindRole == "r$role_id") {
-                                    $moduleToGiveArr[$freindModuleId][] = $role_id;
+                        if ($freinds["m$module_id"] and is_array($freinds["m$module_id"])) {
+                            foreach ($freinds["m$module_id"] as $freind_module => $freindRoleArr) {
+                                $freindModuleId = substr($freind_module, 1);
+                                foreach ($freindRoleArr as $freindRole) {
+                                    if ($freindRole == "r$role_id") {
+                                        $moduleToGiveArr[$freindModuleId][] = $role_id;
+                                    }
                                 }
                             }
                         }
