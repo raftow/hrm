@@ -401,6 +401,13 @@ class Employee extends AFWObject
         }
     }
 
+    public function myPrevilegesDescription()
+    {
+        $usr = Auser::loadByEmail($this->getVal('email'), $create_obj_if_not_found = false);
+        if (!$usr) return "no user - no previleges";
+        return $usr->showAttribute('mau');
+    }
+
     public function updateMyInfosFromExternalSources($lang = 'ar')
     {
         if ($this->isFromOurCompany()) {
