@@ -1050,31 +1050,51 @@ class Employee extends AFWObject
         $moduleToGiveArr = array();
         $jobroleList = $this->get('jobrole_mfk');
 
-        foreach ($jobroleList as $jobroleObj) {
+        $debugg = true;
+
+        $journal = [];
+
+
+        foreach ($jobroleList as $jobroleId => $jobroleObj) {
             if ($jobroleObj and (!$jobroleObj->isEmpty())) {
                 $jobAroleList = $jobroleObj->get('jobAroleList');
-                foreach ($jobAroleList as $jobAroleObj) {
+                if ($debugg) $journal[] = "jobrole $jobroleId has " . count($jobAroleList) . " roles : ";
+                $counter = 0;
+                foreach ($jobAroleList as $jobAroleId => $jobAroleObj) {
+                    $counter++;
                     if ($jobAroleObj and (!$jobAroleObj->isEmpty())) {
                         $module_id = $jobAroleObj->getVal('module_id');
                         $role_id = $jobAroleObj->getVal('arole_id');
+                        if ($debugg) $journal[] = "job-arole $jobAroleId not empty";
                         if ($module_id and $role_id) {
                             $moduleToGiveArr[$module_id][] = $role_id;
+                            if ($debugg) $journal[] = "To give ++ (module_id=$module_id / role_id=$role_id)";
+                        } else {
+                            if ($debugg) $journal[] = "Not to give (module_id=$module_id / role_id=$role_id)";
                         }
 
+
                         if ($freinds["m$module_id"] and is_array($freinds["m$module_id"])) {
+                            if ($debugg) $journal[] = "Module_id=$module_id has freinds :";
                             foreach ($freinds["m$module_id"] as $freind_module => $freindRoleArr) {
                                 $freindModuleId = substr($freind_module, 1);
+                                if ($debugg) $journal[] = "Module_id=$freindModuleId is freind opening roles :";
                                 foreach ($freindRoleArr as $freindRole) {
                                     if ($freindRole == "r$role_id") {
+                                        if ($debugg) $journal[] = "freind opened role : $freindRole";
                                         $moduleToGiveArr[$freindModuleId][] = $role_id;
                                     }
                                 }
                             }
                         }
+                    } else {
+                        if ($debugg) $journal[] = "job-arole $jobAroleId is empty";
                     }
                 }
             }
         }
+
+        if ($debugg) die("Journal of my modules And roles : " . implode("<br>\n", $journal));
         // rafik 2/1/2026 why hard coded below ??
         // $moduleToGiveArr[1274][] = 340;
 
