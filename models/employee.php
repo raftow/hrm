@@ -1157,10 +1157,20 @@ class Employee extends AFWObject
         $this->set('email', $email);
         if ($commit)
             $this->commit();
-        $moduleToGiveArr = $this->myModulesAnRoles();
 
-        $infos_arr[] = $usr->giveMeTheseModulesAnRoles($moduleToGiveArr, $this->id_sh_org);
+        $infos_arr[] = $this->updateMyModulesAnRoles($usr);
         return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
+    }
+
+    /**
+     * @param Auser $usr
+     */
+
+    public function updateMyModulesAnRoles($usr = null)
+    {
+        if (!$usr) $usr = Auser::loadByEmail($this->getVal('email'));
+        $moduleToGiveArr = $this->myModulesAnRoles();
+        return $usr->giveMeTheseModulesAnRoles($moduleToGiveArr, $this->id_sh_org);
     }
 
     public function attributeIsApplicable($attribute)
