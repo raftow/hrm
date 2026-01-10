@@ -1058,7 +1058,7 @@ class Employee extends AFWObject
         $moduleToGiveArr = array();
         $jobroleList = $this->get('jobrole_mfk');
 
-        $debugg = true;
+        $debugg = false;
 
         $journal = [];
 
