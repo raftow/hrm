@@ -408,6 +408,14 @@ class Employee extends AFWObject
         return $usr->showAttribute('mau');
     }
 
+
+    public function hasRole($module_code, $role_id)
+    {
+        $usr = Auser::loadByEmail($this->getVal('email'), $create_obj_if_not_found = false);
+        if (!$usr) return false;
+        return $usr->hasRole($module_code, $role_id);
+    }
+
     public function updateMyInfosFromExternalSources($lang = 'ar')
     {
         if ($this->isFromOurCompany()) {
