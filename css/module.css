@@ -1,98 +1,97 @@
-
 @media screen and (max-width: 575px) {
-    .calendar_bloc_g{
-               display:none;
-               visibility:hidden;
-               width: 0px !important;
-               height: 0px !important;
-            }
+    .calendar_bloc_g {
+        display: none;
+        visibility: hidden;
+        width: 0px !important;
+        height: 0px !important;
     }
-    
-    @media screen and (max-width: 970px) {
-            .title_company_user
-            {
-               display:none;
-               visibility:hidden;
-               width: 0px !important;
-               height: 0px !important;
-            }
+}
+
+@media screen and (max-width: 970px) {
+    .title_company_user {
+        display: none;
+        visibility: hidden;
+        width: 0px !important;
+        height: 0px !important;
     }
-    /*
+}
+
+/*
     @media screen and (max-width: 84.5em)
     {
         margin-right: 250px;
     }*/
-    
-    .title_company_user {
-        padding-right: 15px;
-        padding-left: 15px;
-        padding-top: 16px;
-        vertical-align: bottom;
-        font-weight: bold;
-        color: #03467c;
-        width: 160px;
-        float: right;
-    }
-    
-    .title_company_user p {
-        display: none;
-    }
-    
-    
-    .calendar_bloc_g {
-            height: 96px;
-            background-image: url(../../lib/images/calendar_bus_zz.png);
-            background-repeat: no-repeat;
-            background-size: 60%;
-            background-position: 10px 10px;
-            padding-top: 23px;
-            font-family: saharat;
-            font-size: 14px;
-            font-weight: bold;
-            width: 135px;
-            float: left;
-            margin-top: -4px;
-    }
-    
-    .calendar_year {
-            text-align: center;
-            color: #0c92cc;
-            font-family: Montserrat !important;
-            font-weight: bold;
-            font-size: 12px;
-            margin-left: -32px !important;
-            margin-top: 2px;
-    }
-    
-    .calendar_day {
-            height: 60px;
-            text-align: center;
-            color: #453a3a;
-            margin-left: -32px !important;
-            font-family: title, courrier,arial,rgt;
-            font-weight: bold;
-            font-size: 12px;
-            padding-top: 5px;
-            line-height: 13px;
-    }   
-    
-    span.dday {
-            font-size: 12px;
-            font-family: Montserrat !important;
-            color: #ff7f27;
-            padding: 0px 2px;
-    }
+
+.title_company_user {
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top: 16px;
+    vertical-align: bottom;
+    font-weight: bold;
+    color: #03467c;
+    width: 160px;
+    float: right;
+}
+
+.title_company_user p {
+    display: none;
+}
+
+
+.calendar_bloc_g {
+    height: 96px;
+    background-image: url(../../lib/images/calendar_bus_zz.png);
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: 10px 10px;
+    padding-top: 23px;
+    font-family: saharat;
+    font-size: 14px;
+    font-weight: bold;
+    width: 135px;
+    float: left;
+    margin-top: -4px;
+}
+
+.calendar_year {
+    text-align: center;
+    color: #0c92cc;
+    font-family: Montserrat !important;
+    font-weight: bold;
+    font-size: 12px;
+    margin-left: -32px !important;
+    margin-top: 2px;
+}
+
+.calendar_day {
+    height: 60px;
+    text-align: center;
+    color: #453a3a;
+    margin-left: -32px !important;
+    font-family: title, courrier, arial, rgt;
+    font-weight: bold;
+    font-size: 12px;
+    padding-top: 5px;
+    line-height: 13px;
+}
+
+span.dday {
+    font-size: 12px;
+    font-family: Montserrat !important;
+    color: #ff7f27;
+    padding: 0px 2px;
+}
 
 
 
-.home_banner{
+.home_banner {
     background-image: url(../pic/home_banner_001.jpg) !important;
     background-size: 100% !important;
     background-repeat: no-repeat !important;
     background-position-x: center;
     background-position-y: 80px;
     width: 100%;
-    min-height:1150px;
+    min-height: 1150px;
     float: right;
 }
 
@@ -113,7 +112,7 @@ li.hzm_login {
 .navbar-nav>li>a.alogin {
     background-color: #fff !important;
     color: #0383dd !important;
-}       
+}
 
 .navbar-nav>li.hzm_login>a:hover {
     color: #ffffff !important;
@@ -127,11 +126,16 @@ li.hzm_login {
     top: 45px;
     left: 40px;
     float: left;
-}.btnbtsp {
+}
+
+.btnbtsp {
     font-size: 18px;
 }
 
-button, input, select, textarea{
+button,
+input,
+select,
+textarea {
     font-size: 18px !important;
 }
 
@@ -155,7 +159,7 @@ div.modal-dialog {
 .section nav.navbar {
     margin-bottom: 0px !important;
 }
-    
+
 /***     login/home/header nice can be published for all   */
 
 /**** for all Momken Framework      *******/
@@ -170,15 +174,16 @@ div.modal-dialog {
 }
 
 
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.open>a {
+.navbar-inverse .navbar-nav>.active>a,
+.navbar-inverse .navbar-nav>.open>a {
     background-image: -webkit-linear-gradient(top, #91c73a, #177217);
     background-image: -o-linear-gradient(top, #91c73a 0, #177217 100%);
-    background-image: -webkit-gradient(linear,left top,left bottom,from(#91c73a), to(#177217));
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#91c73a), to(#177217));
     background-image: linear-gradient(180deg, #91c73a 0, #177217);
-    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#ff080808",endColorstr="#ff0f0f0f",GradientType=0);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr="#ff080808", endColorstr="#ff0f0f0f", GradientType=0);
     background-repeat: repeat-x;
-    -webkit-box-shadow: inset 0 3px 9px rgba(0,0,0,.25);
-    box-shadow: inset 0 3px 9px rgba(0,0,0,.25);
+    -webkit-box-shadow: inset 0 3px 9px rgba(0, 0, 0, .25);
+    box-shadow: inset 0 3px 9px rgba(0, 0, 0, .25);
 }
 
 
@@ -191,6 +196,7 @@ div.modal-dialog {
 .hzmSteps {
     min-height: 128px;
 }
+
 .editcard {
     width: 95%;
     min-height: 650px;
@@ -198,12 +204,12 @@ div.modal-dialog {
     margin: auto;
 }
 
-@media (max-width:700px)
-{
-.editcard {
-    width: 100%;
-}    
+@media (max-width:700px) {
+    .editcard {
+        width: 100%;
+    }
 }
+
 .panel-heading {
     color: #1169d3;
     background-color: transparent;
@@ -252,8 +258,8 @@ span.object_id {
 
 .hzm_data {
     font-size: 18px;
-}    
-    
+}
+
 
 /***    steps nice for bus     ***/
 
@@ -324,6 +330,7 @@ span.object_id {
     top: -12px;
     bottom: -12px;
 }
+
 /*
 .form-group {
     margin-bottom: 15px;
@@ -370,7 +377,7 @@ ul.hzm_front_menu_bar.nav.navbar-nav {
     border-bottom: 1px #509727 solid;
     height: 40px;
 }
-    
+
 .navbar-nav>li.navbar-header>a {
     background-color: rgb(23, 114, 23) !important;
     color: #ffe287 !important;
@@ -383,7 +390,8 @@ ul.hzm_front_menu_bar.nav.navbar-nav {
     border-color: #efcb8b !important;
 }
 
-.navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
+.navbar-inverse .navbar-nav>li>a:focus,
+.navbar-inverse .navbar-nav>li>a:hover {
     color: #ffffff !important;
     background-color: #087255 !important;
 }
@@ -452,14 +460,14 @@ other style
 */
 
 .row.booking_filter {
-        background: #515354a6;
-        /* border: #163460 2px solid; */
-        padding: 10px;
-        box-shadow: 4px 4px #81888a8c;
+    background: #515354a6;
+    /* border: #163460 2px solid; */
+    padding: 10px;
+    box-shadow: 4px 4px #81888a8c;
 }
 
 .home_banner.home_banner2 {
-        background-image: url(../pic/home_banner_002.jpg);
+    background-image: url(../pic/home_banner_002.jpg);
 }
 
 .home_banner.home_banner3 {
@@ -473,7 +481,7 @@ other style
 .home_banner.home_banner5 {
     background-image: url(../pic/home_banner_005.jpg);
 }
-    
+
 .attrib-dragDropDiv {
     min-height: 970px !important;
 }
@@ -484,186 +492,190 @@ other style
 
 
 .section nav.navbar {
-        margin: 0px !important;
-        border-top: 1px #91c73a75 solid !important;
-        max-height: 44px !important;
-        border-bottom: 1px #f17d3075 solid !important;
-        padding-top: 3px !important;
-        background-color: #fff;
-    }
-    
-    a.hzm3-button.hzm3-light-grey.hzm3-block {
-        background-color: #fafafa !important;
-    }
-    
-    .navbar-inverse .navbar-nav>li>a:focus, .navbar-inverse .navbar-nav>li>a:hover {
-        color: #ffffff !important;
-        background-color: #087255 !important;
-    }
-    
-    
-    .hzm-method.hzm-method-icon-container {
-        width: 50px;
-        height: 50px;
-        padding: 3px;
-        border-radius: 50%;
-        border-width: 3px;
-    }
-    
-    .hzm-icon-bus:before {
-        content: "\f207";
-        font-size: 24px;
-    }
-    
-    .hzm-icon-branch:before {
-            content: "\f1ad";
-            font-size: 24px;
-    }
-    
-    .hzm-icon-branchs:before {
-            content: "\f1b3";
-            font-size: 24px;
-    } 
-    
-    .hzm-icon-brand:before {
-            content: "\f11e";
-            font-size: 24px;
-    }
-    
-    .hzm-icon-brands:before {
-            content: "\f11d";
-            font-size: 24px;
-    }
-    
-    .hzm-icon-road:before {
-            content: "\f018";
-            font-size: 24px;
-    }
-    
-    .hzm-icon-roads:before {
-            content: "\f018";
-            font-size: 24px;
-    }
-    
-    .hzm-icon-resto:before {
-            content: "\f0f5";
-            font-size: 24px;
-    }
-    
-    .hzm-icon-hotel:before {
-            content: "\f236";
-            font-size: 24px;
-    }
-    
-    .hzm-icon-hotels:before {
-            content: "\f236";
-            font-size: 24px;
-    }
-    
-      
-    .hzm-icon-station:before {
-            content: "\f0ad";
-            font-size: 24px;
-    }
-    
-    .hzm-icon-stations:before {
-            content: "\f0ad";
-            font-size: 24px;
-    }
-    
-    
-    .hzm-icon-travel:before {
-            content: "\f0f2";
-            font-size: 24px;
-    }
-        
-    .hzm-icon-status:before {
-            content: "\f1da";
-            font-size: 24px;
-    }
-    
-    
-    .hzm-icon-credit-card:before {
-        content: "\f09d";
-        font-size: 24px;
-    }
-    
-    .hzm-icon-handshake:before {
-        content: "\f00c";
-        font-size: 24px;
-    }
-    
-    div.hzm-menu>i.hzm-container-center.hzm-vertical-align-middle.hzm-icon-bus::before {
-        font-size: 72px;
-    }
-    
-    button.bf.hzm-specialmethod {
-        width: 85%;
-        border: 2px #2a61b985 solid;
-        background-color: #fcfaf5;
-        color: #164ea9;
-        font-size: 18px;
-    }
-    
-    .form_left {
-        border: none !important;
-    }
-    
-    .section nav.navbar {
-        margin: 0px !important;
-        border-top: 1px #599f2a solid !important;
-        max-height: 44px !important;
-        border-bottom: 1px #599f2a solid !important;
-        padding-top: 3px !important;
-        background-color: #fff;
-    }
+    margin: 0px !important;
+    border-top: 1px #91c73a75 solid !important;
+    max-height: 44px !important;
+    border-bottom: 1px #f17d3075 solid !important;
+    padding-top: 3px !important;
+    background-color: #fff;
+}
 
-    .hzm-method.hzm-method-icon-container.only-border.border-primary {
-        border-color: #ff7f27;
-    }
-    
-    .hzm-method.hzm-method-icon-container i {
-        font-size: 34px;
-    }
-    
-    .hzm-method.hzm-method-icon-container.only-border.border-primary i {
-        color: #ff7f27;
-    }
-    
-    .hzm_module {
-        background-color: #fafafa;
-        margin: 10px;
-        border: 2px #e5980b30 solid;
-        padding: 25px !important;
-    }
-    
-    .bf {
-        background-color: #fafafa;
-        margin: 10px;
-        border: 2px #e5980b30 solid;
-        padding: 25px !important;
-    }
-    
-    
-    div.hzm_module>a>div>.hzm-custom.hzm-custom-icon-container.only-border.border-primary {
-        border-color: #d2ba8f70;
-        border-width: 1px;
-    }
-    
-    div.hzm_module>a>div>.hzm-custom.hzm-custom-icon-container.only-border.border-primary i {
-        color: #b67500;
-    }
-    
-    
-    .hzm-custom.hzm-custom-icon-container.only-border.border-primary {
-        border-color: #d2ba8f70;
-        border-width: 1px;
-    }
-    
-    .hzm-custom.hzm-custom-icon-container.only-border.border-primary i {
-        color: #b67500;
-    }
+a.hzm3-button.hzm3-light-grey.hzm3-block {
+    background-color: #fafafa !important;
+}
 
+.navbar-inverse .navbar-nav>li>a:focus,
+.navbar-inverse .navbar-nav>li>a:hover {
+    color: #ffffff !important;
+    background-color: #087255 !important;
+}
+
+
+.hzm-method.hzm-method-icon-container {
+    width: 50px;
+    height: 50px;
+    padding: 3px;
+    border-radius: 50%;
+    border-width: 3px;
+}
+
+.hzm-icon-bus:before {
+    content: "\f207";
+    font-size: 24px;
+}
+
+.hzm-icon-branch:before {
+    content: "\f1ad";
+    font-size: 24px;
+}
+
+.hzm-icon-branchs:before {
+    content: "\f1b3";
+    font-size: 24px;
+}
+
+.hzm-icon-brand:before {
+    content: "\f11e";
+    font-size: 24px;
+}
+
+.hzm-icon-brands:before {
+    content: "\f11d";
+    font-size: 24px;
+}
+
+.hzm-icon-road:before {
+    content: "\f018";
+    font-size: 24px;
+}
+
+.hzm-icon-roads:before {
+    content: "\f018";
+    font-size: 24px;
+}
+
+.hzm-icon-resto:before {
+    content: "\f0f5";
+    font-size: 24px;
+}
+
+.hzm-icon-hotel:before {
+    content: "\f236";
+    font-size: 24px;
+}
+
+.hzm-icon-hotels:before {
+    content: "\f236";
+    font-size: 24px;
+}
+
+
+.hzm-icon-station:before {
+    content: "\f0ad";
+    font-size: 24px;
+}
+
+.hzm-icon-stations:before {
+    content: "\f0ad";
+    font-size: 24px;
+}
+
+
+.hzm-icon-travel:before {
+    content: "\f0f2";
+    font-size: 24px;
+}
+
+.hzm-icon-status:before {
+    content: "\f1da";
+    font-size: 24px;
+}
+
+
+.hzm-icon-credit-card:before {
+    content: "\f09d";
+    font-size: 24px;
+}
+
+.hzm-icon-handshake:before {
+    content: "\f00c";
+    font-size: 24px;
+}
+
+div.hzm-menu>i.hzm-container-center.hzm-vertical-align-middle.hzm-icon-bus::before {
+    font-size: 72px;
+}
+
+button.bf.hzm-specialmethod {
+    width: 85%;
+    border: 2px #2a61b985 solid;
+    background-color: #fcfaf5;
+    color: #164ea9;
+    font-size: 18px;
+}
+
+.form_left {
+    border: none !important;
+}
+
+.section nav.navbar {
+    margin: 0px !important;
+    border-top: 1px #599f2a solid !important;
+    max-height: 44px !important;
+    border-bottom: 1px #599f2a solid !important;
+    padding-top: 3px !important;
+    background-color: #fff;
+}
+
+.hzm-method.hzm-method-icon-container.only-border.border-primary {
+    border-color: #ff7f27;
+}
+
+.hzm-method.hzm-method-icon-container i {
+    font-size: 34px;
+}
+
+.hzm-method.hzm-method-icon-container.only-border.border-primary i {
+    color: #ff7f27;
+}
+
+.hzm_module {
+    background-color: #fafafa;
+    margin: 10px;
+    border: 2px #e5980b30 solid;
+    padding: 25px !important;
+}
+
+.bf {
+    background-color: #fafafa;
+    margin: 10px;
+    border: 2px #e5980b30 solid;
+    padding: 25px !important;
+}
+
+
+div.hzm_module>a>div>.hzm-custom.hzm-custom-icon-container.only-border.border-primary {
+    border-color: #d2ba8f70;
+    border-width: 1px;
+}
+
+div.hzm_module>a>div>.hzm-custom.hzm-custom-icon-container.only-border.border-primary i {
+    color: #b67500;
+}
+
+
+.hzm-custom.hzm-custom-icon-container.only-border.border-primary {
+    border-color: #d2ba8f70;
+    border-width: 1px;
+}
+
+.hzm-custom.hzm-custom-icon-container.only-border.border-primary i {
+    color: #b67500;
+}
+
+/*
+    rafik : Not good solution , it make form inputs organization bad 
     div#fg-address, div#fg-city_id, div#fg-mobile {
         min-height: 140px;
     }
+    */
