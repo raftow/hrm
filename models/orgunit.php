@@ -9,7 +9,7 @@ $file_dir_name = dirname(__FILE__);
 
 // old include of afw.php
 
-class Orgunit extends AFWObject
+class Orgunit extends AfwMomkenObject
 {
     public function __construct()
     {
@@ -109,7 +109,7 @@ class Orgunit extends AFWObject
         return  "active";
     }
 
-    
+
 
     public static function loadById($id)
     {
@@ -706,8 +706,8 @@ class Orgunit extends AFWObject
                 }
                 // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
                 if (!$simul) $this->execQuery("delete from ${server_db_prefix}ums.module where id_main_sh = '$id' and avail='N'");
-                
-                
+
+
 
                 // hrm.employee-المؤسسة/الشركة	id_sh_org  أنا تفاصيل لها-OneToMany
 
@@ -780,7 +780,7 @@ class Orgunit extends AFWObject
                 $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK on me 
                 // ums.module-الجهة المستفيدة	id_main_sh  أنا تفاصيل لها-OneToMany
                 if (!$simul) $this->execQuery("update ${server_db_prefix}ums.module set id_main_sh='$id_replace' where id_main_sh='$id' ");
-                
+
                 // hrm.employee-المؤسسة/الشركة	id_sh_org  أنا تفاصيل لها-OneToMany
                 if (!$simul) $this->execQuery("update ${server_db_prefix}hrm.employee set id_sh_org='$id_replace' where id_sh_org='$id' ");
                 // hrm.employee-الإدارة/القسم/الفرع	id_sh_div  أنا تفاصيل لها-OneToMany
@@ -926,7 +926,7 @@ class Orgunit extends AFWObject
         return true;
     }
 
-    public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent=false)    // 
+    public function afterInsert($id, $fields_updated, $disableAfterCommitDBEvent = false)    // 
     {
         $file_dir_name = dirname(__FILE__);
         $company = AfwSession::currentCompany();
