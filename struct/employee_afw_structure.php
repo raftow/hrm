@@ -9,7 +9,7 @@ class HrmEmployeeAfwStructure
 			$obj->ORDER_BY_FIELDS = 'firstname, f_firstname, lastname';
 			$obj->FORMULA_DISPLAY_FIELD = "concat(IF(ISNULL(firstname), '', firstname) , ' ' , IF(ISNULL(f_firstname), '', f_firstname) , ' ' , IF(ISNULL(lastname), '', lastname))";
 
-			$obj->UNIQUE_KEY = array('id_sh_org', 'idn_type_id', 'idn');
+			$obj->UNIQUE_KEY = array('id_sh_org', 'email');
 			$obj->editByStep = true;
 			$obj->editNbSteps = 4;
 			$obj->showQeditErrors = true;
