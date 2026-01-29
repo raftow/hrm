@@ -1190,6 +1190,11 @@ class Employee extends AFWObject
         return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
     }
 
+
+    public function getMyAuser() {
+        return Auser::loadByEmail($this->getVal('email'));
+    }
+
     /**
      * @param Auser $usr
      */
