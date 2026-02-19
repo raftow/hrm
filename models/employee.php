@@ -1201,9 +1201,17 @@ class Employee extends AFWObject
 
     public function updateMyModulesAnRoles($usr = null)
     {
+        /**
+         * @var Auser $usr
+         */
         if (!$usr) $usr = Auser::loadByEmail($this->getVal('email'));
         $moduleToGiveArr = $this->myModulesAnRoles();
-        return $usr->giveMeTheseModulesAnRoles($moduleToGiveArr, $this->id_sh_org);
+        $return = $usr->giveMeTheseModulesAnRoles($moduleToGiveArr, $this->id_sh_org);
+        list($err, $info, $war) = $usr->generateCacheFile('en');
+        if($err) $return .= "Error : $err";
+        if($info) $return .= "Information : $info";
+        if($war) $return .= "Warning : $war";
+        return $return;
     }
 
     public function attributeIsApplicable($attribute)
