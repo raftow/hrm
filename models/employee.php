@@ -424,7 +424,7 @@ class Employee extends AFWObject
                 $user_name = strtolower($user_name);
             }
 
-            if (($this->getId()) and $this->getVal('username') or $this->getVal('emp_num')) {
+            if (($this->id) and ($this->getVal('username') or $this->getVal('emp_num'))) {
                 $company = AfwSession::currentCompany();
                 $file_dir_name = dirname(__FILE__);
                 require_once("$file_dir_name/../../client-$company/external_hrm_employee.php");
@@ -1208,9 +1208,9 @@ class Employee extends AFWObject
         $moduleToGiveArr = $this->myModulesAnRoles();
         $return = $usr->giveMeTheseModulesAnRoles($moduleToGiveArr, $this->id_sh_org);
         list($err, $info, $war) = $usr->generateCacheFile('en');
-        if($err) $return .= "Error : $err";
-        if($info) $return .= "Information : $info";
-        if($war) $return .= "Warning : $war";
+        if($err) $return .= "<br>\nError : $err";
+        if($info) $return .= "<br>\nInformation : $info";
+        if($war) $return .= "<br>\nWarning : $war";
         return $return;
     }
 
