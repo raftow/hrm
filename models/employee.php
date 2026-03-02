@@ -451,10 +451,10 @@ class Employee extends AFWObject
 
                 return array($error, $info, '');
             } else {
-                return array('', '', "This employee has no user name neither employee number, can't execute the retrieve of information from HR");
+                return array('', '', $this->tm("This employee has no user name neither employee number, can't execute the retrieve of information from HR", $lang));
             }
         } else {
-            return array('', '', 'This employee is not from the main company');
+            return array('', '', $this->tm('This employee is not from the main company', $lang));
         }
     }
 
