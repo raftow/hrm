@@ -227,49 +227,87 @@ class Orgunit extends AfwMomkenObject
         $id_domain,
         $create_obj_if_not_found = false,
         $update_obj_if_found = true,
-        $hrm_crm = "hrm"
+        $hrm_crm = "hrm",
+        $active = "Y",
+        $id_sh_parent=null,
     ) {
         $obj = new Orgunit();
         $obj->select("${hrm_crm}_code", $hrm_crm_code);
 
+        if(!$id_sh_parent) $id_sh_parent = $id_sh_org;
+
+        $found_and_loaded = false;
         if ($obj->load()) {
-            if ($update_obj_if_found) {
-                if ($id_sh_org and (!$obj->het("id_sh_org"))) $obj->set("id_sh_org", $id_sh_org);
-                if ($id_sh_type) $obj->set("id_sh_type", $id_sh_type);
-                $obj->set("titre_short", $titre_short);
-                $obj->set("titre", $titre);
-                $obj->set("titre_short_en", $titre_short_en);
-                $obj->set("titre_en", $titre_en);
-                if ($id_domain) $obj->set("id_domain", $id_domain);
-                $obj->activate();
-            }
-            return $obj;
+            $found_and_loaded = "عن طريق الرمز لدى الموراد البشرية ($hrm_crm_code)";
         }
+        else {
+            unset($obj);
+            $obj = new Orgunit();
 
-        unset($obj);
-        $obj = new Orgunit();
+            $arrSelects = [
+                "titre_short" => $titre_short,
+                "titre" => $titre,
+                // "titre_short_en" => $titre_short_en,
+                // "titre_en" => $titre_en,
+            ];
 
-        $arrSelects = [
-            "titre_short" => $titre_short,
-            "titre" => $titre,
-            // "titre_short_en" => $titre_short_en,
-            // "titre_en" => $titre_en,
-        ];
+            $obj->selectOneOfListOfCritirea($arrSelects);
 
-        $obj->selectOneOfListOfCritirea($arrSelects);
-
-        if ($obj->load()) {
-            if ($update_obj_if_found) {
-                if ($id_sh_org and (!$obj->het("id_sh_org"))) $obj->set("id_sh_org", $id_sh_org);
-                if ($id_sh_type) $obj->set("id_sh_type", $id_sh_type);
-                $obj->set("titre", $titre);
-                if ($id_domain) $obj->set("id_domain", $id_domain);
-                $obj->set("${hrm_crm}_code", $hrm_crm_code);
-
-                $obj->activate();
+            if ($obj->load()) {
+                $found_and_loaded = "عن طريق الاسم بالعربية";
             }
-            return $obj;
-        } elseif ($create_obj_if_not_found) {
+        }
+         
+        
+        if ($found_and_loaded and $update_obj_if_found) 
+        { 
+            $obj->parent_changed = $found_and_loaded;
+
+            $old_id_sh_org = $obj->getVal("id_sh_org");
+            $old_sh_org = $obj->decode("id_sh_org");
+            if ($id_sh_org and ($id_sh_org != $old_id_sh_org)) {
+                $obj->set("id_sh_org", $id_sh_org);
+                $sh_org = $obj->decode("id_sh_org");
+                if($old_id_sh_org) {
+                    $obj->parent_changed .= " كانت تتبع ".trim($old_sh_org)." فصارت تتبع ".trim($sh_org);
+                }
+                
+            }
+
+            $old_id_sh_parent = $obj->getVal("id_sh_parent");
+            $old_sh_parent = $obj->decode("id_sh_parent");
+            if ($id_sh_parent and ($id_sh_parent != $old_id_sh_parent)) {
+                $obj->set("id_sh_parent", $id_sh_parent);
+                $sh_parent = $obj->decode("id_sh_parent");
+                if($old_id_sh_parent) {
+                    $obj->parent_changed .= " كانت تحت ".trim($old_sh_parent)." فصارت تحت ".trim($sh_parent);
+                }
+                
+            }
+
+            if ($id_sh_type) $obj->set("id_sh_type", $id_sh_type);
+            $old_titre = $obj->getVal("titre");
+            $obj->set("titre_short", $titre_short);
+            $obj->set("titre", $titre);
+            $obj->set("titre_short_en", $titre_short_en);
+            $obj->set("titre_en", $titre_en);
+            if ($id_domain) $obj->set("id_domain", $id_domain);
+            $obj->set("${hrm_crm}_code", $hrm_crm_code);
+
+            if($active == "Y") $obj->activate();
+            else $obj->logicDelete();
+
+            
+            if(trim($old_titre) != trim($titre)) 
+            {
+                if(!trim($old_titre)) $obj->is_new = trim($titre);
+                else $obj->title_changed = "من ".trim($old_titre)." إلى ".trim($titre);
+            }
+            return $obj;        
+
+
+        }
+        elseif ($create_obj_if_not_found) {
             $obj->set("id_sh_org", $id_sh_org);
             $obj->set("id_sh_type", $id_sh_type);
             $obj->set("titre_short", $titre_short);
@@ -278,6 +316,7 @@ class Orgunit extends AfwMomkenObject
             $obj->set("titre_en", $titre_en);
             $obj->set("id_domain", $id_domain);
             $obj->set("${hrm_crm}_code", $hrm_crm_code);
+            $obj->set("active", $active);
 
             $obj->insert();
             $obj->is_new = true;
