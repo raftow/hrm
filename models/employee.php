@@ -126,6 +126,19 @@ class Employee extends AFWObject
         return array($employee, 'HR External data : ' . var_export($resEmployee, true));
     }
 
+    public function getManagerEmail()
+    {
+        $orgunitObj = $this->hetOrgunit();
+        if ($orgunitObj) {
+            $managerObj = $orgunitObj->getManager();
+            if ($managerObj) {
+                return $managerObj->getVal('email');
+            }
+        }
+
+        return null;
+    }
+
     private function suggestDivisionId()
     {
         $depObj = $this->hetDepartment();

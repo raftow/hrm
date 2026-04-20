@@ -230,6 +230,7 @@ class Orgunit extends AfwMomkenObject
         $hrm_crm = "hrm",
         $active = "Y",
         $id_sh_parent=null,
+        $id_responsible=null
     ) {
         $obj = new Orgunit();
         $obj->select("${hrm_crm}_code", $hrm_crm_code);
@@ -293,6 +294,7 @@ class Orgunit extends AfwMomkenObject
             $obj->set("titre_en", $titre_en);
             if ($id_domain) $obj->set("id_domain", $id_domain);
             $obj->set("${hrm_crm}_code", $hrm_crm_code);
+            if ($id_responsible) $obj->set("id_responsible", $id_responsible);
 
             if($active == "Y") $obj->activate();
             else $obj->logicDelete();
@@ -1021,5 +1023,9 @@ class Orgunit extends AfwMomkenObject
         if ($attribute == "parent") return "id_sh_parent";
         if ($attribute == "resp") return "id_responsible";
         return $attribute;
+    }
+
+    public function getManager() {
+        return $this->het("id_responsible");        
     }
 }
