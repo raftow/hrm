@@ -228,7 +228,7 @@ class Orgunit extends AfwMomkenObject
         $create_obj_if_not_found = false,
         $update_obj_if_found = true,
         $hrm_crm = "hrm",
-        $active = "Y",
+        $uactive = "Y",
         $id_sh_parent=null,
         $id_responsible=null
     ) {
@@ -296,11 +296,13 @@ class Orgunit extends AfwMomkenObject
             $obj->set("${hrm_crm}_code", $hrm_crm_code);
             if ($id_responsible) $obj->set("id_responsible", $id_responsible);
 
-            if($active == "Y") $obj->activate();
-            else $obj->logicDelete();
+            $obj->set("active", $uactive);
+            $obj->update();
 
-            
-            if(trim($old_titre) != trim($titre)) 
+            if($uactive=="N") {
+                $obj->action_done = "تم إلغاء تفعيل الوحدة";
+            }
+            elseif(trim($old_titre) != trim($titre)) 
             {
                 if(!trim($old_titre)) $obj->is_new = trim($titre);
                 else $obj->title_changed = "من ".trim($old_titre)." إلى ".trim($titre);
@@ -318,9 +320,9 @@ class Orgunit extends AfwMomkenObject
             $obj->set("titre_en", $titre_en);
             $obj->set("id_domain", $id_domain);
             $obj->set("${hrm_crm}_code", $hrm_crm_code);
-            $obj->set("active", $active);
+            $obj->set("active", $uactive);
 
-            $obj->insert();
+            $obj->insertNew();
             $obj->is_new = true;
             return $obj;
         } else return null;

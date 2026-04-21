@@ -20,6 +20,8 @@
 
 // INSERT INTO `employee` (`id`, `created_by`, `created_at`, `updated_by`, `updated_at`, `validated_by`, `validated_at`, `active`, `version`, `update_groups_mfk`, `delete_groups_mfk`, `display_groups_mfk`, `sci_id`, `auser_id`, `gender_id`, `firstname`, `f_firstname`, `g_f_firstname`, `lastname`, `firstname_en`, `f_firstname_en`, `g_f_firstname_en`, `lastname_en`, `birth_date`, `country_id`, `address`, `city_id`, `id_sh_org`, `id_sh_dep`, `id_sh_div`, `domain_id`, `username`, `emp_num`, `mobile`, `phone`, `email`, `desk`, `job`, `jobrole_mfk`, `last_empl_date`, `em_name`, `em_relship_id`, `em_mobile`, `id_sh_div2`, `id_sh_div3`, `jobrole_id`, `idn_type_id`, `idn`) VALUES ('2', '1', '2024-12-26 07:54:05.000000', '1', '2024-12-26 07:54:05.000000', NULL, NULL, 'Y', NULL, NULL, NULL, NULL, NULL, '2', '1', 'المهمة', NULL, NULL, 'الآلية', 'Scheduled', NULL, NULL, 'Task', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
+// Rafik 21/4/2026 : cleaning up employees that are not in auser table and not having username and not having emp_num (means they are not from external HR system) :
+// delete from tvtc_hrm.employee where id != 1 and auser_id not in (select id from tvtc_ums.auser);
 // ------------------------------------------------------------------------------------
 
 $file_dir_name = dirname(__FILE__);
@@ -429,7 +431,7 @@ class Employee extends AFWObject
         return $usr->hasRole($module_code, $role_id);
     }
 
-    public function updateMyInfosFromExternalSources($lang = 'ar')
+    public function updateMyInfosFromExternalSources($lang = 'ar', $hideNotFoundEmployeesByExtrenalApi=true)
     {
         if ($this->isFromOurCompany()) {
             $user_name = $this->getVal('username');
@@ -454,7 +456,7 @@ class Employee extends AFWObject
                     $info .= $info2 . ' ' . $nbFields . ' field(s) updated';
                     if ($error2)
                         $error .= $error2;
-                } elseif (!$ok) {
+                } elseif (!$ok and $hideNotFoundEmployeesByExtrenalApi) {
                     $this->set('active', 'N');
                     $this->commit();
                     $info = '';
@@ -1122,7 +1124,7 @@ class Employee extends AFWObject
         return $moduleToGiveArr;
     }
 
-    public function updateMyUserInformation($lang = 'ar', $from_ldap = '', $commit = true, $force_reset_pwd_for_user = false)
+    public function updateMyUserInformation($lang = 'ar', $from_ldap = '', $commit = true, $force_reset_pwd_for_user = false, $update_obj_if_found=true)
     {
         global $objme, $ldap_use;
 
@@ -1165,31 +1167,36 @@ class Employee extends AFWObject
         if ((!$usr) or (!is_object($usr)) or ($usr->isEmpty())) {
             throw new AfwRuntimeException('updateMyUserInformation need user object : ' . var_export($usr, true));
         }
-        if ($this->getVal('firstname') and $this->getVal('lastname')) {
-            $usr->set('firstname', $this->getVal('firstname'));
-            $usr->set('f_firstname', $this->getVal('f_firstname'));
-            $usr->set('lastname', $this->getVal('lastname'));
-        }
-        $usr->set('mobile', $this->getVal('mobile'));
-        // rafik 18/01/1442
-        // this not correct modifying the unique index here is source of sql unique index constraint broken error
-        // and not needed
-        // $usr->set("email",$this->getVal("email"));
-        if ($this->getVal('idn_type_id') and $this->getVal('idn')) {
-            $usr->set('idn_type_id', $this->getVal('idn_type_id'));
-            $usr->set('idn', $this->getVal('idn'));
-        }
-
-        if ($this->getVal('address'))
-            $usr->set('address', $this->getVal('address'));
-        if ($this->getVal('city_id'))
-            $usr->set('city_id', $this->getVal('city_id'));
-        if ($this->getVal('mobile'))
+        if($usr->is_new or $update_obj_if_found)
+        {
+            if ($this->getVal('firstname') and $this->getVal('lastname')) {
+                $usr->set('firstname', $this->getVal('firstname'));
+                $usr->set('f_firstname', $this->getVal('f_firstname'));
+                $usr->set('lastname', $this->getVal('lastname'));
+            }
             $usr->set('mobile', $this->getVal('mobile'));
+            // rafik 18/01/1442
+            // this not correct modifying the unique index here is source of sql unique index constraint broken error
+            // and not needed
+            // $usr->set("email",$this->getVal("email"));
+            if ($this->getVal('idn_type_id') and $this->getVal('idn')) {
+                $usr->set('idn_type_id', $this->getVal('idn_type_id'));
+                $usr->set('idn', $this->getVal('idn'));
+            }
 
-        $usr->set('username', $this->getVal('username'));
+            if ($this->getVal('address'))
+                $usr->set('address', $this->getVal('address'));
+            if ($this->getVal('city_id'))
+                $usr->set('city_id', $this->getVal('city_id'));
+            if ($this->getVal('mobile'))
+                $usr->set('mobile', $this->getVal('mobile'));
 
-        $usr->commit();
+            $usr->set('username', $this->getVal('username'));
+
+            $usr->commit();
+        }
+
+        
         if ($usr->is_new or $force_reset_pwd_for_user)
             list($errors_arr[], $infos_arr[]) = $usr->initUser($from_ldap);
 
