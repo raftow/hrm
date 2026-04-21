@@ -238,8 +238,10 @@ class Orgunit extends AfwMomkenObject
         if(!$id_sh_parent) $id_sh_parent = $id_sh_org;
 
         $found_and_loaded = false;
+        $found_by_code = false;
         if ($obj->load()) {
             $found_and_loaded = "عن طريق الرمز لدى الموراد البشرية ($hrm_crm_code)";
+            $found_by_code = true;
         }
         else {
             unset($obj);
@@ -261,52 +263,75 @@ class Orgunit extends AfwMomkenObject
          
         
         if ($found_and_loaded and $update_obj_if_found) 
-        { 
-            $obj->parent_changed = $found_and_loaded;
+        {
+            if($found_by_code) { 
+                if(($uactive=="Y"))
+                {
+                    $obj->parent_changed = $found_and_loaded;
 
-            $old_id_sh_org = $obj->getVal("id_sh_org");
-            $old_sh_org = $obj->decode("id_sh_org");
-            if ($id_sh_org and ($id_sh_org != $old_id_sh_org)) {
-                $obj->set("id_sh_org", $id_sh_org);
-                $sh_org = $obj->decode("id_sh_org");
-                if($old_id_sh_org) {
-                    $obj->parent_changed .= " كانت تتبع ".trim($old_sh_org)." فصارت تتبع ".trim($sh_org);
+                    $old_id_sh_org = $obj->getVal("id_sh_org");
+                    $old_sh_org = $obj->decode("id_sh_org");
+                    if ($id_sh_org and ($id_sh_org != $old_id_sh_org)) {
+                        $obj->set("id_sh_org", $id_sh_org);
+                        $sh_org = $obj->decode("id_sh_org");
+                        if($old_id_sh_org) {
+                            $obj->parent_changed .= " كانت تتبع ".trim($old_sh_org)." فصارت تتبع ".trim($sh_org);
+                        }
+                        
+                    }
+
+                    $old_id_sh_parent = $obj->getVal("id_sh_parent");
+                    $old_sh_parent = $obj->decode("id_sh_parent");
+                    if ($id_sh_parent and ($id_sh_parent != $old_id_sh_parent)) {
+                        $obj->set("id_sh_parent", $id_sh_parent);
+                        $sh_parent = $obj->decode("id_sh_parent");
+                        if($old_id_sh_parent) {
+                            $obj->parent_changed .= " كانت تحت ".trim($old_sh_parent)." فصارت تحت ".trim($sh_parent);
+                        }
+                        
+                    }
+
+                    if ($id_sh_type) $obj->set("id_sh_type", $id_sh_type);
+                    $old_titre = $obj->getVal("titre");
+                    $obj->set("titre_short", $titre_short);
+                    $obj->set("titre", $titre);
+                    $obj->set("titre_short_en", $titre_short_en);
+                    $obj->set("titre_en", $titre_en);
+                    if ($id_domain) $obj->set("id_domain", $id_domain);
+
+                    if(trim($old_titre) != trim($titre)) 
+                    {
+                        if(!trim($old_titre)) $obj->is_new = trim($titre);
+                        else $obj->title_changed = "من ".trim($old_titre)." إلى ".trim($titre);
+                    }
+                    
+                    if ($id_responsible) $obj->set("id_responsible", $id_responsible);
                 }
-                
+
+                $obj->set("active", $uactive);
+
+                if($uactive=="N") {
+                    $obj->action_done = "تم إلغاء تفعيل الوحدة";                    
+                }
+                else {
+                    $obj->action_done = "تم تحديث بيانات الوحدة";
+                }
+                list($query_sql_00, $fields_updated00, $report00) = AfwSqlHelper::getSQLUpdate($obj, 1, 0, $obj->id);
+                $obj->action_done .= " : SQL = ".$query_sql_00;
+                    
             }
 
-            $old_id_sh_parent = $obj->getVal("id_sh_parent");
-            $old_sh_parent = $obj->decode("id_sh_parent");
-            if ($id_sh_parent and ($id_sh_parent != $old_id_sh_parent)) {
-                $obj->set("id_sh_parent", $id_sh_parent);
-                $sh_parent = $obj->decode("id_sh_parent");
-                if($old_id_sh_parent) {
-                    $obj->parent_changed .= " كانت تحت ".trim($old_sh_parent)." فصارت تحت ".trim($sh_parent);
-                }
-                
-            }
-
-            if ($id_sh_type) $obj->set("id_sh_type", $id_sh_type);
-            $old_titre = $obj->getVal("titre");
-            $obj->set("titre_short", $titre_short);
-            $obj->set("titre", $titre);
-            $obj->set("titre_short_en", $titre_short_en);
-            $obj->set("titre_en", $titre_en);
-            if ($id_domain) $obj->set("id_domain", $id_domain);
             $obj->set("${hrm_crm}_code", $hrm_crm_code);
-            if ($id_responsible) $obj->set("id_responsible", $id_responsible);
-
-            $obj->set("active", $uactive);
-            $obj->update();
-
-            if($uactive=="N") {
-                $obj->action_done = "تم إلغاء تفعيل الوحدة";
+            $nb_rows_affected = $obj->update();
+            if(!$nb_rows_affected) {
+                $obj->action_done = " لم يتم تحديث بيانات الوحدة : ".$obj->getTechnicalNotes();
             }
-            elseif(trim($old_titre) != trim($titre)) 
-            {
-                if(!trim($old_titre)) $obj->is_new = trim($titre);
-                else $obj->title_changed = "من ".trim($old_titre)." إلى ".trim($titre);
+            else {
+                $obj->action_done .= "<br>\nrows affected : $nb_rows_affected";
             }
+
+            
+            
             return $obj;        
 
 
@@ -955,16 +980,16 @@ class Orgunit extends AfwMomkenObject
 
     public function beforeMaj($id, $fields_updated)    // 
     {
+        /*
         if (!$this->hrm_code) {
             $this->hrm_code = substr(AfwStringHelper::hzmArabicToLatinRepresentation($this->title), 0, 5) . "-" . round(rand(10001, 99999));
         }
 
+        
         $parent = $this->hetParent();
         if ($parent) {
             //if(!$this->getVal("id_domain")) $this->set("id_domain", $parent->getVal("id_domain"));
-        }
-
-        //$this->afterInsert($id, $fields_updated);
+        }*/
 
         return true;
     }
