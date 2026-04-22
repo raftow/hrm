@@ -147,7 +147,7 @@ class Orgunit extends AfwMomkenObject
         } else return null;
     }
 
-    public static function loadByHRMCode($hrm_code, $create_obj_if_not_found = false)
+    public static function loadByHRMCode($hrm_code, $create_obj_if_not_found = false, $activate_obj_if_found = false)
     {
         $obj = new Orgunit();
         if (!$hrm_code) throw new AfwRuntimeException("loadByHRMCode : hrm_code is mandatory field");
@@ -156,7 +156,7 @@ class Orgunit extends AfwMomkenObject
         $obj->select("hrm_code", $hrm_code);
 
         if ($obj->load()) {
-            if ($create_obj_if_not_found) $obj->activate();
+            if ($activate_obj_if_found) $obj->activate();
             return $obj;
         } elseif ($create_obj_if_not_found) {
             $obj->set("hrm_code", $hrm_code);
@@ -233,7 +233,7 @@ class Orgunit extends AfwMomkenObject
         $id_responsible=null
     ) {
         $obj = new Orgunit();
-        $obj->select("${hrm_crm}_code", $hrm_crm_code);
+        $obj->select($hrm_crm."_code", $hrm_crm_code);
 
         if(!$id_sh_parent) $id_sh_parent = $id_sh_org;
 
@@ -246,6 +246,7 @@ class Orgunit extends AfwMomkenObject
         else {
             unset($obj);
             $obj = new Orgunit();
+            $obj->select("active", "Y");
 
             $arrSelects = [
                 "titre_short" => $titre_short,
@@ -257,7 +258,7 @@ class Orgunit extends AfwMomkenObject
             $obj->selectOneOfListOfCritirea($arrSelects);
 
             if ($obj->load()) {
-                $found_and_loaded = "عن طريق الاسم بالعربية";
+                $found_and_loaded = "عن طريق الاسم بالعربية $titre_short/$titre لدى الموراد البشرية يرقم التسلسلي : {".$obj->id."}";
             }
         }
          
@@ -310,18 +311,25 @@ class Orgunit extends AfwMomkenObject
 
                 $obj->set("active", $uactive);
 
-                if($uactive=="N") {
-                    $obj->action_done = "تم إلغاء تفعيل الوحدة";                    
-                }
-                else {
-                    $obj->action_done = "تم تحديث بيانات الوحدة";
-                }
+                
                 list($query_sql_00, $fields_updated00, $report00) = AfwSqlHelper::getSQLUpdate($obj, 1, 0, $obj->id);
                 $obj->action_done .= " : SQL = ".$query_sql_00;
                     
             }
+            else {
+                $old_code = $obj->getVal($hrm_crm."_code");
+                $obj->action_done = " تم العثور على وحدة بنفس الاسم بالعربية ولكن برمز مختلف في نظام الموارد البشرية [$old_code] فسيتم تحديث الرمز إلى $hrm_crm_code";
+            }
 
-            $obj->set("${hrm_crm}_code", $hrm_crm_code);
+            if($uactive=="N") {
+                    $obj->action_done .= " : تم جعل الوحدة غير نشطة";                    
+            }
+            else {
+                $obj->action_done .= " : تم تحديث بيانات الوحدة";
+            }
+
+            $obj->set($hrm_crm."_code", $hrm_crm_code);
+            $obj->set("active", $uactive);
             $nb_rows_affected = $obj->update();
             if(!$nb_rows_affected) {
                 $obj->action_done = " لم يتم تحديث بيانات الوحدة : ".$obj->getTechnicalNotes();
@@ -344,7 +352,7 @@ class Orgunit extends AfwMomkenObject
             $obj->set("titre_short_en", $titre_short_en);
             $obj->set("titre_en", $titre_en);
             $obj->set("id_domain", $id_domain);
-            $obj->set("${hrm_crm}_code", $hrm_crm_code);
+            $obj->set($hrm_crm."_code", $hrm_crm_code);
             $obj->set("active", $uactive);
 
             $obj->insertNew();
