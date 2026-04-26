@@ -1061,6 +1061,24 @@ class Orgunit extends AfwMomkenObject
     }
 
     public function getManager() {
-        return $this->het("id_responsible");        
+        $return = $this->het("id_responsible");        
+        if($return) return $return;
+        else 
+        {
+            $parent = $this->het("id_sh_parent");
+            if($parent) return $parent->getManager();
+            else return null;
+        }
+    }
+
+    public function getManagerId() {
+        $return = $this->het("id_responsible");
+        if($return) return $return->id;
+        else 
+        {
+            $parent = $this->het("id_sh_parent");
+            if($parent) return $parent->getManagerId();
+            else return null;
+        }
     }
 }
