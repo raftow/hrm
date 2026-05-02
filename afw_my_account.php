@@ -9,6 +9,6 @@ include_once ("$file_dir_name/module_config.php");
 
 $My_Module = "hrm";
 $file_dir_name = dirname(__FILE__);
-include("$file_dir_name/../lib/afw/afw_my_account.php");
+include("$file_dir_name/../lib/afw/web/afw_my_account.php");
 
 ?>

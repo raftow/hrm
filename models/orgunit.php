@@ -435,7 +435,7 @@ class Orgunit extends AfwMomkenObject
                 $url = "";
                 if ($lat1 or $lon1) {
 
-                    $map_url = map($lat1, $lon1);
+                    $map_url = AfwGpsHelper::map($lat1, $lon1);
                     $url = "<a target='_myMap' href='" . $map_url . "'>انقر هنا</a>";
                 }
 
@@ -455,7 +455,7 @@ class Orgunit extends AfwMomkenObject
                     $lon2 = $this->getVal("home_longitude");
                     if (($lat1 or $lon1) and ($lat2 or $lon2)) {
 
-                        $map_url = route($lat1, $lon1, $lat2, $lon2);
+                        $map_url = AfwGpsHelper::route($lat1, $lon1, $lat2, $lon2);
                         $url = "<a target=\"_myMap\" href=\"" . $map_url . "\">انقر هنا</a>";
                     }
                 }

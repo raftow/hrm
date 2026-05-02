@@ -9,7 +9,7 @@ if($objme)
     $options = [];
     $options["dashboard-stats"] = true;
     $options["chart-js"] = true;
-    AfwMainPage::echoMainPage($My_Module, $Main_Page, $file_dir_name, $options);
+    CmsMainPage::echoMainPage($My_Module, $Main_Page, $file_dir_name, $options);
 }
 
 ?>

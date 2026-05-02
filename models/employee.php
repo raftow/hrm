@@ -157,8 +157,6 @@ class Employee extends AFWObject
     private function updateMeFromJson($resEmployee)
     {
         $lang = AfwLanguageHelper::getGlobalLanguage();
-        if (!$lang)
-            $lang = AfwGlobalVar::variable_get('lang', 'ar');
         $file_dir_name = dirname(__FILE__);
         $nbFields = 0;
         $this->set('id_sh_dep', $resEmployee['department_id']);
