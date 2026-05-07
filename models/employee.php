@@ -69,6 +69,9 @@ class Employee extends AFWObject
         HrmEmployeeAfwStructure::initInstance($this);
     }
 
+    /**
+     * @return Employee
+     */
     public static function loadById($id)
     {
         $obj = new Employee();
