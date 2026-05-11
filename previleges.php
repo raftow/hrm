@@ -21,18 +21,11 @@ $tab_info = array(
   array(
     'name' => 'orgunit_type',
   ),
-  3630 =>
-  array(
-    'name' => 'practice_owner',
-  ),
   3629 =>
   array(
     'name' => 'relation_ship',
   ),
-  3631 =>
-  array(
-    'name' => 'user_owner',
-  ),
+
 );
 $tbf_info = array(
   'employee' =>
@@ -235,46 +228,7 @@ $tbf_info = array(
       'id' => -1,
     ),
   ),
-  'practice_owner' =>
-  array(
-    'id' => '3630',
-    'display' =>
-    array(
-      'id' => -1,
-    ),
-    'search' =>
-    array(
-      'id' => -1,
-    ),
-    'qsearch' =>
-    array(
-      'id' => -1,
-    ),
-    'edit' =>
-    array(
-      'id' => -1,
-    ),
-    'qedit' =>
-    array(
-      'id' => -1,
-    ),
-    'crossed' =>
-    array(
-      'id' => -1,
-    ),
-    'stats' =>
-    array(
-      'id' => -1,
-    ),
-    'ddb' =>
-    array(
-      'id' => -1,
-    ),
-    'minibox' =>
-    array(
-      'id' => -1,
-    ),
-  ),
+
   'relation_ship' =>
   array(
     'id' => '3629',
@@ -315,46 +269,7 @@ $tbf_info = array(
       'id' => -1,
     ),
   ),
-  'user_owner' =>
-  array(
-    'id' => '3631',
-    'display' =>
-    array(
-      'id' => -1,
-    ),
-    'search' =>
-    array(
-      'id' => -1,
-    ),
-    'qsearch' =>
-    array(
-      'id' => -1,
-    ),
-    'edit' =>
-    array(
-      'id' => -1,
-    ),
-    'qedit' =>
-    array(
-      'id' => -1,
-    ),
-    'crossed' =>
-    array(
-      'id' => -1,
-    ),
-    'stats' =>
-    array(
-      'id' => -1,
-    ),
-    'ddb' =>
-    array(
-      'id' => -1,
-    ),
-    'minibox' =>
-    array(
-      'id' => -1,
-    ),
-  ),
+
 );
 $role_info = array(
   113 =>
