@@ -248,7 +248,9 @@ class HrmOrgunitAfwStructure
 		),
 
 		'id_domain' => array(
-			'TYPE' => 'INT',
+			'TYPE' => 'FK',
+			'ANSWER' => 'domain',
+			'ANSMODULE' => 'cmn',
 			'SHOW' => true,
 			'RETRIEVE' => true,
 			'EDIT' => true,

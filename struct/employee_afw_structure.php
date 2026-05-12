@@ -125,7 +125,9 @@ class HrmEmployeeAfwStructure
 		),
 		'domain_id' => array(
 			'FGROUP' => 'employment',
-			'TYPE' => 'INT',
+			'TYPE' => 'FK',
+			'ANSWER' => 'domain',
+			'ANSMODULE' => 'cmn',
 			'SHOW' => true,
 			'RETRIEVE' => false,
 			'EDIT' => true,
@@ -331,7 +333,7 @@ class HrmEmployeeAfwStructure
 			'TYPE' => 'MFK',
 			'ANSWER' => 'jobrole',
 			'ANSMODULE' => 'ums',
-			'WHERE' => "id_domain in (§domain_id§,§id_domain§,§id_domain1§,1) or id_domain in (select id from §DBPREFIX§pag.domain where domain_code like '%_common')",
+			'WHERE' => "id_domain in (§domain_id§,§id_domain§,§id_domain1§,1) or id_domain in (select id from §DBPREFIX§cmn.domain where domain_code like '%_common')",
 			'SEL_OPTIONS' => array(
 				'enableFiltering' => true,
 				'numberDisplayed' => 3,
