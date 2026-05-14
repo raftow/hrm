@@ -1031,8 +1031,7 @@ class Orgunit extends AfwMomkenObject
 
     public function instanciated($numInstance)
     {
-        global $MODE_BATCH_LOURD;
-        if (($numInstance > 1400) and (!$MODE_BATCH_LOURD)) {
+        if ($numInstance > 2400) {
             AfwRunHelper::lightSafeDie("orgunit trop dinstances $numInstance", AfwCacheSystem::getSingleton());
         }
         return true;
@@ -1080,5 +1079,9 @@ class Orgunit extends AfwMomkenObject
             if($parent) return $parent->getManagerId();
             else return null;
         }
+    }
+
+    public function estimatedTotalRows() {
+        return 2500;
     }
 }
