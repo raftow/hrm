@@ -1068,13 +1068,11 @@ class Employee extends AFWObject
             $this->commit();
     }
 
-    public function myModulesAnRoles()
+    public function myModulesAnRoles($debugg = true)
     {
         $freinds = AfwSession::config('freinds', []);
         $moduleToGiveArr = array();
         $jobroleList = $this->get('jobrole_mfk');
-
-        $debugg = false;
 
         $journal = [];
 
@@ -1118,11 +1116,12 @@ class Employee extends AFWObject
             }
         }
 
-        if ($debugg) die("Journal of my modules And roles : " . implode("<br>\n", $journal));
+        // die("Journal of my modules And roles : " . implode("<br>\n", $journal));
+
         // rafik 2/1/2026 why hard coded below ??
         // $moduleToGiveArr[1274][] = 340;
 
-        return $moduleToGiveArr;
+        return [$moduleToGiveArr, implode("<br>\n", $journal)];
     }
 
     public function updateMyUserInformation($lang = 'ar', $from_ldap = '', $commit = true, $force_reset_pwd_for_user = false, $update_obj_if_found=true)
@@ -1226,8 +1225,10 @@ class Employee extends AFWObject
          * @var Auser $usr
          */
         if (!$usr) $usr = Auser::loadByEmail($this->getVal('email'));
-        $moduleToGiveArr = $this->myModulesAnRoles();
-        $return = $usr->giveMeTheseModulesAnRoles($moduleToGiveArr, $this->id_sh_org);
+        list($moduleToGiveArr, $journal)  = $this->myModulesAnRoles();
+        $return = "";
+        if($journal) $return .= "<br>\Journal : $journal";
+        $return .= $usr->giveMeTheseModulesAnRoles($moduleToGiveArr);
         list($err, $info, $war) = $usr->generateCacheFile('en');
         if($err) $return .= "<br>\nError : $err";
         if($info) $return .= "<br>\nInformation : $info";
