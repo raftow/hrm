@@ -1228,7 +1228,7 @@ class Employee extends AFWObject
         list($moduleToGiveArr, $journal)  = $this->myModulesAnRoles();
         $return = "";
         if($journal) $return .= "<br>\Journal : $journal";
-        $return .= $usr->giveMeTheseModulesAnRoles($moduleToGiveArr);
+        $return .= "<br>\giveMeTheseModulesAnRoles : ".$usr->giveMeTheseModulesAnRoles($moduleToGiveArr);
         list($err, $info, $war) = $usr->generateCacheFile('en');
         if($err) $return .= "<br>\nError : $err";
         if($info) $return .= "<br>\nInformation : $info";
