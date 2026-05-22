@@ -432,7 +432,7 @@ class Employee extends AFWObject
         return $usr->hasRole($module_code, $role_id);
     }
 
-    public function updateMyInfosFromExternalSources($lang = 'ar', $hideNotFoundEmployeesByExtrenalApi=true)
+    public function updateMyInfosFromExternalSources($lang = 'ar', $hideNotFoundEmployeesByExtrenalApi = true)
     {
         if ($this->isFromOurCompany()) {
             $user_name = $this->getVal('username');
@@ -1124,7 +1124,7 @@ class Employee extends AFWObject
         return [$moduleToGiveArr, implode("<br>\n", $journal)];
     }
 
-    public function updateMyUserInformation($lang = 'ar', $from_ldap = '', $commit = true, $force_reset_pwd_for_user = false, $update_obj_if_found=true)
+    public function updateMyUserInformation($lang = 'ar', $from_ldap = '', $commit = true, $force_reset_pwd_for_user = false, $update_obj_if_found = true)
     {
         global $objme, $ldap_use;
 
@@ -1167,8 +1167,7 @@ class Employee extends AFWObject
         if ((!$usr) or (!is_object($usr)) or ($usr->isEmpty())) {
             throw new AfwRuntimeException('updateMyUserInformation need user object : ' . var_export($usr, true));
         }
-        if($usr->is_new or $update_obj_if_found)
-        {
+        if ($usr->is_new or $update_obj_if_found) {
             if ($this->getVal('firstname') and $this->getVal('lastname')) {
                 $usr->set('firstname', $this->getVal('firstname'));
                 $usr->set('f_firstname', $this->getVal('f_firstname'));
@@ -1196,7 +1195,7 @@ class Employee extends AFWObject
             $usr->commit();
         }
 
-        
+
         if ($usr->is_new or $force_reset_pwd_for_user)
             list($errors_arr[], $infos_arr[]) = $usr->initUser($from_ldap);
 
@@ -1211,7 +1210,8 @@ class Employee extends AFWObject
     }
 
 
-    public function getMyAuser() {
+    public function getMyAuser()
+    {
         return Auser::loadByEmail($this->getVal('email'));
     }
 
@@ -1227,12 +1227,13 @@ class Employee extends AFWObject
         if (!$usr) $usr = Auser::loadByEmail($this->getVal('email'));
         list($moduleToGiveArr, $journal)  = $this->myModulesAnRoles();
         $return = "";
-        if($journal) $return .= "<br>\Journal : $journal";
-        $return .= "<br>\giveMeTheseModulesAnRoles : ".$usr->giveMeTheseModulesAnRoles($moduleToGiveArr);
+        if ($journal) $return .= "<br>\Journal : $journal";
+        $return .= "<br>\giveMeTheseModulesAnRoles : ";
+        $return .= $usr->giveMeTheseModulesAnRoles($moduleToGiveArr);
         list($err, $info, $war) = $usr->generateCacheFile('en');
-        if($err) $return .= "<br>\nError : $err";
-        if($info) $return .= "<br>\nInformation : $info";
-        if($war) $return .= "<br>\nWarning : $war";
+        if ($err)  $return .= "<br>\ngenerateCacheFile Error : $err";
+        if ($info) $return .= "<br>\ngenerateCacheFile Information : $info";
+        if ($war)  $return .= "<br>\ngenerateCacheFile Warning : $war";
         return $return;
     }
 
