@@ -1070,47 +1070,53 @@ class Employee extends AFWObject
 
     public function myModulesAnRoles($debugg = true)
     {
+        $lang = AfwLanguageHelper::getGlobalLanguage();
         $freinds = AfwSession::config('freinds', []);
         $moduleToGiveArr = array();
         $jobroleList = $this->get('jobrole_mfk');
 
-        $journal = [];
 
+        $journal = [];
 
         foreach ($jobroleList as $jobroleId => $jobroleObj) {
             if ($jobroleObj and (!$jobroleObj->isEmpty())) {
                 $jobAroleList = $jobroleObj->get('jobAroleList');
-                if ($debugg) $journal[] = "jobrole $jobroleId has " . count($jobAroleList) . " roles : ";
+                if ($debugg) AfwSession::console("jobrole $jobroleId has " . count($jobAroleList) . " roles : ");
                 $counter = 0;
                 foreach ($jobAroleList as $jobAroleId => $jobAroleObj) {
                     $counter++;
                     if ($jobAroleObj and (!$jobAroleObj->isEmpty())) {
+                        /**
+                         * @var JobArole $jobAroleObj
+                         */
                         $module_id = $jobAroleObj->getVal('module_id');
                         $role_id = $jobAroleObj->getVal('arole_id');
-                        if ($debugg) $journal[] = "job-arole $jobAroleId not empty";
+                        $role_desc = $jobAroleObj->decode('arole_id', '', false, $lang);
+                        $jobAroleDesc = "(module_id=$module_id / role_id=$role_id) : $role_desc";
+                        if ($debugg) AfwSession::console("job-arole $jobAroleId is $jobAroleDesc");
                         if ($module_id and $role_id) {
                             $moduleToGiveArr[$module_id][] = $role_id;
-                            if ($debugg) $journal[] = "To give ++ (module_id=$module_id / role_id=$role_id)";
+                            if ($debugg) AfwSession::console("To give $jobAroleDesc");
                         } else {
-                            if ($debugg) $journal[] = "Not to give (module_id=$module_id / role_id=$role_id)";
+                            if ($debugg) AfwSession::console("Not to give $jobAroleDesc");
                         }
 
 
                         if ($freinds["m$module_id"] and is_array($freinds["m$module_id"])) {
-                            if ($debugg) $journal[] = "Module_id=$module_id has freinds :";
+                            if ($debugg) AfwSession::console("Module_id=$module_id has freinds :");
                             foreach ($freinds["m$module_id"] as $freind_module => $freindRoleArr) {
                                 $freindModuleId = substr($freind_module, 1);
-                                if ($debugg) $journal[] = "Module_id=$freindModuleId is freind opening roles :";
+                                if ($debugg) AfwSession::console("Module_id=$freindModuleId is freind opening roles :");
                                 foreach ($freindRoleArr as $freindRole) {
                                     if ($freindRole == "r$role_id") {
-                                        if ($debugg) $journal[] = "freind opened role : $freindRole";
+                                        if ($debugg) AfwSession::console("freind opened role : $freindRole");
                                         $moduleToGiveArr[$freindModuleId][] = $role_id;
                                     }
                                 }
                             }
                         }
                     } else {
-                        if ($debugg) $journal[] = "job-arole $jobAroleId is empty";
+                        if ($debugg) AfwSession::console("job-arole $jobAroleId is empty");
                     }
                 }
             }
