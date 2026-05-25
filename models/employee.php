@@ -1205,7 +1205,7 @@ class Employee extends AFWObject
         if ($commit)
             $this->commit();
 
-        $infos_arr[] = $this->updateMyModulesAnRoles($usr);
+        $this->updateMyModulesAnRoles($usr);
         return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
     }
 
@@ -1226,15 +1226,15 @@ class Employee extends AFWObject
          */
         if (!$usr) $usr = Auser::loadByEmail($this->getVal('email'));
         list($moduleToGiveArr, $journal)  = $this->myModulesAnRoles();
-        $return = "";
-        if ($journal) $return .= "<br>\Journal : $journal";
-        $return .= "<br>\giveMeTheseModulesAnRoles for " . var_export($moduleToGiveArr, true) . "<br>:";
-        $return .= $usr->giveMeTheseModulesAnRoles($moduleToGiveArr);
-        list($err, $info, $war) = $usr->generateCacheFile('en');
-        if ($err)  $return .= "<br>\ngenerateCacheFile Error : $err";
-        if ($info) $return .= "<br>\ngenerateCacheFile Information : $info";
-        if ($war)  $return .= "<br>\ngenerateCacheFile Warning : $war";
-        return $return;
+        if ($journal) AfwSession::console($journal);
+        AfwSession::console(["giveMeTheseModulesAnRoles" => $moduleToGiveArr]);
+        $res1 = $usr->giveMeTheseModulesAnRoles($moduleToGiveArr);
+        AfwSession::console(["result" => $res1]);
+        list($err, $inf, $war) = $usr->generateCacheFile('en');
+        if ($err) AfwSession::console($err, "error");
+        if ($inf) AfwSession::console($inf, "information");
+        if ($war) AfwSession::console($war, "warning");
+        return true;
     }
 
     public function attributeIsApplicable($attribute)
