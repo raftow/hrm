@@ -1130,7 +1130,7 @@ class Employee extends AFWObject
         return [$moduleToGiveArr, implode("<br>\n", $journal)];
     }
 
-    public function updateMyUserInformation($lang = 'ar', $from_ldap = '', $commit = true, $force_reset_pwd_for_user = false, $update_obj_if_found = true)
+    public function updateMyUserInformation($lang = 'ar', $from_ldap = '', $commit = true, $force_reset_pwd_for_user = false, $update_obj_if_found = true, $rolesFromScratchForModules = [])
     {
         global $objme, $ldap_use;
 
@@ -1211,7 +1211,7 @@ class Employee extends AFWObject
         if ($commit)
             $this->commit();
 
-        $this->updateMyModulesAnRoles($usr);
+        $this->updateMyModulesAnRoles($usr, $rolesFromScratchForModules);
         return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
     }
 
@@ -1225,7 +1225,7 @@ class Employee extends AFWObject
      * @param Auser $usr
      */
 
-    public function updateMyModulesAnRoles($usr = null)
+    public function updateMyModulesAnRoles($usr = null, $rolesFromScratchForModules = [])
     {
         /**
          * @var Auser $usr
@@ -1234,7 +1234,7 @@ class Employee extends AFWObject
         list($moduleToGiveArr, $journal)  = $this->myModulesAnRoles();
         if ($journal) AfwSession::console($journal);
         AfwSession::console(["giveMeTheseModulesAnRoles" => $moduleToGiveArr]);
-        $res1 = $usr->giveMeTheseModulesAnRoles($moduleToGiveArr);
+        $res1 = $usr->giveMeTheseModulesAnRoles($moduleToGiveArr, $rolesFromScratchForModules);
         AfwSession::console(["result" => $res1]);
         list($err, $inf, $war) = $usr->generateCacheFile('en');
         if ($err) AfwSession::console($err, "error");
