@@ -1233,7 +1233,7 @@ class Employee extends AFWObject
         if (!$usr) $usr = Auser::loadByEmail($this->getVal('email'));
         list($moduleToGiveArr, $journal)  = $this->myModulesAnRoles();
         if ($journal) AfwSession::console($journal);
-        AfwSession::console(["giveMeTheseModulesAnRoles" => $moduleToGiveArr]);
+        AfwSession::console(["giveMeTheseModulesAnRoles" => $moduleToGiveArr, "rolesFromScratchForModules" => $rolesFromScratchForModules]);
         $res1 = $usr->giveMeTheseModulesAnRoles($moduleToGiveArr, $rolesFromScratchForModules);
         AfwSession::console(["result" => $res1]);
         list($err, $inf, $war) = $usr->generateCacheFile('en');
