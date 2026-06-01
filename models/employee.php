@@ -1079,9 +1079,13 @@ class Employee extends AFWObject
         $journal = [];
 
         foreach ($jobroleList as $jobroleId => $jobroleObj) {
+            /**
+             * @var Jobrole $jobroleObj
+             */
             if ($jobroleObj and (!$jobroleObj->isEmpty())) {
                 $jobAroleList = $jobroleObj->get('jobAroleList');
-                if ($debugg) AfwSession::console("jobrole $jobroleId has " . count($jobAroleList) . " roles : ");
+                $jobAroleListDesc = $jobroleObj->decode('jobAroleList', '', false, $lang);
+                if ($debugg) AfwSession::console("jobrole $jobroleId has " . count($jobAroleList) . " roles : " . $jobAroleListDesc, "title");
                 $counter = 0;
                 foreach ($jobAroleList as $jobAroleId => $jobAroleObj) {
                     $counter++;
