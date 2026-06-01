@@ -1082,10 +1082,11 @@ class Employee extends AFWObject
             /**
              * @var Jobrole $jobroleObj
              */
+            $jobroleDesc = $jobroleObj->getDisplay($lang);
             if ($jobroleObj and (!$jobroleObj->isEmpty())) {
                 $jobAroleList = $jobroleObj->get('jobAroleList');
-                $jobAroleListDesc = $jobroleObj->decode('jobAroleList', '', false, $lang);
-                if ($debugg) AfwSession::console("jobrole $jobroleId has " . count($jobAroleList) . " roles : " . $jobAroleListDesc, "title");
+                $jobAroleListDesc = $jobroleObj->showAttribute('jobAroleList');
+                if ($debugg) AfwSession::console("jobrole $jobroleId ($jobroleDesc) has " . count($jobAroleList) . " roles : " . $jobAroleListDesc, "title");
                 $counter = 0;
                 foreach ($jobAroleList as $jobAroleId => $jobAroleObj) {
                     $counter++;
