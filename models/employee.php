@@ -1071,7 +1071,9 @@ class Employee extends AFWObject
     public function myModulesAnRoles($debugg = true)
     {
         $lang = AfwLanguageHelper::getGlobalLanguage();
-        $freinds = AfwSession::config('freinds', []);
+        $freinds_all = AfwSession::config('freinds', []);
+        $freinds_company = AfwSession::config('freinds-company', []);
+        $freinds = array_merge($freinds_all, $freinds_company);
         $moduleToGiveArr = array();
         $jobroleList = $this->get('jobrole_mfk');
 
