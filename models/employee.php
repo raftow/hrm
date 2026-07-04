@@ -99,8 +99,15 @@ class Employee extends AFWObject
             return null;
     }
 
+    /**
+     * @param string $username
+     * @param string $employee_num
+     * @return array
+     */
     public static function loadAndUpdateFromExternalHRSystem($username, $employee_num)
     {
+        
+        $employee = null;
         $file_dir_name = dirname(__FILE__);
         $company = AfwSession::currentCompany();
         require_once("$file_dir_name/../../client-$company/external_hrm_employee.php");
@@ -120,6 +127,9 @@ class Employee extends AFWObject
 
         // die("resEmployee : ".var_export($resEmployee,true));
         if ($ok and $resEmployee['company_id'] and $resEmployee['email']) {
+            /** 
+             * @var Employee $employee 
+             */
             $employee = Employee::loadByEmail($resEmployee['company_id'], $resEmployee['email'], $create_obj_if_not_found = true);
 
             if (!$resEmployee['guest'])
@@ -253,6 +263,8 @@ class Employee extends AFWObject
 
     /**
      * @return Employee
+     * @param string $email
+     * @param int $id_sh_org
      */
     public static function loadByEmail($id_sh_org, $email, $create_obj_if_not_found = false)
     {
