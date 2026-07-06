@@ -398,8 +398,11 @@ class Employee extends AFWObject
                 $this->set('idn_type_id', $idn_type_id);
         }
 
-        // die("me empl=".var_export($this,true));
-        $this->updateMyUserInformation($lang, $from_ldap = false, $commit = false);
+        if (!$this->doNotUpdateMyUserInformationBeforeMaj) {
+            // die("me empl=".var_export($this,true));
+            $this->updateMyUserInformation($lang, $from_ldap = false, $commit = false);
+        }
+
 
         $errs = null;
         return (!$errs);
