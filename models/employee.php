@@ -1166,6 +1166,7 @@ class Employee extends AFWObject
 
         $infos_arr = array();
         $errors_arr = array();
+        $warnings_arr = array();
 
         if ((!$email) and (!$username)) {
             // die("username=$username, email=$email, employee to update =".var_export($this,true));
@@ -1194,7 +1195,7 @@ class Employee extends AFWObject
         $usr = Auser::loadByEmail($email, $create_obj_if_not_found = true);
 
         if ((!$usr) or (!is_object($usr)) or ($usr->isEmpty())) {
-            throw new AfwRuntimeException('updateMyUserInformation need user object : ' . var_export($usr, true));
+            throw new AfwRuntimeException('updateMyUserInformation failed to find or create user object : ' . var_export($usr, true));
         }
         if ($usr->is_new or $update_obj_if_found) {
             if ($this->getVal('firstname') and $this->getVal('lastname')) {
@@ -1226,7 +1227,11 @@ class Employee extends AFWObject
 
 
         if ($usr->is_new or $force_reset_pwd_for_user)
-            list($errors_arr[], $infos_arr[]) = $usr->initUser($from_ldap);
+            list($err, $inf, $war) = $usr->initUser($from_ldap);
+        if ($inf) $infos_arr[] = $inf;
+        if ($war) $warnings_arr[] = $war;
+        if ($err) $errors_arr[] = $err;
+
 
         $this->set('auser_id', $usr->getId());
         // update my email if not set before
@@ -1234,8 +1239,11 @@ class Employee extends AFWObject
         if ($commit)
             $this->commit();
 
-        $this->updateMyModulesAnRoles($usr, $rolesFromScratchForModules);
-        return AfwFormatHelper::pbm_result($errors_arr, $infos_arr);
+        list($err, $inf, $war) = $this->updateMyModulesAnRoles($usr, $rolesFromScratchForModules, true);
+        if ($inf) $infos_arr[] = $inf;
+        if ($war) $warnings_arr[] = $war;
+        if ($err) $errors_arr[] = $err;
+        return AfwFormatHelper::pbm_result($errors_arr, $infos_arr, $warnings_arr);
     }
 
 
@@ -1248,7 +1256,7 @@ class Employee extends AFWObject
      * @param Auser $usr
      */
 
-    public function updateMyModulesAnRoles($usr = null, $rolesFromScratchForModules = [])
+    public function updateMyModulesAnRoles($usr = null, $rolesFromScratchForModules = [], $pbm = false)
     {
         /**
          * @var Auser $usr
@@ -1260,6 +1268,7 @@ class Employee extends AFWObject
         $res1 = $usr->giveMeTheseModulesAnRoles($moduleToGiveArr, $rolesFromScratchForModules);
         AfwSession::console(["result" => $res1]);
         list($err, $inf, $war) = $usr->generateCacheFile('en');
+        if ($pbm) return [$err, $inf, $war];
         if ($err) AfwSession::console($err, "error");
         if ($inf) AfwSession::console($inf, "information");
         if ($war) AfwSession::console($war, "warning");
