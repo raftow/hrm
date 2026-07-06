@@ -106,7 +106,7 @@ class Employee extends AFWObject
      */
     public static function loadAndUpdateFromExternalHRSystem($username, $employee_num)
     {
-        
+
         $employee = null;
         $file_dir_name = dirname(__FILE__);
         $company = AfwSession::currentCompany();
@@ -1083,9 +1083,9 @@ class Employee extends AFWObject
     public function myModulesAnRoles($debugg = true)
     {
         $lang = AfwLanguageHelper::getGlobalLanguage();
-        $freinds_all = AfwSession::config('freinds', []);
-        $freinds_company = AfwSession::config('freinds-company', []);
-        $freinds = array_merge($freinds_all, $freinds_company);
+        $freinds_all_menu = AfwSession::config('freinds-applications', [], "menu");
+        $freinds_company_menu = AfwSession::config('freinds-applications', [], "menu", 'force-client');
+        $freinds = array_merge($freinds_all_menu, $freinds_company_menu);
         $moduleToGiveArr = array();
         $jobroleList = $this->get('jobrole_mfk');
 
