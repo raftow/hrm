@@ -1084,7 +1084,8 @@ class Employee extends AFWObject
     {
         $lang = AfwLanguageHelper::getGlobalLanguage();
         $freinds_all_menu = AfwSession::config('freinds-applications', [], "menu");
-        $freinds_company_menu = AfwSession::config('freinds-applications', [], "menu", 'force-client');
+        $main_company = AfwSession::currentCompany();
+        $freinds_company_menu = AfwSession::config('freinds-applications', [], "menu", 'force-client', $main_company);
         $freinds = array_merge($freinds_all_menu, $freinds_company_menu);
         $moduleToGiveArr = array();
         $jobroleList = $this->get('jobrole_mfk');
