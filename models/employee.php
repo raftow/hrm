@@ -1083,8 +1083,9 @@ class Employee extends AFWObject
             $this->commit();
     }
 
-    public function myModulesAnRoles($debugg = true)
+    public function myModulesAnRoles($console = true)
     {
+        $pbm = true;
         $lang = AfwLanguageHelper::getGlobalLanguage();
         $freinds_all_menu = AfwSession::config('freinds-applications', [], "menu");
         $main_company = AfwSession::currentCompany();
@@ -1094,7 +1095,10 @@ class Employee extends AFWObject
         $jobroleList = $this->get('jobrole_mfk');
 
 
-        $journal = [];
+        $inf_arr = [];
+        $err_arr = [];
+        $war_arr = [];
+
 
         foreach ($jobroleList as $jobroleId => $jobroleObj) {
             /**
@@ -1104,7 +1108,11 @@ class Employee extends AFWObject
             if ($jobroleObj and (!$jobroleObj->isEmpty())) {
                 $jobAroleList = $jobroleObj->get('jobAroleList');
                 $jobAroleListDesc = $jobroleObj->showAttribute('jobAroleList');
-                if ($debugg) AfwSession::console("jobrole $jobroleId ($jobroleDesc) has " . count($jobAroleList) . " roles : " . $jobAroleListDesc, "title");
+                $inf = "jobrole $jobroleId ($jobroleDesc) has " . count($jobAroleList) . " roles : " . $jobAroleListDesc;
+                if ($pbm)  $inf_arr[] = $inf;
+                if ($console) AfwSession::console($inf, "title");
+
+
                 $counter = 0;
                 foreach ($jobAroleList as $jobAroleId => $jobAroleObj) {
                     $counter++;
@@ -1116,30 +1124,45 @@ class Employee extends AFWObject
                         $role_id = $jobAroleObj->getVal('arole_id');
                         $role_desc = $jobAroleObj->decode('arole_id', '', false, $lang);
                         $jobAroleDesc = "(module_id=$module_id / role_id=$role_id) : $role_desc";
-                        if ($debugg) AfwSession::console("job-arole $jobAroleId is $jobAroleDesc");
+                        $inf = "job-arole $jobAroleId is $jobAroleDesc";
+                        if ($pbm)  $inf_arr[] = $inf;
+
+                        if ($console) AfwSession::console($inf);
                         if ($module_id and $role_id) {
                             $moduleToGiveArr[$module_id][] = $role_id;
-                            if ($debugg) AfwSession::console("To give $jobAroleDesc");
+                            $inf = "To give $jobAroleDesc";
+                            if ($pbm)  $inf_arr[] = $inf;
+                            if ($console) AfwSession::console($inf);
                         } else {
-                            if ($debugg) AfwSession::console("Not to give $jobAroleDesc");
+                            $war = "Ignored because erroned : $jobAroleDesc";
+                            if ($pbm)  $war_arr[] = $war;
+                            if ($console) AfwSession::console($war, "warning");
                         }
 
 
                         if ($freinds["m$module_id"] and is_array($freinds["m$module_id"])) {
-                            if ($debugg) AfwSession::console("Module_id=$module_id has freinds :");
+                            $inf = "Module_id=$module_id has freinds :";
+                            if ($pbm)  $inf_arr[] = $inf;
+                            if ($console) AfwSession::console($inf);
                             foreach ($freinds["m$module_id"] as $freind_module => $freindRoleArr) {
                                 $freindModuleId = substr($freind_module, 1);
-                                if ($debugg) AfwSession::console("Module_id=$freindModuleId is freind opening roles :");
+                                $inf = "friend module = $freindModuleId is recieving the following roles :";
+                                if ($pbm)  $inf_arr[] = $inf;
+                                if ($console) AfwSession::console($inf);
                                 foreach ($freindRoleArr as $freindRole) {
                                     if ($freindRole == "r$role_id") {
-                                        if ($debugg) AfwSession::console("freind opened role : $freindRole");
+                                        $inf = "freind recieved role : $freindRole";
+                                        if ($pbm)  $inf_arr[] = $inf;
+                                        if ($console) AfwSession::console($inf);
                                         $moduleToGiveArr[$freindModuleId][] = $role_id;
                                     }
                                 }
                             }
                         }
                     } else {
-                        if ($debugg) AfwSession::console("job-arole $jobAroleId is empty");
+                        $war = "job-arole $jobAroleId is empty";
+                        if ($pbm)  $war_arr[] = $war;
+                        if ($console) AfwSession::console($war);
                     }
                 }
             }
@@ -1150,7 +1173,13 @@ class Employee extends AFWObject
         // rafik 2/1/2026 why hard coded below ??
         // $moduleToGiveArr[1274][] = 340;
 
-        return [$moduleToGiveArr, implode("<br>\n", $journal)];
+        $result = count($err_arr) . " error(s) ";
+        $result .= count($war_arr) . " warning(s) ";
+        $result .= count($inf_arr) . " information(s) ";
+        $inf_arr[] = "<b>$result</b>";
+
+        if ($pbm) return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr, "<br>\n", null, $moduleToGiveArr);
+        else return [];
     }
 
     public function updateMyUserInformation($lang = 'ar', $from_ldap = '', $commit = true, $force_reset_pwd_for_user = false, $update_obj_if_found = true, $rolesFromScratchForModules = [])
@@ -1258,17 +1287,26 @@ class Employee extends AFWObject
 
     public function updateMyModulesAnRoles($usr = null, $rolesFromScratchForModules = [], $pbm = false)
     {
+        $inf_arr = array();
+        $err_arr = array();
+        $war_arr = array();
         /**
          * @var Auser $usr
          */
         if (!$usr) $usr = Auser::loadByEmail($this->getVal('email'));
-        list($moduleToGiveArr, $journal)  = $this->myModulesAnRoles();
-        if ($journal) AfwSession::console($journal);
+        list($err, $inf, $war, $tech, $moduleToGiveArr)  = $this->myModulesAnRoles($console = true);
+        if ($inf) $inf_arr[] = $inf;
+        if ($war) $war_arr[] = $war;
+        if ($err) $err_arr[] = $err;
+
         AfwSession::console(["giveMeTheseModulesAnRoles" => $moduleToGiveArr, "rolesFromScratchForModules" => $rolesFromScratchForModules]);
         $res1 = $usr->giveMeTheseModulesAnRoles($moduleToGiveArr, $rolesFromScratchForModules);
         AfwSession::console(["result" => $res1]);
         list($err, $inf, $war) = $usr->generateCacheFile('en');
-        if ($pbm) return [$err, $inf, $war];
+        if ($inf) $inf_arr[] = $inf;
+        if ($war) $war_arr[] = $war;
+        if ($err) $err_arr[] = $err;
+        if ($pbm) return AfwFormatHelper::pbm_result($err_arr, $inf_arr, $war_arr);
         if ($err) AfwSession::console($err, "error");
         if ($inf) AfwSession::console($inf, "information");
         if ($war) AfwSession::console($war, "warning");
