@@ -1085,6 +1085,7 @@ class Employee extends AFWObject
 
     public function myModulesAnRoles($console = true)
     {
+
         $pbm = true;
         $lang = AfwLanguageHelper::getGlobalLanguage();
         $freinds_all_menu = AfwSession::config('freinds-applications', [], "menu");
