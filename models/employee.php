@@ -400,7 +400,7 @@ class Employee extends AFWObject
 
         if (!$this->doNotUpdateMyUserInformationBeforeMaj) {
             // die("me empl=".var_export($this,true));
-            $this->updateMyUserInformation($lang, $from_ldap = false, $commit = false);
+            $this->updateMyUserInformationAndRoles($lang, $from_ldap = false, $commit = false);
         }
 
 
@@ -467,7 +467,7 @@ class Employee extends AFWObject
 
                 if ($ok and $resEmployee['company_id'] and $resEmployee['email']) {
                     $nbFields = $this->updateMeFromJson($resEmployee);
-                    list($error2, $info2) = $this->updateMyUserInformation();
+                    list($error2, $info2) = $this->updateMyUserInformationAndRoles();
 
                     $info .= $info2 . ' ' . $nbFields . ' field(s) updated';
                     if ($error2)
@@ -1040,8 +1040,8 @@ class Employee extends AFWObject
         }
 
         $color = 'green';
-        $title_ar = 'تحديث بيانات المستخدم';
-        $methodName = 'updateMyUserInformation';
+        $title_ar = 'تحديث معلومات وصلاحيات المستخدم';
+        $methodName = 'updateMyUserInformationAndRoles';
         $pbms[AfwStringHelper::hzmEncode($methodName)] = array(
             'METHOD' => $methodName,
             'COLOR' => $color,
@@ -1183,7 +1183,7 @@ class Employee extends AFWObject
         else return [];
     }
 
-    public function updateMyUserInformation($lang = 'ar', $from_ldap = '', $commit = true, $force_reset_pwd_for_user = false, $update_obj_if_found = true, $rolesFromScratchForModules = [])
+    public function updateMyUserInformationAndRoles($lang = 'ar', $from_ldap = '', $commit = true, $force_reset_pwd_for_user = false, $update_obj_if_found = true, $rolesFromScratchForModules = [])
     {
         global $objme, $ldap_use;
 
@@ -1225,7 +1225,7 @@ class Employee extends AFWObject
         $usr = Auser::loadByEmail($email, $create_obj_if_not_found = true);
 
         if ((!$usr) or (!is_object($usr)) or ($usr->isEmpty())) {
-            throw new AfwRuntimeException('updateMyUserInformation failed to find or create user object : ' . var_export($usr, true));
+            throw new AfwRuntimeException('updateMyUserInformationAndRoles failed to find or create user object : ' . var_export($usr, true));
         }
         if ($usr->is_new or $update_obj_if_found) {
             if ($this->getVal('firstname') and $this->getVal('lastname')) {
@@ -1270,7 +1270,7 @@ class Employee extends AFWObject
             $this->commit();
 
         list($err, $inf, $war) = $this->updateMyModulesAnRoles($usr, $rolesFromScratchForModules, true);
-        if ($inf) $infos_arr[] = $inf;
+        if ($inf) $infos_arr[] = "updateMyModulesAnRoles : " . $inf;
         if ($war) $warnings_arr[] = $war;
         if ($err) $errors_arr[] = $err;
         return AfwFormatHelper::pbm_result($errors_arr, $infos_arr, $warnings_arr);
