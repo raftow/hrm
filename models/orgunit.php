@@ -263,7 +263,7 @@ class Orgunit extends AfwMomkenObject
         }
          
         
-        if ($found_and_loaded and $update_obj_if_found) 
+        if ($found_and_loaded) 
         {
             if($found_by_code) { 
                 if(($uactive=="Y"))
@@ -321,28 +321,24 @@ class Orgunit extends AfwMomkenObject
                 $obj->action_done = " تم العثور على وحدة بنفس الاسم بالعربية ولكن برمز مختلف في نظام الموارد البشرية [$old_code] فسيتم تحديث الرمز إلى $hrm_crm_code";
             }
 
-            if($uactive=="N") {
+            if($update_obj_if_found) {
+                $obj->set("active", $uactive);
+                if($uactive=="N") {
                     $obj->action_done .= " : تم جعل الوحدة غير نشطة";                    
+                }
+                else {
+                    $obj->action_done .= " : تم تحديث بيانات الوحدة";
+                }
+                $obj->set($hrm_crm."_code", $hrm_crm_code);
+                $nb_rows_affected = $obj->update();
+                if(!$nb_rows_affected) {
+                    $obj->action_done = " لم يتم تحديث بيانات الوحدة : ".$obj->getTechnicalNotes();
+                }
+                else {
+                    $obj->action_done .= "<br>\nrows affected : $nb_rows_affected";
+                }
             }
-            else {
-                $obj->action_done .= " : تم تحديث بيانات الوحدة";
-            }
-
-            $obj->set($hrm_crm."_code", $hrm_crm_code);
-            $obj->set("active", $uactive);
-            $nb_rows_affected = $obj->update();
-            if(!$nb_rows_affected) {
-                $obj->action_done = " لم يتم تحديث بيانات الوحدة : ".$obj->getTechnicalNotes();
-            }
-            else {
-                $obj->action_done .= "<br>\nrows affected : $nb_rows_affected";
-            }
-
-            
-            
             return $obj;        
-
-
         }
         elseif ($create_obj_if_not_found) {
             $obj->set("id_sh_org", $id_sh_org);
