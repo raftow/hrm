@@ -303,6 +303,10 @@ class HrmOrgunitAfwStructure
 			'DISPLAY' => true,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
+			'DEPENDENT_OFME' => array(
+				0 => 'id_responsible',
+			),
+			'CSS' => 'width_pct_50',
 		),
 
 		'id_responsible' => array(
@@ -319,11 +323,36 @@ class HrmOrgunitAfwStructure
                                                    and (jobrole_mfk like '%,1,%' or jobrole_mfk like '%,51,%' or jobrole_mfk like '%,123,%'))",
 
 			'RELATION' => 'OneToMany',
+			'DEPENDENCIES' => array(
+				0 => 'id_sh_parent',
+			),
 			'STEP' => 2,
 			'SEARCH-BY-ONE' => '',
 			'DISPLAY' => true,
 			'DISPLAY-UGROUPS' => '',
 			'EDIT-UGROUPS' => '',
+			'CSS' => 'width_pct_50',
+		),
+
+		'log' => array(
+			'SEARCH' => false,
+			'QSEARCH' => false,
+			'SHOW' => true,
+			'RETRIEVE' => false,
+			'EDIT' => true,
+			'QEDIT' => false,
+			'SIZE' => 'AREA',
+			'ROWS' => 10,
+			'MANDATORY' => false,
+			'UTF8' => true,
+			'TYPE' => 'TEXT',
+			'FORMAT' => 'TOHTML',
+			'READONLY' => true,
+			'DISPLAY' => true,
+			'STEP' => 2,
+			'DISPLAY-UGROUPS' => '',
+			'EDIT-UGROUPS' => '',
+			'CSS' => 'width_pct_100',
 		),
 
 		'subOrgList' => array(
