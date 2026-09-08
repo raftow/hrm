@@ -350,6 +350,7 @@ class Orgunit extends AfwMomkenObject
             $obj->set("id_domain", $id_domain);
             $obj->set($hrm_crm."_code", $hrm_crm_code);
             $obj->set("active", $uactive);
+            if ($id_responsible) $obj->set("id_responsible", $id_responsible);
 
             $obj->insertNew();
             $obj->is_new = true;
@@ -575,6 +576,8 @@ class Orgunit extends AfwMomkenObject
         ];
 
         // @todo here import SubDepartments depending on domain  
+
+        $sub_dep_obj_arr = []; 
 
         $create_obj_if_not_found = true;
         foreach ($sub_dep_arr as $sub_dep_code => $sub_dep) {
