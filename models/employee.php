@@ -1107,7 +1107,7 @@ class Employee extends UmsObject
              */
             $jobroleDesc = $jobroleObj->getDisplay($lang);
             if ($jobroleObj and (!$jobroleObj->isEmpty())) {
-                $jobAroleList = $jobroleObj->get('jobAroleList');
+                $jobAroleList = $jobroleObj->loadMyList('jobAroleList');
                 $jobAroleListDesc = $jobroleObj->showAttribute('jobAroleList');
                 $inf = "jobrole $jobroleId ($jobroleDesc) has " . count($jobAroleList) . " roles : " . $jobAroleListDesc;
                 if ($pbm)  $inf_arr[] = $inf;
