@@ -296,7 +296,7 @@ class HrmOrgunitAfwStructure
 			'ANSMODULE' => 'hrm',
 			'RELATION' => 'OneToMany',
 			'WHERE' => "id != '§id§' 
-								and (id_sh_type in (5,6,7,8)) or (§id_sh_type§ in (3,4,9,10,15) and  id_sh_type in (11,13,14,16))",
+								and (id_sh_type in (4,5,6,7,8)) or (§id_sh_type§ in (3,4,9,10,15) and  id_sh_type in (11,13,14,16))",
 			// and (id_sh_org = §id_sh_org§ or (§id_sh_type§ in ('5','6','7','8') and id_sh_type in ('5','6','7','8'))) 				
 			// and id_domain = §id_domain§
 			'STEP' => 2,
