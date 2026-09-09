@@ -998,6 +998,8 @@ class Orgunit extends AfwMomkenObject
             //if(!$this->getVal("id_domain")) $this->set("id_domain", $parent->getVal("id_domain"));
         }*/
 
+
+
         return true;
     }
 
@@ -1008,6 +1010,16 @@ class Orgunit extends AfwMomkenObject
         if (file_exists("$file_dir_name/../client-$company/organization_business.php") and $this->getVal("titre_short")) {
             require_once("$file_dir_name/../client-$company/organization_business.php");
             OrganizationBusiness::trigger_new_organization($this);
+        }
+    }
+
+    public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent = false)    // 
+    {
+        $file_dir_name = dirname(__FILE__);
+        $company = AfwSession::currentCompany();
+        if (file_exists("$file_dir_name/../client-$company/organization_business.php")) {
+            require_once("$file_dir_name/../client-$company/organization_business.php");
+            OrganizationBusiness::trigger_update_organization($this, $fields_updated);
         }
     }
 
