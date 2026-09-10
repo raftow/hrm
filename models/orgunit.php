@@ -268,10 +268,11 @@ class Orgunit extends AfwMomkenObject
         /* if($hrm_crm_code=="152" and !$found_and_loaded) {
             die("findOrgunit failed to found this unit : load_try_query=$load_try_query");
         }*/
-         
+        $obj->alert = ""; 
         
         if ($found_and_loaded) 
         {
+            $obj->alert .= " loaded";
             if($found_by_code) { 
                 if(($uactive=="Y"))
                 {
@@ -284,6 +285,7 @@ class Orgunit extends AfwMomkenObject
                         $sh_org = $obj->decode("id_sh_org");
                         if($old_id_sh_org) {
                             $obj->parent_changed .= " كانت تتبع ".trim($old_sh_org)." فصارت تتبع ".trim($sh_org);
+                            $obj->alert = " moved0";
                         }
                         
                     }
@@ -294,7 +296,8 @@ class Orgunit extends AfwMomkenObject
                         $obj->set("id_sh_parent", $id_sh_parent);
                         $sh_parent = $obj->decode("id_sh_parent");
                         if($old_id_sh_parent) {
-                            $obj->parent_changed .= " كانت تحت ".trim($old_sh_parent)." فصارت تحت ".trim($sh_parent);
+                            $obj->parent_changed .= " كانت تحت ".trim($old_sh_parent)." فصارت تحت ".trim($sh_parent);                            
+                            $obj->alert .= " moved";
                         }
                         
                     }
@@ -313,10 +316,18 @@ class Orgunit extends AfwMomkenObject
                         else $obj->title_changed = "من ".trim($old_titre)." إلى ".trim($titre);
                     }
                     
-                    if ($id_responsible) $obj->set("id_responsible", $id_responsible);
+                    if ($id_responsible and ($obj->getVal("id_responsible") != $id_responsible)) {
+                        $obj->set("id_responsible", $id_responsible);
+                        $obj->alert .= " newresponsible";
+                    }
                 }
 
                 $obj->set("active", $uactive);
+
+                if($uactive=="N") {
+                    $obj->alert .= " disabled";
+                    $obj->action_done .= " : تم جعل الوحدة غير نشطة";                    
+                }
 
                 
                 list($query_sql_00, $fields_updated00, $report00) = AfwSqlHelper::getSQLUpdate($obj, 1, 0, $obj->id);
@@ -331,6 +342,7 @@ class Orgunit extends AfwMomkenObject
             if($update_obj_if_found) {
                 $obj->set("active", $uactive);
                 if($uactive=="N") {
+                    $obj->alert .= " disabled";
                     $obj->action_done .= " : تم جعل الوحدة غير نشطة";                    
                 }
                 else {
@@ -364,7 +376,10 @@ class Orgunit extends AfwMomkenObject
             $obj->set("id_domain", $id_domain);
             $obj->set($hrm_crm."_code", $hrm_crm_code);
             $obj->set("active", $uactive);
-            if ($id_responsible) $obj->set("id_responsible", $id_responsible);
+            if ($id_responsible and ($obj->getVal("id_responsible") != $id_responsible)) {
+                $obj->set("id_responsible", $id_responsible);
+                $obj->alert .= " newresponsible";
+            }
 
             $obj->insertNew();
             $obj->is_new = true;
