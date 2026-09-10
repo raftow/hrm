@@ -260,9 +260,12 @@ class Orgunit extends AfwMomkenObject
             if ($obj->load()) {
                 $found_and_loaded = "عن طريق الاسم بالعربية $titre_short/$titre لدى الموراد البشرية يرقم التسلسلي : {".$obj->id."}";
             }
-            $load_try_query = $obj->getLastSqlQuery();
-            
-            
+        }
+
+        $load_try_query = $obj->getLastSqlQuery();
+
+        if($hrm_crm_code=="152" and !$found_and_loaded) {
+            die("findOrgunit failed to found this unit : load_try_query=$load_try_query");
         }
          
         
