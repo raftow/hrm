@@ -260,6 +260,9 @@ class Orgunit extends AfwMomkenObject
             if ($obj->load()) {
                 $found_and_loaded = "عن طريق الاسم بالعربية $titre_short/$titre لدى الموراد البشرية يرقم التسلسلي : {".$obj->id."}";
             }
+            $load_try_query = $obj->getLastSqlQuery();
+            
+            
         }
          
         
@@ -341,6 +344,8 @@ class Orgunit extends AfwMomkenObject
             return $obj;        
         }
         elseif ($create_obj_if_not_found) {
+            $obj->action_done = "لم يتم العثور على وحدة بنفس الاسم بالعربية في نظام الموارد البشرية [$titre_short/$titre] فسيتم إنشاء وحدة جديدة بهذا الاسم وبرمز $hrm_crm_code ";
+            $obj->action_done .= "<br>\nSQL TRY LOAD: $load_try_query";
             $obj->set("id_sh_org", $id_sh_org);
             $obj->set("id_sh_type", $id_sh_type);
             $obj->set("titre_short", $titre_short);
