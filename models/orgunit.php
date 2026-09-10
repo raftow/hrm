@@ -230,7 +230,8 @@ class Orgunit extends AfwMomkenObject
         $hrm_crm = "hrm",
         $uactive = "Y",
         $id_sh_parent=null,
-        $id_responsible=null
+        $id_responsible=null,
+        $stop_and_debugg_before_update=false
     ) {
         $obj = new Orgunit();
         $obj->select($hrm_crm."_code", $hrm_crm_code);
@@ -264,9 +265,9 @@ class Orgunit extends AfwMomkenObject
 
         $load_try_query = $obj->getLastSqlQuery();
 
-        if($hrm_crm_code=="152" and !$found_and_loaded) {
+        /* if($hrm_crm_code=="152" and !$found_and_loaded) {
             die("findOrgunit failed to found this unit : load_try_query=$load_try_query");
-        }
+        }*/
          
         
         if ($found_and_loaded) 
@@ -336,6 +337,11 @@ class Orgunit extends AfwMomkenObject
                     $obj->action_done .= " : تم تحديث بيانات الوحدة";
                 }
                 $obj->set($hrm_crm."_code", $hrm_crm_code);
+                if($stop_and_debugg_before_update) {
+                    $res11 = AfwSqlHelper::getSQLUpdate($obj, 1, 0, $obj->id); // list($query_sql_11, $fields_updated11, $report11)
+
+                    die(AfwExportHelper::afwExport($res11));
+                }
                 $nb_rows_affected = $obj->update();
                 if(!$nb_rows_affected) {
                     $obj->action_done = " لم يتم تحديث بيانات الوحدة : ".$obj->getTechnicalNotes();
