@@ -244,24 +244,39 @@ class Orgunit extends AfwMomkenObject
             $found_and_loaded = "عن طريق الرمز لدى الموراد البشرية ($hrm_crm_code)";
             $found_by_code = true;
         }
-        else {
+        else 
+        {
+            $hrm_crm_code_completed = AfwStringHelper::left_complete_len($hrm_crm_code,4,"0");
             unset($obj);
             $obj = new Orgunit();
-            $obj->select("active", "Y");
-
-            $arrSelects = [
-                "titre_short" => $titre_short,
-                "titre" => $titre,
-                // "titre_short_en" => $titre_short_en,
-                // "titre_en" => $titre_en,
-            ];
-
-            $obj->selectOneOfListOfCritirea($arrSelects);
+            $obj->where($hrm_crm."_code like '065_-$hrm_crm_code_completed'");
 
             if ($obj->load()) {
-                $found_and_loaded = "عن طريق الاسم بالعربية $titre_short/$titre لدى الموراد البشرية يرقم التسلسلي : {".$obj->id."}";
+                $found_and_loaded = "عن طريق الرمز القديم لدى الموراد البشرية (065_-$hrm_crm_code_completed)";
+                $found_by_code = true;
             }
-        }
+            else
+            {
+                unset($obj);
+                $obj = new Orgunit();
+                $obj->select("active", "Y");
+
+                $arrSelects = [
+                    "titre_short" => $titre_short,
+                    "titre" => $titre,
+                    // "titre_short_en" => $titre_short_en,
+                    // "titre_en" => $titre_en,
+                ];
+
+                $obj->selectOneOfListOfCritirea($arrSelects);
+
+                if ($obj->load()) {
+                    $found_and_loaded = "عن طريق الاسم بالعربية $titre_short/$titre لدى الموراد البشرية يرقم التسلسلي : {".$obj->id."}";
+                }
+            }
+
+        } 
+        
 
         $load_try_query = $obj->getLastSqlQuery();
 
@@ -315,7 +330,14 @@ class Orgunit extends AfwMomkenObject
                         if(!trim($old_titre)) $obj->is_new = trim($titre);
                         else $obj->title_changed = "من ".trim($old_titre)." إلى ".trim($titre);
                     }
-                    
+
+                    $old_code = $obj->getVal($hrm_crm."_code");
+                    if($hrm_crm_code != $old_code) 
+                    {
+                        $obj->set($hrm_crm."_code", $hrm_crm_code);      
+                        $obj->action_done .= " : تم تعديل كود الوحدة";  
+                        $obj->alert .= " codechanged";                                     
+                    }
                     if ($id_responsible and ($obj->getVal("id_responsible") != $id_responsible)) {
                         $obj->set("id_responsible", $id_responsible);
                         $obj->alert .= " newresponsible";
