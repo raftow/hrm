@@ -247,7 +247,7 @@ class Orgunit extends AfwMomkenObject
         }
         else 
         {
-            $load_try_query .= "<br> mysql> " . $obj->getLastSqlQuery();
+            $load_try_query .= "\n mysql " . $obj->getLastSqlQuery();
             $hrm_crm_code_completed = AfwStringHelper::left_complete_len($hrm_crm_code,4,"0");
             unset($obj);
             $obj = new Orgunit();
@@ -259,7 +259,7 @@ class Orgunit extends AfwMomkenObject
             }
             else
             {
-                $load_try_query .= "<br> mysql> " . $obj->getLastSqlQuery();
+                $load_try_query .= "\n mysql " . $obj->getLastSqlQuery();
                 unset($obj);
                 $obj = new Orgunit();
                 $obj->select("active", "Y");
@@ -281,7 +281,7 @@ class Orgunit extends AfwMomkenObject
         } 
         
 
-        $load_try_query .= "<br> mysql> " . $obj->getLastSqlQuery();
+        $load_try_query .= "\n mysql " . $obj->getLastSqlQuery();
 
         /* if($hrm_crm_code=="152" and !$found_and_loaded) {
             die("findOrgunit failed to found this unit : load_try_query=$load_try_query");
@@ -303,7 +303,7 @@ class Orgunit extends AfwMomkenObject
                         $obj->set("id_sh_org", $id_sh_org);
                         $sh_org = $obj->decode("id_sh_org");
                         if($old_id_sh_org) {
-                            $obj->parent_changed .= " كانت تتبع ".trim($old_sh_org)." فصارت تتبع ".trim($sh_org);
+                            $obj->parent_changed .= "\n كانت تتبع ".trim($old_sh_org)." فصارت تتبع ".trim($sh_org);
                             $obj->alert = " moved0";
                         }
                         
@@ -315,7 +315,7 @@ class Orgunit extends AfwMomkenObject
                         $obj->set("id_sh_parent", $id_sh_parent);
                         $sh_parent = $obj->decode("id_sh_parent");
                         if($old_id_sh_parent) {
-                            $obj->parent_changed .= " كانت تحت ".trim($old_sh_parent)." فصارت تحت ".trim($sh_parent);                            
+                            $obj->parent_changed .= "\n كانت تحت ".trim($old_sh_parent)." فصارت تحت ".trim($sh_parent);                            
                             $obj->alert .= " moved";
                         }
                         
@@ -339,7 +339,7 @@ class Orgunit extends AfwMomkenObject
                     if($hrm_crm_code != $old_code) 
                     {
                         $obj->set($hrm_crm."_code", $hrm_crm_code);      
-                        $obj->action_done .= " : تم تعديل كود الوحدة";  
+                        $obj->action_done .= "\nتم تعديل كود الوحدة";  
                         $obj->alert .= " codechanged";                                     
                     }
                     if ($id_responsible and ($obj->getVal("id_responsible") != $id_responsible)) {
@@ -352,27 +352,27 @@ class Orgunit extends AfwMomkenObject
 
                 if($uactive=="N") {
                     $obj->alert .= " disabled";
-                    $obj->action_done .= " : تم جعل الوحدة غير نشطة";                    
+                    $obj->action_done .= "\n تم جعل الوحدة غير نشطة";                    
                 }
 
                 
                 list($query_sql_00, $fields_updated00, $report00) = AfwSqlHelper::getSQLUpdate($obj, 1, 0, $obj->id);
-                $obj->action_done .= " : SQL = ".$query_sql_00;
+                $obj->action_done .= "\n SQL = ".$query_sql_00;
                     
             }
             else {
                 $old_code = $obj->getVal($hrm_crm."_code");
-                $obj->action_done .= " تم العثور على وحدة بنفس الاسم بالعربية ولكن برمز مختلف في نظام الموارد البشرية [$old_code] فسيتم تحديث الرمز إلى $hrm_crm_code";
+                $obj->action_done .= "\n تم العثور على وحدة بنفس الاسم بالعربية ولكن برمز مختلف في نظام الموارد البشرية [$old_code] فسيتم تحديث الرمز إلى $hrm_crm_code";
             }
 
             if($update_obj_if_found) {
                 $obj->set("active", $uactive);
                 if($uactive=="N") {
                     $obj->alert .= " disabled";
-                    $obj->action_done .= " : تم جعل الوحدة غير نشطة";                    
+                    $obj->action_done .= "\n تم جعل الوحدة غير نشطة";                    
                 }
                 else {
-                    $obj->action_done .= " : تم تحديث بيانات الوحدة";
+                    $obj->action_done .= "\n تم تحديث بيانات الوحدة";
                 }
                 $obj->set($hrm_crm."_code", $hrm_crm_code);
                 if($stop_and_debugg_before_update) {
@@ -382,17 +382,17 @@ class Orgunit extends AfwMomkenObject
                 }
                 $nb_rows_affected = $obj->update();
                 if(!$nb_rows_affected) {
-                    $obj->action_done .= " لم يتم تحديث بيانات الوحدة : ".$obj->getTechnicalNotes();
+                    $obj->action_done .= "\n لم يتم تحديث بيانات الوحدة : ".$obj->getTechnicalNotes();
                 }
                 else {
-                    $obj->action_done .= "<br>\nrows affected : $nb_rows_affected";
+                    $obj->action_done .= "\n rows affected : $nb_rows_affected";
                 }
             }
-            $obj->action_done .= "<br>\nSQL TRY LOAD: $load_try_query";
+            $obj->action_done .= "\n SQL TRY LOAD: $load_try_query";
             return $obj;        
         }
         elseif ($create_obj_if_not_found) {
-            $obj->action_done .= "لم يتم العثور على وحدة بنفس الاسم بالعربية في نظام الموارد البشرية [$titre_short/$titre] فسيتم إنشاء وحدة جديدة بهذا الاسم وبرمز $hrm_crm_code ";
+            $obj->action_done .= "\n لم يتم العثور على وحدة بنفس الاسم بالعربية في نظام الموارد البشرية [$titre_short/$titre] فسيتم إنشاء وحدة جديدة بهذا الاسم وبرمز $hrm_crm_code ";
             
             $obj->set("id_sh_org", $id_sh_org);
             $obj->set("id_sh_type", $id_sh_type);
@@ -410,7 +410,7 @@ class Orgunit extends AfwMomkenObject
 
             $obj->insertNew();
             $obj->is_new = true;
-            $obj->action_done .= "<br>\nSQL TRY LOAD: $load_try_query";
+            $obj->action_done .= "\n SQL TRY LOAD: $load_try_query";
             return $obj;
         } else return null;
     }
