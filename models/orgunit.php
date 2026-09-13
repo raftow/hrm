@@ -240,12 +240,14 @@ class Orgunit extends AfwMomkenObject
 
         $found_and_loaded = false;
         $found_by_code = false;
+        $load_try_query = "";
         if ($obj->load()) {
             $found_and_loaded = "عن طريق الرمز لدى الموراد البشرية ($hrm_crm_code)";
             $found_by_code = true;
         }
         else 
         {
+            $load_try_query .= "<br> mysql> " . $obj->getLastSqlQuery();
             $hrm_crm_code_completed = AfwStringHelper::left_complete_len($hrm_crm_code,4,"0");
             unset($obj);
             $obj = new Orgunit();
@@ -257,6 +259,7 @@ class Orgunit extends AfwMomkenObject
             }
             else
             {
+                $load_try_query .= "<br> mysql> " . $obj->getLastSqlQuery();
                 unset($obj);
                 $obj = new Orgunit();
                 $obj->select("active", "Y");
@@ -278,12 +281,13 @@ class Orgunit extends AfwMomkenObject
         } 
         
 
-        $load_try_query = $obj->getLastSqlQuery();
+        $load_try_query .= "<br> mysql> " . $obj->getLastSqlQuery();
 
         /* if($hrm_crm_code=="152" and !$found_and_loaded) {
             die("findOrgunit failed to found this unit : load_try_query=$load_try_query");
         }*/
         $obj->alert = ""; 
+        $obj->action_done = "";
         
         if ($found_and_loaded) 
         {
@@ -358,7 +362,7 @@ class Orgunit extends AfwMomkenObject
             }
             else {
                 $old_code = $obj->getVal($hrm_crm."_code");
-                $obj->action_done = " تم العثور على وحدة بنفس الاسم بالعربية ولكن برمز مختلف في نظام الموارد البشرية [$old_code] فسيتم تحديث الرمز إلى $hrm_crm_code";
+                $obj->action_done .= " تم العثور على وحدة بنفس الاسم بالعربية ولكن برمز مختلف في نظام الموارد البشرية [$old_code] فسيتم تحديث الرمز إلى $hrm_crm_code";
             }
 
             if($update_obj_if_found) {
@@ -378,17 +382,18 @@ class Orgunit extends AfwMomkenObject
                 }
                 $nb_rows_affected = $obj->update();
                 if(!$nb_rows_affected) {
-                    $obj->action_done = " لم يتم تحديث بيانات الوحدة : ".$obj->getTechnicalNotes();
+                    $obj->action_done .= " لم يتم تحديث بيانات الوحدة : ".$obj->getTechnicalNotes();
                 }
                 else {
                     $obj->action_done .= "<br>\nrows affected : $nb_rows_affected";
                 }
             }
+            $obj->action_done .= "<br>\nSQL TRY LOAD: $load_try_query";
             return $obj;        
         }
         elseif ($create_obj_if_not_found) {
-            $obj->action_done = "لم يتم العثور على وحدة بنفس الاسم بالعربية في نظام الموارد البشرية [$titre_short/$titre] فسيتم إنشاء وحدة جديدة بهذا الاسم وبرمز $hrm_crm_code ";
-            $obj->action_done .= "<br>\nSQL TRY LOAD: $load_try_query";
+            $obj->action_done .= "لم يتم العثور على وحدة بنفس الاسم بالعربية في نظام الموارد البشرية [$titre_short/$titre] فسيتم إنشاء وحدة جديدة بهذا الاسم وبرمز $hrm_crm_code ";
+            
             $obj->set("id_sh_org", $id_sh_org);
             $obj->set("id_sh_type", $id_sh_type);
             $obj->set("titre_short", $titre_short);
@@ -405,6 +410,7 @@ class Orgunit extends AfwMomkenObject
 
             $obj->insertNew();
             $obj->is_new = true;
+            $obj->action_done .= "<br>\nSQL TRY LOAD: $load_try_query";
             return $obj;
         } else return null;
     }
