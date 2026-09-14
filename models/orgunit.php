@@ -257,10 +257,6 @@ class Orgunit extends AfwMomkenObject
                 $found_by_code = true;
             } else {
                 $load_try_query .= "\n mysql 1 : " . $obj->getLastSqlQuery();
-                unset($obj);
-                $obj = new Orgunit();
-                $obj->select("active", "Y");
-
                 $arrSelects = [
                     "titre_short" => $titre_short,
                     "titre" => $titre,
@@ -268,11 +264,27 @@ class Orgunit extends AfwMomkenObject
                     // "titre_en" => $titre_en,
                 ];
 
-                $obj->selectOneOfListOfCritirea($arrSelects);
+                
+                unset($obj);
+                $obj = new Orgunit();
+                $obj->select("active", "Y");
 
-                if ($obj->load()) {
-                    $obj->how_found_and_loaded = "عن طريق الاسم بالعربية $titre_short/$titre لدى الموراد البشرية يرقم التسلسلي : {" . $obj->id . "}";
+                $obj->selectOneOfListOfCritirea($arrSelects);
+                $nbFound = $obj->count();
+                if($nbFound>1) {
+                    die("2 units found with : $titre_short / $titre");
                 }
+                elseif($nbFound==1) {
+                    unset($obj);
+                    $obj = new Orgunit();
+                    $obj->select("active", "Y");
+                    $obj->selectOneOfListOfCritirea($arrSelects);
+
+                    if ($obj->load()) {
+                        $obj->how_found_and_loaded = "عن طريق الاسم بالعربية $titre_short/$titre لدى الموراد البشرية يرقم التسلسلي : {" . $obj->id . "}";
+                    }
+                }
+                
             }
         }
 
@@ -280,7 +292,11 @@ class Orgunit extends AfwMomkenObject
         $load_try_query .= "\n mysql 2 : " . $obj->getLastSqlQuery();
         $_how_found_and_loaded = $obj->how_found_and_loaded;
         $found_hrm_code = $obj->getVal($hrm_crm."_code");
+        $found_titre_short = $obj->getVal("titre_short");
+        $found_titre = $obj->getVal("titre");
         if (($hrm_crm_code != $found_hrm_code) and 
+            ($found_titre_short != $titre_short) and 
+            ($found_titre != $titre) and 
             (!AfwStringHelper::stringContain($found_hrm_code, $hrm_crm_code)) and
             $_how_found_and_loaded) {
             die("findOrgunit is trying to find <br> rowExternal($hrm_crm : $hrm_crm_code) = " . var_export($rowExternal, true) .
