@@ -231,7 +231,8 @@ class Orgunit extends AfwMomkenObject
         $uactive = "Y",
         $id_sh_parent = null,
         $id_responsible = null,
-        $stop_and_debugg_before_update = false
+        $stop_and_debugg_before_update = false,
+        $rowExternal = null
     ) {
         $obj = new Orgunit();
         $obj->select($hrm_crm . "_code", $hrm_crm_code);
@@ -279,7 +280,11 @@ class Orgunit extends AfwMomkenObject
         $load_try_query .= "\n mysql " . $obj->getLastSqlQuery();
 
         if($hrm_crm_code=="690" and $how_found_and_loaded) {
-            die("findOrgunit is trying to find $titre_short/$titre and found : <br> \n $how_found_and_loaded, <br> \n load_try_query=$load_try_query");
+            die("findOrgunit is trying to find <br> rowExternal = " . var_export($rowExternal, true) .
+                "\n title is :$titre_short/$titre <br> \n 
+                and found : \n
+                $how_found_and_loaded, <br> \n 
+                load_try_query=$load_try_query");
         }
 
         /* if($hrm_crm_code=="152" and !$how_found_and_loaded) {
