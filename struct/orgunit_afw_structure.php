@@ -652,7 +652,7 @@ class HrmOrgunitAfwStructure
 			'HIDE_IF_NEW' => true,
 			'SHOW' => true,
 			'TECH_FIELDS-RETRIEVE' => true,
-			'RETRIEVE' => false,
+			'RETRIEVE' => true,
 			'QEDIT' => false,
 			'TYPE' => 'GDAT',
 			'FGROUP' => 'tech_fields'
