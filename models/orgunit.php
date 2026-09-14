@@ -238,11 +238,11 @@ class Orgunit extends AfwMomkenObject
 
         if (!$id_sh_parent) $id_sh_parent = $id_sh_org;
 
-        $found_and_loaded = false;
+        $how_found_and_loaded = false;
         $found_by_code = false;
         $load_try_query = "";
         if ($obj->load()) {
-            $found_and_loaded = "عن طريق الرمز لدى الموراد البشرية ($hrm_crm_code)";
+            $how_found_and_loaded = "عن طريق الرمز لدى الموراد البشرية ($hrm_crm_code)";
             $found_by_code = true;
         } else {
             $load_try_query .= "\n mysql " . $obj->getLastSqlQuery();
@@ -252,7 +252,7 @@ class Orgunit extends AfwMomkenObject
             $obj->where($hrm_crm . "_code like '065_-$hrm_crm_code_completed'");
 
             if ($obj->load()) {
-                $found_and_loaded = "عن طريق الرمز القديم لدى الموراد البشرية (065_-$hrm_crm_code_completed)";
+                $how_found_and_loaded = "عن طريق الرمز القديم لدى الموراد البشرية (065_-$hrm_crm_code_completed)";
                 $found_by_code = true;
             } else {
                 $load_try_query .= "\n mysql " . $obj->getLastSqlQuery();
@@ -270,7 +270,7 @@ class Orgunit extends AfwMomkenObject
                 $obj->selectOneOfListOfCritirea($arrSelects);
 
                 if ($obj->load()) {
-                    $found_and_loaded = "عن طريق الاسم بالعربية $titre_short/$titre لدى الموراد البشرية يرقم التسلسلي : {" . $obj->id . "}";
+                    $how_found_and_loaded = "عن طريق الاسم بالعربية $titre_short/$titre لدى الموراد البشرية يرقم التسلسلي : {" . $obj->id . "}";
                 }
             }
         }
@@ -278,108 +278,56 @@ class Orgunit extends AfwMomkenObject
 
         $load_try_query .= "\n mysql " . $obj->getLastSqlQuery();
 
-        /* if($hrm_crm_code=="152" and !$found_and_loaded) {
+        /* if($hrm_crm_code=="152" and !$how_found_and_loaded) {
             die("findOrgunit failed to found this unit : load_try_query=$load_try_query");
         }*/
         $obj->alert = "";
         $obj->action_done = "";
 
-        if ($found_and_loaded) {
+        if ($how_found_and_loaded) {
             $obj->alert .= " loaded";
-            if ($found_by_code) {
-                if (($uactive == "Y")) {
-                    $obj->parent_changed = $found_and_loaded;
-
-                    $old_id_sh_org = $obj->getVal("id_sh_org");
-                    $old_sh_org = $obj->decode("id_sh_org");
-                    if ($id_sh_org and ($id_sh_org != $old_id_sh_org)) {
-                        $obj->set("id_sh_org", $id_sh_org);
-                        $sh_org = $obj->decode("id_sh_org");
-                        if ($old_id_sh_org) {
-                            $obj->parent_changed .= "\n كانت تتبع " . trim($old_sh_org) . " فصارت تتبع " . trim($sh_org);
-                            $obj->alert = " moved0";
-                        }
-                    }
-
-                    $old_id_sh_parent = $obj->getVal("id_sh_parent");
-                    $old_sh_parent = $obj->decode("id_sh_parent");
-                    if ($id_sh_parent and ($id_sh_parent != $old_id_sh_parent)) {
-                        $obj->set("id_sh_parent", $id_sh_parent);
-                        $sh_parent = $obj->decode("id_sh_parent");
-                        if ($old_id_sh_parent) {
-                            $obj->parent_changed .= "\n كانت تحت " . trim($old_sh_parent) . " فصارت تحت " . trim($sh_parent);
-                            $obj->alert .= " moved";
-                        }
-                    }
-
-                    if ($id_sh_type) $obj->set("id_sh_type", $id_sh_type);
-                    $old_titre = $obj->getVal("titre");
-                    $obj->set("titre_short", $titre_short);
-                    $obj->set("titre", $titre);
-                    $obj->set("titre_short_en", $titre_short_en);
-                    $obj->set("titre_en", $titre_en);
-                    if ($id_domain) $obj->set("id_domain", $id_domain);
-
-                    if (trim($old_titre) != trim($titre)) {
-                        if (!trim($old_titre)) $obj->is_new = trim($titre);
-                        else $obj->title_changed = "من " . trim($old_titre) . " إلى " . trim($titre);
-                        $obj->alert .= " titlechanged";
-                    }
-
-                    $old_code = $obj->getVal($hrm_crm . "_code");
-                    if ($hrm_crm_code != $old_code) {
-                        $obj->set($hrm_crm . "_code", $hrm_crm_code);
-                        $obj->action_done .= "\nتم تعديل كود الوحدة";
-                        $obj->alert .= " codechanged";
-                    }
-                    if ($id_responsible and ($obj->getVal("id_responsible") != $id_responsible)) {
-                        $obj->set("id_responsible", $id_responsible);
-                        $obj->alert .= " newresponsible";
-                    }
-                }
-
-                $obj->set("active", $uactive);
-
-                if ($uactive == "N") {
-                    $obj->alert .= " disabled";
-                    $obj->action_done .= "\n تم جعل الوحدة غير نشطة";
-                }
-
-
-                list($query_sql_00, $fields_updated00, $report00) = AfwSqlHelper::getSQLUpdate($obj, 1, 0, $obj->id);
-                $obj->action_done .= "\n SQL = " . $query_sql_00;
-            } else {
-                $old_code = $obj->getVal($hrm_crm . "_code");
-                $obj->action_done .= "\n تم العثور على وحدة بنفس الاسم بالعربية ولكن برمز مختلف في نظام الموارد البشرية [$old_code] فسيتم تحديث الرمز إلى $hrm_crm_code";
-            }
-
             if ($update_obj_if_found) {
-                $obj->set("active", $uactive);
-                if ($uactive == "N") {
-                    $obj->alert .= " disabled";
-                    $obj->action_done .= "\n تم جعل الوحدة غير نشطة";
-                } else {
-                    $obj->action_done .= "\n تم تحديث بيانات الوحدة";
-                }
-                $obj->set($hrm_crm . "_code", $hrm_crm_code);
-                if ($stop_and_debugg_before_update) {
-                    $res11 = AfwSqlHelper::getSQLUpdate($obj, 1, 0, $obj->id); // list($query_sql_11, $fields_updated11, $report11)
-
-                    die(AfwExportHelper::afwExport($res11));
-                }
-                $nb_rows_affected = $obj->update();
-                if (!$nb_rows_affected) {
-                    $obj->action_done .= "\n لم يتم تحديث بيانات الوحدة : " . $obj->getTechnicalNotes();
-                } else {
-                    $obj->action_done .= "\n rows affected : $nb_rows_affected";
+                $obj->updateMeWithData($uactive, $id_sh_org, $id_sh_parent, $id_sh_type, $titre_short, $titre, $titre_short_en, $titre_en, $id_domain, $id_responsible, $hrm_crm_code, $hrm_crm, $how_found_and_loaded, $stop_and_debugg_before_update);
+                $obj->action_done .= "\n SQL TRY LOAD: $load_try_query";                
+                if (!$found_by_code) {
+                    $old_code = $obj->getVal($hrm_crm . "_code");
+                    $obj->action_done .= "\n تم العثور على وحدة بنفس الاسم بالعربية ولكن برمز مختلف في نظام الموارد البشرية [$old_code] فسيتم تحديث الرمز إلى $hrm_crm_code";
                 }
             }
-            $obj->action_done .= "\n SQL TRY LOAD: $load_try_query";
-            return $obj;
-        } elseif ($create_obj_if_not_found) {
-            $obj->action_done .= "\n لم يتم العثور على وحدة بنفس الاسم بالعربية في نظام الموارد البشرية [$titre_short/$titre] فسيتم إنشاء وحدة جديدة بهذا الاسم وبرمز $hrm_crm_code ";
 
-            $obj->set("id_sh_org", $id_sh_org);
+            return $obj;
+            
+        } elseif ($create_obj_if_not_found) {
+            
+            $objNew = self::createMeWithData($uactive, $id_sh_org, $id_sh_parent, $id_sh_type, $titre_short, $titre, $titre_short_en, $titre_en, $id_domain, $id_responsible, $hrm_crm_code, $hrm_crm, $how_found_and_loaded, $stop_and_debugg_before_update);
+            $objNew->action_done .= "\n NEW CREATED AFTER SQL TRY LOAD: $load_try_query";
+            
+            return $objNew;
+        } else return null;
+    }
+
+
+    public static function createMeWithData(
+        $uactive,
+        $id_sh_org,
+        $id_sh_parent,
+        $id_sh_type,
+        $titre_short,
+        $titre,
+        $titre_short_en,
+        $titre_en,
+        $id_domain,
+        $id_responsible,
+
+        $hrm_crm_code,
+        $hrm_crm,
+        $how_found_and_loaded,
+        $stop_and_debugg_before_update = false
+
+    )
+    {
+        $obj = new Orgunit();
+        $obj->set("id_sh_org", $id_sh_org);
             $obj->set("id_sh_type", $id_sh_type);
             $obj->set("titre_short", $titre_short);
             $obj->set("titre", $titre);
@@ -395,9 +343,112 @@ class Orgunit extends AfwMomkenObject
 
             $obj->insertNew();
             $obj->is_new = true;
-            $obj->action_done .= "\n SQL TRY LOAD: $load_try_query";
+            $obj->action_done .= "\n لم يتم العثور على وحدة بنفس الاسم بالعربية في نظام الموارد البشرية [$titre_short/$titre] فسيتم إنشاء وحدة جديدة بهذا الاسم وبرمز $hrm_crm_code ";
             return $obj;
-        } else return null;
+    }
+
+    public function updateMeWithData(
+        $uactive,
+        $id_sh_org,
+        $id_sh_parent,
+        $id_sh_type,
+        $titre_short,
+        $titre,
+        $titre_short_en,
+        $titre_en,
+        $id_domain,
+        $id_responsible,
+
+        $hrm_crm_code,
+        $hrm_crm,
+        $how_found_and_loaded,
+        $stop_and_debugg_before_update = false
+
+    ) {
+        if (($uactive == "Y")) {
+            $this->parent_changed = $how_found_and_loaded;
+
+            $old_id_sh_org = $this->getVal("id_sh_org");
+            $old_sh_org = $this->decode("id_sh_org");
+            if ($id_sh_org and ($id_sh_org != $old_id_sh_org)) {
+                $this->set("id_sh_org", $id_sh_org);
+                $sh_org = $this->decode("id_sh_org");
+                if ($old_id_sh_org) {
+                    $this->parent_changed .= "\n كانت تتبع " . trim($old_sh_org) . " فصارت تتبع " . trim($sh_org);
+                    $this->alert = " moved0";
+                }
+            }
+
+            $old_id_sh_parent = $this->getVal("id_sh_parent");
+            $old_sh_parent = $this->decode("id_sh_parent");
+            if ($id_sh_parent and ($id_sh_parent != $old_id_sh_parent)) {
+                $this->set("id_sh_parent", $id_sh_parent);
+                $sh_parent = $this->decode("id_sh_parent");
+                if ($old_id_sh_parent) {
+                    $this->parent_changed .= "\n كانت تحت " . trim($old_sh_parent) . " فصارت تحت " . trim($sh_parent);
+                    $this->alert .= " moved";
+                }
+            }
+
+            if ($id_sh_type) $this->set("id_sh_type", $id_sh_type);
+            $old_titre = $this->getVal("titre");
+            $this->set("titre_short", $titre_short);
+            $this->set("titre", $titre);
+            $this->set("titre_short_en", $titre_short_en);
+            $this->set("titre_en", $titre_en);
+            if ($id_domain) $this->set("id_domain", $id_domain);
+
+            if (trim($old_titre) != trim($titre)) {
+                if (!trim($old_titre)) $this->is_new = trim($titre);
+                else {
+                    $this->title_changed = "من " . trim($old_titre) . " إلى " . trim($titre);
+                    $this->action_done .= "تم تعديل المسمى العربي " . $this->title_changed;
+                }
+                $this->alert .= " titlechanged";
+            }
+
+            $old_code = $this->getVal($hrm_crm . "_code");
+            if ($hrm_crm_code != $old_code) {
+                $this->set($hrm_crm . "_code", $hrm_crm_code);
+                $this->action_done .= "\nتم تعديل كود الوحدة من $old_code إلى $hrm_crm_code";
+                $this->alert .= " codechanged";
+                die("example : " .  $this->action_done);
+            }
+            if ($id_responsible and ($this->getVal("id_responsible") != $id_responsible)) {
+                $this->set("id_responsible", $id_responsible);
+                $this->alert .= " newresponsible";
+            }
+        }
+
+        $this->set("active", $uactive);
+
+        if ($uactive == "N") {
+            $this->alert .= " disabled";
+            $this->action_done .= "\n تم جعل الوحدة غير نشطة";
+        }
+
+
+        $res11 = AfwSqlHelper::getSQLUpdate($this, 1, 0, $this->id);
+        list($query_sql_00, $fields_updated00, $report00) = $res11;
+        if ($stop_and_debugg_before_update) {
+            AfwSqlHelper::getSQLUpdate($this, 1, 0, $this->id); // list($query_sql_11, $fields_updated11, $report11)
+
+            die(AfwExportHelper::afwExport($res11));
+        }
+
+        $this->action_done .= "\n SQL = " . $query_sql_00;
+
+        
+
+
+
+
+        $nb_rows_affected = $this->update();
+        if (!$nb_rows_affected) {
+            $this->action_done .= "\n لم يتم تحديث بيانات الوحدة : " . $this->getTechnicalNotes();
+        } else {
+            $this->action_done .= "\n rows affected : $nb_rows_affected";
+        }
     }
 
     public function getShortDisplay($lang = "ar")
