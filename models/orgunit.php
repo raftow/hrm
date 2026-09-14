@@ -402,17 +402,18 @@ class Orgunit extends AfwMomkenObject
                 if (!trim($old_titre)) $this->is_new = trim($titre);
                 else {
                     $this->title_changed = "من " . trim($old_titre) . " إلى " . trim($titre);
-                    $this->action_done .= "تم تعديل المسمى العربي " . $this->title_changed;
+                    $this->action_done .= "\nتم تعديل المسمى العربي " . $this->title_changed;
                 }
                 $this->alert .= " titlechanged";
             }
 
+            $id = $this->id;
             $old_code = $this->getVal($hrm_crm . "_code");
             if ($hrm_crm_code != $old_code) {
                 $this->set($hrm_crm . "_code", $hrm_crm_code);
                 $this->action_done .= "\nتم تعديل كود الوحدة من $old_code إلى $hrm_crm_code";
                 $this->alert .= " codechanged";
-                die("example : " .  $this->action_done);
+                if($hrm_crm_code==$id) die("example:\n o[$old_titre] \n n[$titre_short/$titre : $titre_short_en/$titre_en] : \n" .  $this->action_done);
             }
             if ($id_responsible and ($this->getVal("id_responsible") != $id_responsible)) {
                 $this->set("id_responsible", $id_responsible);
@@ -1196,10 +1197,10 @@ class Orgunit extends AfwMomkenObject
         $oldvalue = $this->getVal($attribute);
         $id = $this->id;
 
-
+        /*
         if ($attribute == "hrm_code") {
             if ($newvalue == $id) throw new AfwRuntimeException("before set attribute $attribute from '$oldvalue' to '$newvalue' rafik pb found الحمد لله حمدا كثيرا");
-        }
+        }*/
 
         return true;
     }
