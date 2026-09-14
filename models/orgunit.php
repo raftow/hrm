@@ -278,6 +278,10 @@ class Orgunit extends AfwMomkenObject
 
         $load_try_query .= "\n mysql " . $obj->getLastSqlQuery();
 
+        if($hrm_crm_code=="690" and $how_found_and_loaded) {
+            die("findOrgunit is trying to find $titre_short/$titre and found : <br> \n $how_found_and_loaded, <br> \n load_try_query=$load_try_query");
+        }
+
         /* if($hrm_crm_code=="152" and !$how_found_and_loaded) {
             die("findOrgunit failed to found this unit : load_try_query=$load_try_query");
         }*/
