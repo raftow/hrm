@@ -279,12 +279,16 @@ class Orgunit extends AfwMomkenObject
 
         $load_try_query .= "\n mysql 2 : " . $obj->getLastSqlQuery();
         $_how_found_and_loaded = $obj->how_found_and_loaded;
-        if (($hrm_crm_code != $obj->getVal("hrm_code")) and $_how_found_and_loaded) {
+        $found_hrm_code = $obj->getVal($hrm_crm."_code");
+        if (($hrm_crm_code != $found_hrm_code) and 
+            (!AfwStringHelper::stringContain($found_hrm_code, $hrm_crm_code)) and
+            $_how_found_and_loaded) {
             die("findOrgunit is trying to find <br> rowExternal($hrm_crm : $hrm_crm_code) = " . var_export($rowExternal, true) .
                 "<br>\n title is :$titre_short/$titre <br> \n 
                 and found : \n
                 $_how_found_and_loaded, <br> \n                 
                 object found : " . $obj->getDisplay()." <br> \n 
+                found $hrm_crm code : $found_hrm_code
                 load_try_query = $load_try_query");
         }
 
