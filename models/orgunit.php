@@ -287,8 +287,8 @@ class Orgunit extends AfwMomkenObject
         if ($how_found_and_loaded) {
             $obj->alert .= " loaded";
             if ($update_obj_if_found) {
-                $obj->updateMeWithData($uactive, $id_sh_org, $id_sh_parent, $id_sh_type, $titre_short, $titre, $titre_short_en, $titre_en, $id_domain, $id_responsible, $hrm_crm_code, $hrm_crm, $how_found_and_loaded, $stop_and_debugg_before_update);
-                $obj->action_done .= "\n SQL TRY LOAD: $load_try_query";                
+                $obj->updateMeWithData($uactive, $id_sh_org, $id_sh_parent, $id_sh_type, $titre_short, $titre, $titre_short_en, $titre_en, $id_domain, $id_responsible, $hrm_crm_code, $hrm_crm, $how_found_and_loaded, $stop_and_debugg_before_update, $load_try_query);
+                
                 if (!$found_by_code) {
                     $old_code = $obj->getVal($hrm_crm . "_code");
                     $obj->action_done .= "\n تم العثور على وحدة بنفس الاسم بالعربية ولكن برمز مختلف في نظام الموارد البشرية [$old_code] فسيتم تحديث الرمز إلى $hrm_crm_code";
@@ -362,9 +362,11 @@ class Orgunit extends AfwMomkenObject
         $hrm_crm_code,
         $hrm_crm,
         $how_found_and_loaded,
-        $stop_and_debugg_before_update = false
+        $stop_and_debugg_before_update = false,
+        $load_try_query = ""
 
     ) {
+        $this->action_done .= "\n SQL TRY LOAD: $load_try_query";                
         if (($uactive == "Y")) {
             $this->parent_changed = $how_found_and_loaded;
 
@@ -413,7 +415,12 @@ class Orgunit extends AfwMomkenObject
                 $this->set($hrm_crm . "_code", $hrm_crm_code);
                 $this->action_done .= "\nتم تعديل كود الوحدة من $old_code إلى $hrm_crm_code";
                 $this->alert .= " codechanged";
-                if($hrm_crm_code==$id) die("example:\n o[$old_titre] \n n[$titre_short/$titre : $titre_short_en/$titre_en] : \n" .  $this->action_done);
+                if($hrm_crm_code==$id) {
+                    die("example:\n 
+                         o[$old_titre] \n 
+                         n[$titre_short/$titre : $titre_short_en/$titre_en] : \n" .  
+                         $this->action_done);
+                }
             }
             if ($id_responsible and ($this->getVal("id_responsible") != $id_responsible)) {
                 $this->set("id_responsible", $id_responsible);
