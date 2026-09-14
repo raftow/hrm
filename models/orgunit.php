@@ -333,6 +333,7 @@ class Orgunit extends AfwMomkenObject
                     {
                         if(!trim($old_titre)) $obj->is_new = trim($titre);
                         else $obj->title_changed = "من ".trim($old_titre)." إلى ".trim($titre);
+                        $obj->alert .= " titlechanged";
                     }
 
                     $old_code = $obj->getVal($hrm_crm."_code");
