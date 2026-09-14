@@ -239,11 +239,11 @@ class Orgunit extends AfwMomkenObject
 
         if (!$id_sh_parent) $id_sh_parent = $id_sh_org;
 
-        $how_found_and_loaded = false;
+        $obj->how_found_and_loaded = false;
         $found_by_code = false;
         $load_try_query = "";
         if ($obj->load()) {
-            $how_found_and_loaded = "عن طريق الرمز لدى الموراد البشرية ($hrm_crm_code)";
+            $obj->how_found_and_loaded = "عن طريق الرمز لدى الموراد البشرية ($hrm_crm_code)";
             $found_by_code = true;
         } else {
             $load_try_query .= "\n mysql 0 : " . $obj->getLastSqlQuery();
