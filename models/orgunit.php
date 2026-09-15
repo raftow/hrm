@@ -358,7 +358,7 @@ class Orgunit extends AfwMomkenObject
                 $hrm_crm,
                 $stop_and_debugg_before_update
             );
-            $objNew->action_done .= "\n NEW CREATED AFTER SQL TRY LOAD: $load_try_query";
+            $objNew->log_tech .= "\n NEW CREATED AFTER SQL TRY LOAD: $load_try_query";
 
             return $objNew;
         } else return null;
@@ -422,7 +422,7 @@ class Orgunit extends AfwMomkenObject
         $load_try_query = ""
 
     ) {
-        $this->action_done .= "\n SQL TRY LOAD: $load_try_query";
+        $this->log_tech .= "\n SQL TRY LOAD: $load_try_query";
         if (($uactive == "Y")) {
             $this->parent_changed = $this->how_found_and_loaded;
 
