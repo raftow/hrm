@@ -398,6 +398,7 @@ class Orgunit extends AfwMomkenObject
         }
 
         $obj->insertNew();
+        $obj->alert .= " newcreated";
         $obj->is_new = true;
         $obj->action_done .= "\n لم يتم العثور على وحدة بنفس الاسم بالعربية في نظام الموارد البشرية [$titre_short/$titre] فسيتم إنشاء وحدة جديدة بهذا الاسم وبرمز $hrm_crm_code ";
         return $obj;
