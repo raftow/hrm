@@ -243,20 +243,22 @@ class Orgunit extends AfwMomkenObject
         $found_by_code = false;
         $load_try_query = "";
         if ($obj->load()) {
+            $load_try_query .= "\n mysql ok 0 : " . $obj->getLastSqlQuery();
             $obj->how_found_and_loaded = "عن طريق الرمز لدى الموراد البشرية ($hrm_crm_code)";
             $found_by_code = true;
         } else {
-            $load_try_query .= "\n mysql 0 : " . $obj->getLastSqlQuery();
+            $load_try_query .= "\n mysql empty 0 : " . $obj->getLastSqlQuery();
             $hrm_crm_code_completed = AfwStringHelper::left_complete_len($hrm_crm_code, 4, "0");
             unset($obj);
             $obj = new Orgunit();
             $obj->where($hrm_crm . "_code like '065_-$hrm_crm_code_completed'");
 
             if ($obj->load()) {
+                $load_try_query .= "\n mysql ok 1 : " . $obj->getLastSqlQuery();
                 $obj->how_found_and_loaded = "عن طريق الرمز القديم لدى الموراد البشرية (065_-$hrm_crm_code_completed)";
                 $found_by_code = true;
             } else {
-                $load_try_query .= "\n mysql 1 : " . $obj->getLastSqlQuery();
+                $load_try_query .= "\n mysql empty 1 : " . $obj->getLastSqlQuery();
                 $arrSelects = [
                     "titre_short" => $titre_short,
                     "titre" => $titre,
@@ -281,7 +283,11 @@ class Orgunit extends AfwMomkenObject
                     $obj->selectOneOfListOfCritirea($arrSelects);
 
                     if ($obj->load()) {
+                        $load_try_query .= "\n mysql ok 2 : " . $obj->getLastSqlQuery();
                         $obj->how_found_and_loaded = "عن طريق الاسم بالعربية $titre_short/$titre لدى الموراد البشرية يرقم التسلسلي : {" . $obj->id . "}";
+                    }
+                    else {
+                        $load_try_query .= "\n mysql empty 2 : " . $obj->getLastSqlQuery();
                     }
                 }
                 
@@ -289,7 +295,7 @@ class Orgunit extends AfwMomkenObject
         }
 
 
-        $load_try_query .= "\n mysql 2 : " . $obj->getLastSqlQuery();
+        
         $_how_found_and_loaded = $obj->how_found_and_loaded;
         $found_hrm_code = $obj->getVal($hrm_crm."_code");
         $found_titre_short = $obj->getVal("titre_short");
