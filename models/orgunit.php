@@ -402,7 +402,7 @@ class Orgunit extends AfwMomkenObject
         $obj->set("id_domain", $id_domain);
         $obj->set($hrm_crm . "_code", $hrm_crm_code);
         $obj->set("active", $uactive);
-        if ($force_update_responsible or ($id_responsible and (!$this->getVal("id_responsible")))) {
+        if ($force_update_responsible or ($id_responsible and (!$obj->getVal("id_responsible")))) {
             $obj->set("id_responsible", $id_responsible);
             $obj->alert .= " newresponsible";
         }
@@ -511,7 +511,7 @@ class Orgunit extends AfwMomkenObject
             die(AfwExportHelper::afwExport($res11));
         }
 
-        $this->action_done .= "\n SQL = " . $query_sql_00;
+        // $this->action_done .= "\n SQL = " . $query_sql_00;
 
 
 
@@ -522,7 +522,7 @@ class Orgunit extends AfwMomkenObject
         if (!$nb_rows_affected) {
             $this->action_done .= "\n لم يتم تحديث بيانات الوحدة : " . $this->getTechnicalNotes();
         } else {
-            $this->action_done .= "\n rows affected : $nb_rows_affected";
+            $this->action_done .= "\n تم تحديث $nb_rows_affected سجل";
         }
     }
 
