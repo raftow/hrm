@@ -232,7 +232,8 @@ class Orgunit extends AfwMomkenObject
         $id_sh_parent = null,
         $id_responsible = null,
         $stop_and_debugg_before_update = false,
-        $rowExternal = null
+        $rowExternal = null,
+        $force_update_responsible = false
     ) {
         $obj = new Orgunit();
         $obj->select($hrm_crm . "_code", $hrm_crm_code);
@@ -336,6 +337,7 @@ class Orgunit extends AfwMomkenObject
                     $id_responsible,
                     $hrm_crm_code,
                     $hrm_crm,
+                    $force_update_responsible,
                     $stop_and_debugg_before_update,
                     $load_try_query
                 );
@@ -362,6 +364,7 @@ class Orgunit extends AfwMomkenObject
                 $id_responsible,
                 $hrm_crm_code,
                 $hrm_crm,
+                $force_update_responsible,
                 $stop_and_debugg_before_update
             );
             $objNew->log_tech .= "\n NEW CREATED AFTER SQL TRY LOAD: $load_try_query";
@@ -384,6 +387,7 @@ class Orgunit extends AfwMomkenObject
         $id_responsible,
         $hrm_crm_code,
         $hrm_crm,
+        $force_update_responsible,
         $stop_and_debugg_before_update = false
 
     ) {
@@ -398,7 +402,7 @@ class Orgunit extends AfwMomkenObject
         $obj->set("id_domain", $id_domain);
         $obj->set($hrm_crm . "_code", $hrm_crm_code);
         $obj->set("active", $uactive);
-        if ($id_responsible and ($obj->getVal("id_responsible") != $id_responsible)) {
+        if ($force_update_responsible or ($id_responsible and (!$this->getVal("id_responsible")))) {
             $obj->set("id_responsible", $id_responsible);
             $obj->alert .= " newresponsible";
         }
@@ -424,6 +428,7 @@ class Orgunit extends AfwMomkenObject
 
         $hrm_crm_code,
         $hrm_crm,
+        $force_update_responsible,
         $stop_and_debugg_before_update = false,
         $load_try_query = ""
 
@@ -484,7 +489,7 @@ class Orgunit extends AfwMomkenObject
                         $this->action_done);
                 }
             }
-            if ($id_responsible and ($this->getVal("id_responsible") != $id_responsible)) {
+            if ($force_update_responsible or ($id_responsible and (!$this->getVal("id_responsible")))) {
                 $this->set("id_responsible", $id_responsible);
                 $this->alert .= " newresponsible";
             }
