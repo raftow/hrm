@@ -21,7 +21,8 @@ $trad["orgunit"]["moduleOrgunitList"] = "التطبيقات المستخدمة";
 
 $trad["orgunit"]["avail"] = "نشط";
 $trad["orgunit"]["titre"] = "المسمى الكامل";
-$trad["orgunit"]["titre_short"] = "المسمى المختصر";
+$trad["orgunit"]["titre_short"] = "المسمى عربي";
+$trad["orgunit"]["titre_short_en"] = "المسمى انجليزي";
 $trad["orgunit"]["emp_num"] = "رقم الموظف";
 $trad["orgunit"]["id_domain"] = "قطاع الأعمال";
 $trad["orgunit"]["gender_id"] = "جنس الموظفين";

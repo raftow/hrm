@@ -80,7 +80,7 @@ class HrmOrgunitAfwStructure
 
 		'active' => array(
 			'SHOW-ADMIN' => true,
-			'RETRIEVE' => false,
+			'RETRIEVE' => true,
 			'EDIT' => true,
 			'QEDIT' => true,
 			'DEFAUT' => 'Y',

@@ -241,12 +241,12 @@ class Orgunit extends AfwMomkenObject
         if (!$id_sh_parent) $id_sh_parent = $id_sh_org;
 
         $obj->how_found_and_loaded = false;
-        $found_by_code = false;
+        $obj->foundByCode = false;
         $load_try_query = "";
         if ($obj->load()) {
             $load_try_query .= "\n mysql ok 0 : " . $obj->getLastSqlQuery();
             $obj->how_found_and_loaded = "عن طريق الرمز لدى الموراد البشرية ($hrm_crm_code)";
-            $found_by_code = true;
+            $obj->foundByCode = true;
         } else {
             $load_try_query .= "\n mysql empty 0 : " . $obj->getLastSqlQuery();
             $hrm_crm_code_completed = AfwStringHelper::left_complete_len($hrm_crm_code, 4, "0");
@@ -257,7 +257,7 @@ class Orgunit extends AfwMomkenObject
             if ($obj->load()) {
                 $load_try_query .= "\n mysql ok 1 : " . $obj->getLastSqlQuery();
                 $obj->how_found_and_loaded = "عن طريق الرمز القديم لدى الموراد البشرية (065_-$hrm_crm_code_completed)";
-                $found_by_code = true;
+                $obj->foundByCode = true;
             } else {
                 $load_try_query .= "\n mysql empty 1 : " . $obj->getLastSqlQuery();
                 $arrSelects = [
@@ -342,7 +342,7 @@ class Orgunit extends AfwMomkenObject
                     $load_try_query
                 );
 
-                if (!$found_by_code) {
+                if (!$obj->foundByCode) {
                     $old_code = $obj->getVal($hrm_crm . "_code");
                     $obj->action_done .= "\n تم العثور على وحدة بنفس الاسم بالعربية ولكن برمز مختلف في نظام الموارد البشرية [$old_code] فسيتم تحديث الرمز إلى $hrm_crm_code";
                 }
@@ -493,11 +493,13 @@ class Orgunit extends AfwMomkenObject
                 $this->set("id_responsible", $id_responsible);
                 $this->alert .= " newresponsible";
             }
+            $this->set("active", $uactive);
         }
-
-        $this->set("active", $uactive);
-
-        if ($uactive == "N") {
+        // @note : if we found by name no disable because sometime we disable old unit and create new one 
+        // with same name just parent change
+        // so we disable only if found by code                        
+        elseif($this->foundByCode) { 
+            $this->set("active", $uactive);
             $this->alert .= " disabled";
             $this->action_done .= "\n تم جعل الوحدة غير نشطة";
         }
