@@ -487,7 +487,7 @@ class Orgunit extends AfwMomkenObject
         // so we disable only if found by code                        
         elseif($this->foundByCode) { 
             $this->set("active", $uactive);
-            $this->alert .= " disabled";
+            $this->alert .= " unit-disabled";
             $this->action_done .= "\n تم جعل الوحدة غير نشطة";
         }
 
@@ -498,11 +498,8 @@ class Orgunit extends AfwMomkenObject
         if ($id_domain) $this->set("id_domain", $id_domain);
 
         if (trim($old_titre) != trim($titre)) {
-            if (!trim($old_titre)) $this->is_new = trim($titre);
-            else {
-                $this->title_changed = "من " . trim($old_titre) . " إلى " . trim($titre);
-                $this->action_done .= "\nتم تعديل المسمى العربي " . $this->title_changed;
-            }
+            $this->title_changed = "من " . trim($old_titre) . " إلى " . trim($titre);
+            $this->action_done .= "\nتم تعديل المسمى العربي " . $this->title_changed;
             $this->alert .= " titlechanged";
         }
         $res11 = AfwSqlHelper::getSQLUpdate($this, 1, 0, $this->id);
@@ -522,7 +519,7 @@ class Orgunit extends AfwMomkenObject
 
         $nb_rows_affected = $this->update();
         if (!$nb_rows_affected) {
-            $this->action_done .= "\n لم يتم تحديث بيانات الوحدة : " . $this->getTechnicalNotes();
+            $this->action_done .= "\n لم يتم تحديث بيانات الوحدة في قاعدة البيانات يبدوا أنه لا يوجد أي تغيير ";
         } else {
             $this->action_done .= "\n تم تحديث $nb_rows_affected سجل";
         }
