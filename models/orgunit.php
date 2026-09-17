@@ -461,20 +461,7 @@ class Orgunit extends AfwMomkenObject
 
             if ($id_sh_type) $this->set("id_sh_type", $id_sh_type);
             $old_titre = $this->getVal("titre");
-            $this->set("titre_short", $titre_short);
-            $this->set("titre", $titre);
-            $this->set("titre_short_en", $titre_short_en);
-            $this->set("titre_en", $titre_en);
-            if ($id_domain) $this->set("id_domain", $id_domain);
 
-            if (trim($old_titre) != trim($titre)) {
-                if (!trim($old_titre)) $this->is_new = trim($titre);
-                else {
-                    $this->title_changed = "من " . trim($old_titre) . " إلى " . trim($titre);
-                    $this->action_done .= "\nتم تعديل المسمى العربي " . $this->title_changed;
-                }
-                $this->alert .= " titlechanged";
-            }
 
             $id = $this->id;
             $old_code = $this->getVal($hrm_crm . "_code");
@@ -504,7 +491,20 @@ class Orgunit extends AfwMomkenObject
             $this->action_done .= "\n تم جعل الوحدة غير نشطة";
         }
 
+        $this->set("titre_short", $titre_short);
+        $this->set("titre", $titre);
+        $this->set("titre_short_en", $titre_short_en);
+        $this->set("titre_en", $titre_en);
+        if ($id_domain) $this->set("id_domain", $id_domain);
 
+        if (trim($old_titre) != trim($titre)) {
+            if (!trim($old_titre)) $this->is_new = trim($titre);
+            else {
+                $this->title_changed = "من " . trim($old_titre) . " إلى " . trim($titre);
+                $this->action_done .= "\nتم تعديل المسمى العربي " . $this->title_changed;
+            }
+            $this->alert .= " titlechanged";
+        }
         $res11 = AfwSqlHelper::getSQLUpdate($this, 1, 0, $this->id);
         list($query_sql_00, $fields_updated00, $report00) = $res11;
         if ($stop_and_debugg_before_update) {
@@ -1005,13 +1005,6 @@ class Orgunit extends AfwMomkenObject
                 }
                 // if there's no record that block the delete operation perform the delete of the other records linked with me and deletable
                 if (!$simul) $this->execQuery("delete from ${server_db_prefix}hrm.orgunit where id_sh_parent = '$id' and active='N'");
-
-
-
-
-
-
-
 
                 $server_db_prefix = AfwSession::config("db_prefix", "default_db_"); // FK part of me - deletable 
                 // ums.module_orgunit-الجهة المعنية بالنظام/ التطبيق	id_orgunit  أنا تفاصيل لها-OneToMany
