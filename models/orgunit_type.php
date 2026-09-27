@@ -44,6 +44,14 @@ class OrgunitType extends AFWObject{
 
         // INSTITUTE - معهد  
         public static $ORGUNIT_TYPE_INSTITUTE = 10; 
+
+        // GENERAL DEPARTMENT  إدارة عامة 
+        public static $ORGUNIT_TYPE_GENERAL_DEPARTMENT = 13; 
+
+        // الادارة العامة للتدريب التقني و المهني في منطقة كذا وكذا
+        public static $ORGUNIT_TYPE_GENERAL_DEPARTMENT_OF_REGION = 16; 
+ 
+ 
  
 
  
