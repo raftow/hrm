@@ -1279,6 +1279,7 @@ class Employee extends UmsObject
 
     public function getMyAuser()
     {
+        if(!$this->getVal('email')) return null;
         return Auser::loadByEmail($this->getVal('email'));
     }
 
