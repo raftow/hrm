@@ -141,6 +141,16 @@ class Employee extends UmsObject
         return array($employee, 'HR External data : ' . var_export($resEmployee, true));
     }
 
+    public function getManager()
+    {
+        $orgunitObj = $this->hetOrgunit();
+        if ($orgunitObj) {
+            return $orgunitObj->getManager();
+        }
+
+        return null;
+    }
+
     public function getManagerEmail()
     {
         $orgunitObj = $this->hetOrgunit();
