@@ -469,13 +469,18 @@ class Employee extends UmsObject
                 $company = AfwSession::currentCompany();
                 $file_dir_name = dirname(__FILE__);
                 require_once("$file_dir_name/../../client-$company/external_hrm_employee.php");
-
-                list($ok, $error, $resEmployee) = ExternalHrmEmployee::loadJsonFromExternalHRSystem($user_name, $this->getVal('emp_num'));
+                $this_emp_num = $this->getVal('emp_num');
+                list($ok, $error, $resEmployee) = ExternalHrmEmployee::loadJsonFromExternalHRSystem($user_name, $this_emp_num);
 
                 $info = '';
                 $info .= 'resEmployee=' . var_export($resEmployee, true);
 
-                if ($ok and $resEmployee['company_id'] and $resEmployee['email']) {
+                if ($ok and $resEmployee['company_id'] and trim($resEmployee['email'])) {
+                    // as security process we check this is the same email
+                    if($this->getVal('email') and (strtoupper(trim($this->getVal('email'))) != strtoupper(trim($resEmployee['email']))))
+                    {
+                        throw new AfwRuntimeException("ExternalHrmEmployee::loadJsonFromExternalHRSystem($user_name, $this_emp_num) returned strange result : ".var_export($resEmployee, true));
+                    }
                     $nbFields = $this->updateMeFromJson($resEmployee);
                     list($error2, $info2) = $this->updateMyUserInformationAndRoles();
 
