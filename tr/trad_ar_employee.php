@@ -35,7 +35,7 @@
 		$trad["employee"]["idn_type_id"] = "نوع الهوية";
 		$trad["employee"]["idn"] = "رقم الهوية";
 
-		$trad["employee"]["id_sh_dep"] = "الإدارة العامة";  
+		$trad["employee"]["id_sh_dep"] = "يباشر عمله في";  
 		$trad["employee"]["id_sh_div"] = "الإدارة/القسم";  
 		$trad["employee"]["emp_num"] = "رقم الموظف";
 		$trad["employee"]["mobile"] = "الجوال";

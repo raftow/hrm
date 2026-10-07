@@ -1029,6 +1029,22 @@ class Orgunit extends AfwMomkenObject
                 if (!$simul) $this->execQuery("update ${server_db_prefix}ums.module_orgunit set id_orgunit='$id_replace' where id_orgunit='$id' ");
 
 
+                if (class_exists('CrmOrgunit', true)) {
+                    if (!$simul) $this->execQuery("delete from ${server_db_prefix}crm.crm_orgunit where orgunit_id='$id' ");
+                }
+
+                if (class_exists('CrmEmployee', true)) {
+                    if (!$simul) $this->execQuery("update ${server_db_prefix}crm.crm_employee set orgunit_id='$id_replace' where orgunit_id='$id' ");
+                }
+
+                if (class_exists('Request', true)) {
+                    if (!$simul) $this->execQuery("update ${server_db_prefix}crm.request set orgunit_id='$id_replace' where orgunit_id='$id' ");
+                }
+
+                if (class_exists('Response', true)) {
+                    if (!$simul) $this->execQuery("update ${server_db_prefix}crm.response set orgunit_id='$id_replace' where orgunit_id='$id' ");
+                }
+
                 /*    
                 $file_dir_name = dirname(__FILE__);
                 if (file_exists("$file_dir_name/../client-$company/organization_business.php")) {
@@ -1254,7 +1270,7 @@ class Orgunit extends AfwMomkenObject
 
     public function estimatedTotalRows()
     {
-        return 2500;
+        return 50;
     }
 
 
