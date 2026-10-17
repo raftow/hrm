@@ -1084,7 +1084,8 @@ class Orgunit extends AfwMomkenObject
 
     public function getUrl($extended_orgunit_class = "Orgunit", $extended_orgunit_module = "hrm")
     {
-        return "main.php?Main_Page=afw_mode_display.php&cl=$extended_orgunit_class&currmod=$extended_orgunit_module&id=" . $this->getId();
+        $myId = $extended_orgunit_class::OrunitIdToMyId($this->getId());
+        return "main.php?Main_Page=afw_mode_edit.php&cl=$extended_orgunit_class&currmod=$extended_orgunit_module&id=" . $myId;
     }
 
     public function getOrgunitMenu($extended_orgunit_class = "Orgunit", $extended_orgunit_module = "hrm")

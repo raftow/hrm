@@ -1,9 +1,13 @@
 <?php
+    /**
+     * @var array $menu_icons_arr
+     * @var string $org_icon
+     */
     $out_scr .= "<div class='hzm3-row-padding hzm3-center hzm3-small hzm_home_bloc' style='margin:0 -16px'>";
-    if(!$objme) $objme = AfwSession::getUserConnected();
-    if(!$objme) die("no opened session for you. please contact administartor!!");
+    if(!isset($objme)) $objme = AfwSession::getUserConnected();
+    if(!$objme) die("no authenticated session found. please authenticate before");
     $iamAdmin = $objme->isAdmin();
-    if(!$org) 
+    if(!isset($org)) 
     {
         $org = $objme->getMyOrganizationId();
         $dep = $objme->getMyDepartmentId();
@@ -11,7 +15,7 @@
     
     if(!$org)
     {
-        die("session aborted, check your connection or do logout and login again.");
+        die("page display aborted, the authenticated user isn't an employee of any organization.");
         //die("your organization id is not (no more) allowed to access the system. please contact administrator!!<br>مؤسستك لا أو لم تعد تملك الصلاحية للدخول على هذا النظام")
     }    
     
