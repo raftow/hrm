@@ -49,8 +49,8 @@
 
                 $front_header = true;
                 $front_application = true;
-                // $config["img-path"] = "../exte-rnal/pic/"; // "../$MODULE/pic/";
-                // $config["img-company-path"] = "../exte-rnal/pic/";
+                 // "../$MODULE/pic/";
+                
                 // $config["sms-crm"] = true;
                 // $config["sms-captcha"] = true;
                 // $config["default-logged-out-page"] = "customer_login.php";
