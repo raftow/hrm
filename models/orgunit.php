@@ -477,6 +477,7 @@ class Orgunit extends AfwMomkenObject
                 }
             }
             $old_id_responsible = $this->getVal("id_responsible");
+            if(!$id_responsible) $id_responsible = 0;
             if ($force_update_responsible or ($id_responsible != $old_id_responsible)) {
                 $this->set("id_responsible", $id_responsible);
                 $this->alert .= " newresponsible";
