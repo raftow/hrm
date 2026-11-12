@@ -408,7 +408,7 @@ class Employee extends UmsObject
                 $this->set('idn_type_id', $idn_type_id);
         }
 
-        if (!$this->doNotUpdateMyUserInformationBeforeMaj) {
+        if (!$this->is_new and !$this->doNotUpdateMyUserInformationBeforeMaj and !$this->doNotUpdateMyUserInformationAnyMore) {
             // die("me empl=".var_export($this,true));
             $this->updateMyUserInformationAndRoles($lang, $from_ldap = false, $commit = false);
         }
@@ -507,7 +507,7 @@ class Employee extends UmsObject
     /*
      * public function updateMyInfosFromExternalSources($lang="ar", $commit=true, $force=true)
      * {
-     *         global $lang, $auto_generate_employeenum;
+     *         global $auto_generate_employeenum;
      *
      *         $errors_arr = array();
      *         $infos_arr = array();
@@ -1200,12 +1200,7 @@ class Employee extends UmsObject
 
     public function updateMyUserInformationAndRoles($lang = 'ar', $from_ldap = '', $commit = true, $force_reset_pwd_for_user = false, $update_obj_if_found = true, $rolesFromScratchForModules = [])
     {
-        global $objme, $ldap_use;
-
-        // @todo read from configuration file and remove all this not good practice of global vars
-        if (!$from_ldap)
-            $from_ldap = $ldap_use;
-
+        $this->doNotUpdateMyUserInformationAnyMore = true;
         $username = $this->getVal('username');
         $email = $this->getVal('email');
 
