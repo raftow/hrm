@@ -1091,7 +1091,8 @@ class Orgunit extends AfwMomkenObject
 
     public function getOrgunitMenu($extended_orgunit_class = "Orgunit", $extended_orgunit_module = "hrm")
     {
-        global $lang, $MENU_ICONS, $menu_css_arr;
+        $lang = AfwLanguageHelper::getGlobalLanguage();
+        global $MENU_ICONS, $menu_css_arr;
 
         $colors = array(0 => "red", 1 => "yellow", 2 => "orange", 3 => "green", 4 => "blue", 5 => "nili", 6 => "purpule");
 

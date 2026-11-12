@@ -393,7 +393,7 @@ class Employee extends UmsObject
 
     public function beforeMaj($id, $fields_updated)
     {
-        self::lookIfInfiniteLoop(1000, 'EmployeeBeforeMaj');
+        // self::lookIfInfiniteLoop(1000, 'EmployeeBeforeMaj');
         $lang = AfwLanguageHelper::getGlobalLanguage();
 
         if (!$this->getVal('username')) {
@@ -420,7 +420,7 @@ class Employee extends UmsObject
 
     public function afterUpdate($id, $fields_updated, $disableAfterCommitDBEvent = false)  // afterInsert
     {
-        self::lookIfInfiniteLoop(1000, 'EmployeeAfterUpdate');
+        // self::lookIfInfiniteLoop(1000, 'EmployeeAfterUpdate');
         global $auto_generate_employeenum;
         $id_sh_org = $this->getVal('id_sh_org');
         $emp_num = $this->getVal('emp_num');
