@@ -393,7 +393,7 @@ class Employee extends UmsObject
 
     public function beforeMaj($id, $fields_updated)
     {
-        // self::lookIfInfiniteLoop(1000, 'EmployeeBeforeMaj');
+        self::lookIfInfiniteLoop(3000, 'EmployeeBeforeMaj');
         $lang = AfwLanguageHelper::getGlobalLanguage();
 
         if (!$this->getVal('username')) {
