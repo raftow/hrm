@@ -393,7 +393,7 @@ class Employee extends UmsObject
 
     public function beforeMaj($id, $fields_updated)
     {
-        self::lookIfInfiniteLoop(7000, 'EmployeeBeforeMaj');
+        self::lookIfInfiniteLoop(20000, 'EmployeeBeforeMaj');
         $lang = AfwLanguageHelper::getGlobalLanguage();
 
         if (!$this->getVal('username')) {
@@ -459,7 +459,7 @@ class Employee extends UmsObject
         return $usr->hasRole($module_code, $role_id);
     }
 
-    public function updateMyInfosFromExternalSources($lang = 'ar', $hideNotFoundEmployeesByExtrenalApi = true)
+    public function updateMyInfosFromExternalSources($lang = 'ar', $hideNotFoundEmployeesByExtrenalApi = true, $commit=true)
     {
         if ($this->isFromOurCompany()) {
             $user_name = $this->getVal('username');
@@ -491,7 +491,7 @@ class Employee extends UmsObject
                         $error .= ' + '.$error2;
                 } elseif (!$ok and $hideNotFoundEmployeesByExtrenalApi) {
                     $this->set('active', 'N');
-                    $this->commit();
+                    if($commit) $this->commit();
                     $info = '';
                 } else {
                     $info = '';
