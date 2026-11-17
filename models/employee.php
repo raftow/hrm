@@ -408,10 +408,12 @@ class Employee extends UmsObject
                 $this->set('idn_type_id', $idn_type_id);
         }
 
+        /* cause infinite loop if he don't set ->doNotUpdateMyUserInformationXXXX : so removed
         if (!$this->is_new and !$this->doNotUpdateMyUserInformationBeforeMaj and !$this->doNotUpdateMyUserInformationAnyMore) {
             // die("me empl=".var_export($this,true));
             $this->updateMyUserInformationAndRoles($lang, $from_ldap = false, $commit = false);
         }
+        */
 
 
         $errs = null;
